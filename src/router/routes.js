@@ -4,7 +4,7 @@ export default [
     path: '/',
     component: () => import('layouts/default'),
     children: [
-      { path: '', component: () => import('pages/index') }
+      { name: 'settings', path: '/', component: () => import('components/Settings'), meta: {auth: true} }
     ]
   },
 

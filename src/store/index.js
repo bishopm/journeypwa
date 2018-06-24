@@ -1,13 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import example from './module-example'
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  modules: {
-    example
+  state: {
+    profile: {},
+    circuitname: '',
+    circuitid: 0,
+    hostname: 'http://localhost/churchnet/public/api'
+    // hostname: 'https://church.net.za/api'
+  },
+  mutations: {
+    setProfile (state, newprofile) {
+      state.profile = newprofile
+    }
   }
 })
 
