@@ -14,6 +14,12 @@ const store = new Vuex.Store({
   mutations: {
     setProfile (state, newprofile) {
       state.profile = newprofile
+    },
+    setCircuitName (state, newname) {
+      state.circuitname = newname
+    },
+    setCircuitId (state, newid) {
+      state.circuitid = newid
     }
   }
 })

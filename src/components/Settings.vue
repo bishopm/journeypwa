@@ -5,6 +5,9 @@
       <q-field icon="book" label="Bible version" class="q-my-md">
         <q-option-group @input="chooseTranslation" type="radio" placeholder="Choose a Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' } ]"/>
       </q-field>
+      <q-field icon="games" label="Church" class="q-my-md">
+        <q-select placeholder="Select church" v-model="church" :options="churchOptions"/>
+      </q-field>
       <q-field icon="language" label="District" class="q-my-md">
         <q-select @input="chooseDistrict" placeholder="Select a district" v-model="district" :options="districtOptions"/>
       </q-field>
@@ -47,7 +50,9 @@ export default {
     return {
       circuitOptions: [],
       districtOptions: [],
-      bible: '',
+      churchOptions: [{ label: 'Methodist Church of Southern Africa', value: 'mcsa' }],
+      bible: 'eng-GNTUK',
+      church: 'mcsa',
       district: 0,
       circuit: {},
       phone: ''
@@ -55,7 +60,7 @@ export default {
   },
   computed: {
     notifications () {
-      if (localStorage.getItem('CIRC_Phonenumber')) {
+      if (localStorage.getItem('JOURNEY_Phonenumber')) {
         return 1
       } else {
         return 0
@@ -95,31 +100,31 @@ export default {
             }
             this.circuitOptions.push(newitem)
           }
-          localStorage.setItem('CIRC_District', this.district)
+          localStorage.setItem('JOURNEY_District', this.district)
         })
         .catch(function (error) {
           console.log(error)
         })
     },
     chooseCircuit () {
-      localStorage.setItem('CIRC_Circuit', JSON.stringify(this.circuit))
+      localStorage.setItem('JOURNEY_Circuit', JSON.stringify(this.circuit))
       this.$store.commit('setCircuitName', this.circuit.name)
       this.$store.commit('setCircuitId', this.circuit.id)
     },
     chooseTranslation () {
-      localStorage.setItem('CIRC_Bible', JSON.stringify(this.bible))
+      localStorage.setItem('JOURNEY_Bible', JSON.stringify(this.bible))
     }
   },
   mounted () {
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token
-    if (localStorage.getItem('CIRC_District')) {
-      this.district = parseInt(localStorage.getItem('CIRC_District'))
+    if (localStorage.getItem('JOURNEY_District')) {
+      this.district = parseInt(localStorage.getItem('JOURNEY_District'))
     }
-    if (localStorage.getItem('CIRC_Circuit')) {
-      this.circuit = JSON.parse(localStorage.getItem('CIRC_Circuit'))
+    if (localStorage.getItem('JOURNEY_Circuit')) {
+      this.circuit = JSON.parse(localStorage.getItem('JOURNEY_Circuit'))
     }
-    if (localStorage.getItem('CIRC_VerifiedPhone')) {
-      this.phone = localStorage.getItem('CIRC_VerifiedPhone')
+    if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+      this.phone = localStorage.getItem('JOURNEY_VerifiedPhone')
     }
     this.$axios.get(this.$store.state.hostname + '/methodist/districts')
       .then(response => {
