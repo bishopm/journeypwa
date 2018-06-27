@@ -14,50 +14,32 @@
       <q-field icon="group" label="Circuit" class="q-my-md">
         <q-select @input="chooseCircuit" placeholder="Select a circuit" v-model="circuit" :options="circuitOptions"/>
       </q-field>
+      <q-field icon="place" label="Society" class="q-my-md">
+        <q-select @input="chooseSociety" placeholder="Select a society" v-model="society" :options="societyOptions"/>
+      </q-field>
       <q-btn v-if="!phone && circuit" color="secondary" label="Click here to set up notifications (eg: preaching/meeting reminders)" :to="{ name: 'verification' }"/>
-      <div v-else>
-        <h3 class="text-center q-pt-md">Personal details</h3>
-        <table class="table">
-          <tr>
-            <th class="text-left">Phone</th><td>{{phone}}</td>
-          </tr>
-          <tr v-if="individual">
-            <th class="text-left">Name</th><td>{{individual.title}} {{individual.firstname}} {{individual.surname}}</td>
-          </tr>
-          <tr v-else><th>If you are a minister or preacher, your personal details will appear here once your circuit adds your phone number to their list of preachers</th></tr>
-          <tr v-if="individual">
-            <th class="text-left">Status</th><td>{{individual.status}}</td>
-          </tr>
-          <tr v-if="society && individual.status !== 'Minister'">
-            <th class="text-left">Society</th><td>{{society.society}}</td>
-          </tr>
-        </table>
-        <q-list v-if="upcoming && upcoming.length" class="q-mt-md text-center no-border">
-          <q-list-header>Upcoming preaching appointments</q-list-header>
-          <q-item v-for="(plan,pdate) in upcoming" :key="plan.id">
-            <q-item-side class="text-left">{{pdate}}</q-item-side>
-            <q-item-main><p v-for="pp in plan" :key="pp.id"><small>{{pp.society}} ({{pp.servicetime}})</small></p></q-item-main>
-          </q-item>
-        </q-list>
-      </div>
     </form>
   </div>
 </template>
 
 <script>
+import saveState from 'vue-save-state'
 export default {
   data () {
     return {
+      churchOptions: [{ label: 'Methodist Church of Southern Africa', value: 'mcsa' }],
       circuitOptions: [],
       districtOptions: [],
-      churchOptions: [{ label: 'Methodist Church of Southern Africa', value: 'mcsa' }],
+      societyOptions: [],
       bible: 'eng-GNTUK',
       church: 'mcsa',
       district: 0,
       circuit: {},
+      society: 0,
       phone: ''
     }
   },
+  mixins: [saveState],
   computed: {
     notifications () {
       if (localStorage.getItem('JOURNEY_Phonenumber')) {
@@ -65,30 +47,14 @@ export default {
       } else {
         return 0
       }
-    },
-    society () {
-      if (this.$store.state.individual.society) {
-        return this.$store.state.individual.society
-      } else {
-        return false
-      }
-    },
-    upcoming () {
-      if (this.$store.state.individual.upcoming) {
-        return this.$store.state.individual.upcoming
-      } else {
-        return false
-      }
-    },
-    individual () {
-      if (this.$store.state.individual) {
-        return this.$store.state.individual
-      } else {
-        return false
-      }
     }
   },
   methods: {
+    getSaveStateConfig () {
+      return {
+        'cacheKey': 'JOURNEY_Settings'
+      }
+    },
     chooseDistrict () {
       this.$axios.get(this.$store.state.hostname + '/methodist/districts/' + this.district)
         .then(response => {
@@ -110,22 +76,30 @@ export default {
       localStorage.setItem('JOURNEY_Circuit', JSON.stringify(this.circuit))
       this.$store.commit('setCircuitName', this.circuit.name)
       this.$store.commit('setCircuitId', this.circuit.id)
+      this.$axios.get(this.$store.state.hostname + '/methodist/circuits/' + this.circuit.id + '/societies')
+        .then(response => {
+          this.societyOptions = []
+          for (var skey in response.data) {
+            var newitem = {
+              label: response.data[skey].society,
+              value: response.data[skey].id
+            }
+            this.societyOptions.push(newitem)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    chooseSociety () {
+      localStorage.setItem('JOURNEY_Society', this.society)
+      this.$store.commit('setSocietyId', this.society)
     },
     chooseTranslation () {
       localStorage.setItem('JOURNEY_Bible', JSON.stringify(this.bible))
     }
   },
   mounted () {
-    // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token
-    if (localStorage.getItem('JOURNEY_District')) {
-      this.district = parseInt(localStorage.getItem('JOURNEY_District'))
-    }
-    if (localStorage.getItem('JOURNEY_Circuit')) {
-      this.circuit = JSON.parse(localStorage.getItem('JOURNEY_Circuit'))
-    }
-    if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
-      this.phone = localStorage.getItem('JOURNEY_VerifiedPhone')
-    }
     this.$axios.get(this.$store.state.hostname + '/methodist/districts')
       .then(response => {
         this.districtOptions = []
@@ -146,6 +120,18 @@ export default {
         console.log(error)
         // this.$q.loading.hide()
       })
+    if (localStorage.getItem('JOURNEY_District')) {
+      this.district = parseInt(localStorage.getItem('JOURNEY_District'))
+    }
+    if (!localStorage.getItem('JOURNEY_Bible')) {
+      localStorage.setItem('JOURNEY_Bible', this.bible)
+    }
+    if (localStorage.getItem('JOURNEY_Circuit')) {
+      this.circuit = JSON.parse(localStorage.getItem('JOURNEY_Circuit'))
+    }
+    if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+      this.phone = localStorage.getItem('JOURNEY_VerifiedPhone')
+    }
   }
 
 }

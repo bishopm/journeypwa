@@ -4,7 +4,10 @@ export default [
     path: '/',
     component: () => import('layouts/default'),
     children: [
-      { name: 'settings', path: '/', component: () => import('components/Settings'), meta: {auth: true} }
+      { name: 'reading', path: '/reading/:reading', component: () => import('components/Reading'), meta: {auth: true} },
+      { name: 'settings', path: '/settings', component: () => import('components/Settings'), meta: {auth: true} },
+      { name: 'societies', path: '/societies', component: () => import('components/Societies'), meta: {auth: true} },
+      { name: 'sunday', path: '/', component: () => import('components/Sunday'), meta: {auth: true} }
     ]
   },
 
