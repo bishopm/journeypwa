@@ -8,8 +8,8 @@ const store = new Vuex.Store({
     profile: {},
     circuitname: '',
     circuitid: 0,
-    // hostname: 'http://localhost/churchnet/public/api'
-    hostname: 'https://church.net.za/api'
+    hostname: 'http://localhost/churchnet/public/api'
+    // hostname: 'https://church.net.za/api'
   },
   mutations: {
     setProfile (state, newprofile) {
@@ -21,8 +21,20 @@ const store = new Vuex.Store({
     setCircuitId (state, newid) {
       state.circuitid = newid
     },
-    setSocietyId (state, newsocietyid) {
-      state.society = newsocietyid
+    setSociety (state, newsociety) {
+      state.society = newsociety
+    },
+    setGroups (state, newgroups) {
+      state.menu_groups = newgroups
+    },
+    setBirthdays (state, newbdays) {
+      state.menu_birthdays = newbdays
+    },
+    setFeeditems (state, newitems) {
+      state.feeditems = newitems
+    },
+    setMedia (state, newmedia) {
+      state.menu_media = newmedia
     }
   }
 })

@@ -35,7 +35,7 @@ export default {
       church: 'mcsa',
       district: 0,
       circuit: {},
-      society: 0,
+      society: {},
       phone: ''
     }
   },
@@ -82,7 +82,7 @@ export default {
           for (var skey in response.data) {
             var newitem = {
               label: response.data[skey].society,
-              value: response.data[skey].id
+              value: { id: response.data[skey].id, name: response.data[skey].society }
             }
             this.societyOptions.push(newitem)
           }
@@ -92,42 +92,16 @@ export default {
         })
     },
     chooseSociety () {
-      localStorage.setItem('JOURNEY_Society', this.society)
-      this.$store.commit('setSocietyId', this.society)
+      localStorage.setItem('JOURNEY_Society', JSON.stringify(this.society))
+      this.$store.commit('setSociety', this.society)
     },
     chooseTranslation () {
       localStorage.setItem('JOURNEY_Bible', JSON.stringify(this.bible))
     }
   },
   mounted () {
-    this.$axios.get(this.$store.state.hostname + '/methodist/districts')
-      .then(response => {
-        this.districtOptions = []
-        for (var dkey in response.data) {
-          var newitem = {
-            label: response.data[dkey].district,
-            value: response.data[dkey].id
-          }
-          this.districtOptions.push(newitem)
-        }
-        for (var ckey in this.circuitOptions) {
-          if (this.circuit.number === this.circuitOptions[ckey].value.number) {
-            this.circuit = this.circuitOptions[ckey].value
-          }
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-        // this.$q.loading.hide()
-      })
-    if (localStorage.getItem('JOURNEY_District')) {
-      this.district = parseInt(localStorage.getItem('JOURNEY_District'))
-    }
     if (!localStorage.getItem('JOURNEY_Bible')) {
       localStorage.setItem('JOURNEY_Bible', this.bible)
-    }
-    if (localStorage.getItem('JOURNEY_Circuit')) {
-      this.circuit = JSON.parse(localStorage.getItem('JOURNEY_Circuit'))
     }
     if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
       this.phone = localStorage.getItem('JOURNEY_VerifiedPhone')

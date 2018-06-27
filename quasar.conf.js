@@ -4,7 +4,9 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'axios'
+      'axios',
+      'maps',
+      'firebase'
     ],
     css: [
       'app.styl'
@@ -49,8 +51,9 @@ module.exports = function (ctx) {
         'QItemSide',
         'QOptionGroup',
         'QLayout',
-        'QLayoutHeader',
         'QLayoutDrawer',
+        'QLayoutFooter',
+        'QLayoutHeader',
         'QList',
         'QListHeader',
         'QPageContainer',
