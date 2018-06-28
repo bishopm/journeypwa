@@ -35,4 +35,7 @@ blockquote {
   margin-bottom: 10px;
   padding-bottom: 0px;
 }
+p {
+  margin-bottom: 10px;
+}
 </style>

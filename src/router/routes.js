@@ -7,11 +7,12 @@ export default [
       { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: {auth: true} },
       { name: 'ffdl', path: '/ffdl', component: () => import('components/FFDL'), meta: {auth: true} },
       { name: 'groups', path: '/groups', component: () => import('components/Groups'), meta: {auth: true} },
+      { name: 'home', path: '/', component: () => import('components/Home'), meta: {auth: true} },
       { name: 'reading', path: '/reading/:reading', component: () => import('components/Reading'), meta: {auth: true} },
       { name: 'settings', path: '/settings', component: () => import('components/Settings'), meta: {auth: true} },
       { name: 'societies', path: '/societies', component: () => import('components/Societies'), meta: {auth: true} },
       { name: 'society', path: '/societies/:id', component: () => import('components/Society'), meta: {auth: true} },
-      { name: 'home', path: '/', component: () => import('components/Sunday'), meta: {auth: true} }
+      { name: 'sunday', path: '/sunday', component: () => import('components/Sunday'), meta: {auth: true} }
     ]
   },
 

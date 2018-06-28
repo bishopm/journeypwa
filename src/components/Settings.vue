@@ -78,7 +78,7 @@ export default {
           for (var ckey in response.data) {
             var newitem = {
               label: response.data[ckey].circuitnumber + ' ' + response.data[ckey].circuit,
-              value: { id: response.data[ckey].id, number: response.data[ckey].circuitnumber, name: response.data[ckey].circuit }
+              value: response.data[ckey].id
             }
             this.circuitOptions.push(newitem)
           }
@@ -89,16 +89,21 @@ export default {
         })
     },
     chooseCircuit () {
-      localStorage.setItem('JOURNEY_Circuit', JSON.stringify(this.circuit))
-      this.$store.commit('setCircuitName', this.circuit.name)
-      this.$store.commit('setCircuitId', this.circuit.id)
-      this.$axios.get(this.$store.state.hostname + '/methodist/circuits/' + this.circuit.id + '/societies')
+      localStorage.setItem('JOURNEY_Circuit', this.circuit)
+      for (var ckey in this.circuitOptions) {
+        if (this.circuit === this.circuitOptions[ckey].value) {
+          localStorage.setItem('JOURNEY_Circuitname', this.circuitOptions[ckey].label)
+        }
+      }
+      this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
+      this.$store.commit('setCircuitId', this.circuit)
+      this.$axios.get(this.$store.state.hostname + '/methodist/circuits/' + this.circuit + '/societies')
         .then(response => {
           this.societyOptions = []
           for (var skey in response.data) {
             var newitem = {
               label: response.data[skey].society,
-              value: { id: response.data[skey].id, name: response.data[skey].society }
+              value: response.data[skey].id
             }
             this.societyOptions.push(newitem)
           }
@@ -108,9 +113,14 @@ export default {
         })
     },
     chooseSociety () {
-      localStorage.setItem('JOURNEY_Society', JSON.stringify(this.society))
-      this.$store.commit('setSocietyId', this.society.id)
-      this.$store.commit('setSocietyName', this.society.name)
+      localStorage.setItem('JOURNEY_Society', this.society)
+      for (var skey in this.societyOptions) {
+        if (this.society === this.societyOptions[skey].value) {
+          localStorage.setItem('JOURNEY_Societyname', this.societyOptions[skey].label)
+        }
+      }
+      this.$store.commit('setSocietyId', this.society)
+      this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
     },
     chooseTranslation () {
       localStorage.setItem('JOURNEY_Bible', JSON.stringify(this.bible))
@@ -125,17 +135,6 @@ export default {
     }
     if (!localStorage.getItem('JOURNEY_District')) {
       this.populateDistricts()
-    } else {
-      for (var ckey in this.circuitOptions) {
-        if (this.circuit.value.number === this.circuitOptions[ckey].value.number) {
-          this.circuit = this.circuitOptions[ckey].value
-        }
-      }
-      for (var skey in this.societyOptions) {
-        if (this.society.value.name === this.societyOptions[skey].value.name) {
-          this.society = this.societyOptions[skey].value
-        }
-      }
     }
   }
 }

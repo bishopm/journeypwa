@@ -14,41 +14,48 @@
 
     <q-layout-drawer v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
-        <q-list-header class="text-center"><b>{{societyname()}} Society</b></q-list-header>
-        <q-item to="/">
-          <q-item-side icon="book" />
-          <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
-        </q-item>
-        <q-item v-if="menu_birthdays()" to="/community">
-          <q-item-side icon="people_outline" />
-          <q-item-main label="Community" sublabel="Birthdays, prayer needs" />
-        </q-item>
-        <q-item v-if="menu_media()" to="/extra">
-          <q-item-side icon="chrome_reader_mode" />
-          <q-item-main label="Extra" sublabel="Media / articles" />
-        </q-item>
-        <q-item v-if="menu_groups()" to="/groups">
-          <q-item-side icon="group" />
-          <q-item-main label="Groups" sublabel="Small group material" />
-        </q-item>
-        <q-item to="/ffdl">
-          <q-item-side icon="book" />
-          <q-item-main label="Devotions" sublabel="Faith for daily living" />
-        </q-item>
-        <q-list-header class="text-center"><b>{{circuitname() || 'Circuit'}}</b></q-list-header>
-        <q-item to="/societies">
-          <q-item-side icon="people" />
-          <q-item-main label="Societies" sublabel="My circuit" />
-        </q-item>
-        <q-item to="/diary">
-          <q-item-side icon="calendar_today" />
-          <q-item-main label="Circuit diary" sublabel="Upcoming circuit meetings and events" />
-        </q-item>
-        <q-list-header class="text-center"><b>App administration</b></q-list-header>
-        <q-item to="/settings">
-          <q-item-side icon="settings" />
-          <q-item-main label="Settings" sublabel="App settings" />
-        </q-item>
+        <q-collapsible opened class="text-center text-primary" group="somegroup" :label="societyname() + ' Society'">
+          <q-item v-if="menu_birthdays()" to="/community">
+            <q-item-side icon="people_outline" />
+            <q-item-main label="Community" sublabel="Birthdays, prayer needs" />
+          </q-item>
+          <q-item to="/ffdl">
+            <q-item-side icon="book" />
+            <q-item-main label="Devotions" sublabel="Faith for daily living" />
+          </q-item>
+          <q-item v-if="menu_groups()" to="/groups">
+            <q-item-side icon="group" />
+            <q-item-main label="Groups" sublabel="Small group material" />
+          </q-item>
+          <q-item v-if="menu_media()" to="/media">
+            <q-item-side icon="art_track" />
+            <q-item-main label="Extra" sublabel="Media / articles" />
+          </q-item>
+          <q-item v-if="menu_practice()" to="/practice">
+            <q-item-side icon="pan_tool" />
+            <q-item-main label="Practice" sublabel="Practice or discipline for the week" />
+          </q-item>
+          <q-item to="/">
+            <q-item-side icon="book" />
+            <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
+          </q-item>
+        </q-collapsible>
+        <q-collapsible class="text-center text-primary" group="somegroup" :label="circuitname() || 'Circuit'">
+          <q-item to="/societies">
+            <q-item-side icon="people" />
+            <q-item-main label="Societies" sublabel="My circuit" />
+          </q-item>
+          <q-item to="/diary">
+            <q-item-side icon="calendar_today" />
+            <q-item-main label="Circuit diary" sublabel="Upcoming circuit meetings and events" />
+          </q-item>
+        </q-collapsible>
+        <q-collapsible class="text-center text-primary" group="somegroup" label="App administration">
+          <q-item to="/settings">
+            <q-item-side icon="settings" />
+            <q-item-main label="Settings" sublabel="App settings" />
+          </q-item>
+        </q-collapsible>
 
       </q-list>
     </q-layout-drawer>
@@ -95,6 +102,9 @@ export default {
     menu_birthdays () {
       return this.$store.state.menu_birthdays
     },
+    menu_practice () {
+      return this.$store.state.menu_practice
+    },
     societyname () {
       return this.$store.state.societyname
     },
@@ -108,5 +118,11 @@ export default {
 <style>
 a, a:hover {
   text-decoration: none;
+}
+#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.text-primary.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
+  background-color:#4d7227;
+  border-bottom:white solid 2px;
+  color: white;
+  text-align:center;
 }
 </style>
