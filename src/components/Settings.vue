@@ -55,6 +55,22 @@ export default {
         'cacheKey': 'JOURNEY_Settings'
       }
     },
+    populateDistricts () {
+      this.$axios.get(this.$store.state.hostname + '/methodist/districts')
+        .then(response => {
+          this.districtOptions = []
+          for (var dkey in response.data) {
+            var newitem = {
+              label: response.data[dkey].district,
+              value: response.data[dkey].id
+            }
+            this.districtOptions.push(newitem)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     chooseDistrict () {
       this.$axios.get(this.$store.state.hostname + '/methodist/districts/' + this.district)
         .then(response => {
@@ -93,7 +109,8 @@ export default {
     },
     chooseSociety () {
       localStorage.setItem('JOURNEY_Society', JSON.stringify(this.society))
-      this.$store.commit('setSociety', this.society)
+      this.$store.commit('setSocietyId', this.society.id)
+      this.$store.commit('setSocietyName', this.society.name)
     },
     chooseTranslation () {
       localStorage.setItem('JOURNEY_Bible', JSON.stringify(this.bible))
@@ -106,8 +123,21 @@ export default {
     if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
       this.phone = localStorage.getItem('JOURNEY_VerifiedPhone')
     }
+    if (!localStorage.getItem('JOURNEY_District')) {
+      this.populateDistricts()
+    } else {
+      for (var ckey in this.circuitOptions) {
+        if (this.circuit.value.number === this.circuitOptions[ckey].value.number) {
+          this.circuit = this.circuitOptions[ckey].value
+        }
+      }
+      for (var skey in this.societyOptions) {
+        if (this.society.value.name === this.societyOptions[skey].value.name) {
+          this.society = this.societyOptions[skey].value
+        }
+      }
+    }
   }
-
 }
 </script>
 

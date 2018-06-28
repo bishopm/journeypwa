@@ -4,6 +4,8 @@ export default [
     path: '/',
     component: () => import('layouts/default'),
     children: [
+      { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: {auth: true} },
+      { name: 'ffdl', path: '/ffdl', component: () => import('components/FFDL'), meta: {auth: true} },
       { name: 'groups', path: '/groups', component: () => import('components/Groups'), meta: {auth: true} },
       { name: 'reading', path: '/reading/:reading', component: () => import('components/Reading'), meta: {auth: true} },
       { name: 'settings', path: '/settings', component: () => import('components/Settings'), meta: {auth: true} },

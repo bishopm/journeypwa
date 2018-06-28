@@ -32,49 +32,51 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem('JOURNEY_Society')) {
-      this.$store.commit('setSociety', JSON.parse(localStorage.getItem('JOURNEY_Society')))
+    if (!localStorage.getItem('JOURNEY_Society')) {
+      this.$router.push({ name: 'settings' })
+    } else {
+      this.$store.commit('setSocietyName', JSON.parse(localStorage.getItem('JOURNEY_Society')).name)
+      this.$store.commit('setSocietyId', JSON.parse(localStorage.getItem('JOURNEY_Society')).id)
+      if (localStorage.getItem('JOURNEY_Circuit')) {
+        this.$store.commit('setCircuitId', JSON.parse(localStorage.getItem('JOURNEY_Circuit')).id)
+        this.$store.commit('setCircuitName', JSON.parse(localStorage.getItem('JOURNEY_Circuit')).name)
+      }
+      this.$axios.get(this.$store.state.hostname + '/methodist/circuits/' + this.$store.state.circuitid + '/societies/' + this.$store.state.societyid + '/feeditems')
+        .then(response => {
+          this.$store.commit('setFeeditems', response.data)
+          if (response.data.groups) {
+            this.$store.commit('setGroups', true)
+          } else {
+            this.$store.commit('setGroups', false)
+          }
+          if (response.data.birthdays) {
+            this.$store.commit('setBirthdays', true)
+          } else {
+            this.$store.commit('setBirthdays', false)
+          }
+          if (response.data.media) {
+            this.$store.commit('setMedia', true)
+          } else {
+            this.$store.commit('setMedia', false)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+          // this.$q.loading.hide()
+        })
+      this.$axios.get(this.$store.state.hostname + '/sunday')
+        .then(response => {
+          this.date = response.data.date
+          this.description = response.data.description
+          this.readings = response.data.readings
+          // this.$q.loading.hide()
+        })
+        .catch(function (error) {
+          console.log(error)
+          // this.$q.loading.hide()
+        })
     }
-    if (localStorage.getItem('JOURNEY_Circuit')) {
-      this.$store.commit('setCircuitId', JSON.parse(localStorage.getItem('JOURNEY_Circuit')).id)
-      this.$store.commit('setCircuitName', JSON.parse(localStorage.getItem('JOURNEY_Circuit')).name)
-    }
-    this.$axios.get(this.$store.state.hostname + '/methodist/circuits/' + this.$store.state.circuitid + '/societies/' + this.$store.state.society.id + '/feeditems')
-      .then(response => {
-        this.$store.commit('setFeeditems', response.data)
-        if (response.data.groups) {
-          this.$store.commit('setGroups', true)
-        } else {
-          this.$store.commit('setGroups', false)
-        }
-        if (response.data.birthdays) {
-          this.$store.commit('setBirthdays', true)
-        } else {
-          this.$store.commit('setBirthdays', false)
-        }
-        if (response.data.media) {
-          this.$store.commit('setMedia', true)
-        } else {
-          this.$store.commit('setMedia', false)
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-        // this.$q.loading.hide()
-      })
-    this.$axios.get(this.$store.state.hostname + '/sunday')
-      .then(response => {
-        this.date = response.data.date
-        this.description = response.data.description
-        this.readings = response.data.readings
-        // this.$q.loading.hide()
-      })
-      .catch(function (error) {
-        console.log(error)
-        // this.$q.loading.hide()
-      })
   }
-
 }
 </script>
 

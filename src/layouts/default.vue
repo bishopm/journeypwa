@@ -14,7 +14,7 @@
 
     <q-layout-drawer v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
-        <q-list-header class="text-center">{{societyname}} Society</q-list-header>
+        <q-list-header class="text-center"><b>{{societyname()}} Society</b></q-list-header>
         <q-item to="/">
           <q-item-side icon="book" />
           <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
@@ -31,15 +31,25 @@
           <q-item-side icon="group" />
           <q-item-main label="Groups" sublabel="Small group material" />
         </q-item>
-        <q-item to="/settings">
-          <q-item-side icon="settings" />
-          <q-item-main label="Settings" sublabel="App settings" />
+        <q-item to="/ffdl">
+          <q-item-side icon="book" />
+          <q-item-main label="Devotions" sublabel="Faith for daily living" />
         </q-item>
-        <q-list-header class="text-center">{{circuitname}}</q-list-header>
+        <q-list-header class="text-center"><b>{{circuitname() || 'Circuit'}}</b></q-list-header>
         <q-item to="/societies">
           <q-item-side icon="people" />
           <q-item-main label="Societies" sublabel="My circuit" />
         </q-item>
+        <q-item to="/diary">
+          <q-item-side icon="calendar_today" />
+          <q-item-main label="Circuit diary" sublabel="Upcoming circuit meetings and events" />
+        </q-item>
+        <q-list-header class="text-center"><b>App administration</b></q-list-header>
+        <q-item to="/settings">
+          <q-item-side icon="settings" />
+          <q-item-main label="Settings" sublabel="App settings" />
+        </q-item>
+
       </q-list>
     </q-layout-drawer>
     <q-page-container>
@@ -75,16 +85,6 @@ export default {
       leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
-  computed: {
-    societyname () {
-      if (this.$store.state.society) {
-        return this.$store.state.society.name
-      }
-    },
-    circuitname () {
-      return this.$store.state.circuitname
-    }
-  },
   methods: {
     menu_media () {
       return this.$store.state.menu_media
@@ -94,8 +94,13 @@ export default {
     },
     menu_birthdays () {
       return this.$store.state.menu_birthdays
+    },
+    societyname () {
+      return this.$store.state.societyname
+    },
+    circuitname () {
+      return this.$store.state.circuitname
     }
-
   }
 }
 </script>

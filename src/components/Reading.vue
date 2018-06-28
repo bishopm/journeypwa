@@ -31,6 +31,7 @@ export default {
     }
   },
   mounted () {
+    this.$q.loading.show()
     if (localStorage.getItem('JOURNEY_Bible')) {
       this.bible = localStorage.getItem('JOURNEY_Bible')
     } else {

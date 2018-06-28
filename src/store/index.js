@@ -21,8 +21,11 @@ const store = new Vuex.Store({
     setCircuitId (state, newid) {
       state.circuitid = newid
     },
-    setSociety (state, newsociety) {
-      state.society = newsociety
+    setSocietyId (state, newsocietyid) {
+      state.societyid = newsocietyid
+    },
+    setSocietyName (state, newsocietyname) {
+      state.societyname = newsocietyname
     },
     setGroups (state, newgroups) {
       state.menu_groups = newgroups
