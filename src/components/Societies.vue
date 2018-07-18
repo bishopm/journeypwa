@@ -7,8 +7,8 @@
         </q-item-main>
         <q-item-side class="text-right">
           <p v-for="service in society['services']" :key="service.id">
-            <span v-if="service.preacher">
-              <small>{{service.preacher.title}} {{service.preacher.firstname}} {{service.preacher.surname}}&nbsp;
+            <span v-if="service.person">
+              <small>{{service.person.title}} {{service.person.firstname}} {{service.person.surname}}&nbsp;
                 <span v-if="service.servicetype"><b>{{service.servicetype}}</b></span>
               </small>
             </span>&nbsp;&nbsp;<b>{{service.servicetime}}</b>

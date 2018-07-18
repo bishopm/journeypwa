@@ -20,6 +20,7 @@ export default {
     this.$axios.get(this.$store.state.hostname + '/feeds/ffdl')
       .then(response => {
         this.devotion = response.data.devotion
+        console.log(this.devotion)
         this.$q.loading.hide()
       })
       .catch(function (error) {
