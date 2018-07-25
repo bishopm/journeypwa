@@ -4,9 +4,9 @@ export default [
     path: '/',
     component: () => import('layouts/default'),
     children: [
+      { name: 'content', path: '/content/:ctype', component: () => import('components/Content'), meta: {auth: true} },
       { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: {auth: true} },
       { name: 'ffdl', path: '/ffdl', component: () => import('components/FFDL'), meta: {auth: true} },
-      { name: 'groups', path: '/groups', component: () => import('components/Groups'), meta: {auth: true} },
       { name: 'home', path: '/', component: () => import('components/Home'), meta: {auth: true} },
       { name: 'reading', path: '/reading/:reading', component: () => import('components/Reading'), meta: {auth: true} },
       { name: 'settings', path: '/settings', component: () => import('components/Settings'), meta: {auth: true} },

@@ -9,10 +9,19 @@
 </template>
 
 <script>
+import saveState from 'vue-save-state'
 export default {
   data () {
     return {
       devotion: {}
+    }
+  },
+  mixins: [saveState],
+  methods: {
+    getSaveStateConfig () {
+      return {
+        'cacheKey': 'JOURNEY_FFDL'
+      }
     }
   },
   mounted () {
@@ -20,7 +29,6 @@ export default {
     this.$axios.get(this.$store.state.hostname + '/feeds/ffdl')
       .then(response => {
         this.devotion = response.data.devotion
-        console.log(this.devotion)
         this.$q.loading.hide()
       })
       .catch(function (error) {
@@ -38,5 +46,9 @@ blockquote {
 }
 p {
   margin-bottom: 10px;
+}
+
+img.alignright {
+  padding-left: 10px;
 }
 </style>

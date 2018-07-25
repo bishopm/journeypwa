@@ -27,7 +27,7 @@ export default {
   methods: {
     getSaveStateConfig () {
       return {
-        'cacheKey': 'Journey_Events'
+        'cacheKey': 'JOURNEY_Events'
       }
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="q-mt-md caption text-center">Welcome! Here are Sunday's readings</p>
+    <p class="q-mt-md caption text-center">Sunday's lectionary readings</p>
     <q-list striped class="no-border">
       <p class="caption text-center q-my-md" v-if="date"><b>{{date}}</b><br><small>({{description}})</small></p>
       <q-item v-if="readings" v-for="reading in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)">

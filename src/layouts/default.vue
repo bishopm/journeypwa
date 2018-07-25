@@ -15,27 +15,27 @@
     <q-layout-drawer v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
         <q-collapsible opened class="text-center text-primary" group="somegroup" :label="societyname() + ' Society'">
-          <q-item v-if="menu_birthdays()" to="/community">
+          <q-item v-if="menu_community()" to="/community">
             <q-item-side icon="people_outline" />
-            <q-item-main label="Community" sublabel="Birthdays, prayer needs" />
+            <q-item-main label="Community" sublabel="Community news and needs" />
           </q-item>
           <q-item to="/ffdl">
             <q-item-side icon="book" />
             <q-item-main label="Devotions" sublabel="Faith for daily living" />
           </q-item>
-          <q-item v-if="menu_groups()" to="/groups">
+          <q-item v-if="menu_groups()" to="/content/groups">
             <q-item-side icon="group" />
             <q-item-main label="Groups" sublabel="Small group material" />
           </q-item>
-          <q-item v-if="menu_media()" to="/media">
+          <q-item v-if="menu_media()" to="/content/media">
             <q-item-side icon="art_track" />
             <q-item-main label="Extra" sublabel="Media / articles" />
           </q-item>
-          <q-item v-if="menu_practice()" to="/practice">
+          <q-item v-if="menu_practice()" to="/content/practice">
             <q-item-side icon="pan_tool" />
             <q-item-main label="Practice" sublabel="Practice or discipline for the week" />
           </q-item>
-          <q-item to="/">
+          <q-item to="/sunday">
             <q-item-side icon="book" />
             <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
           </q-item>
@@ -99,8 +99,8 @@ export default {
     menu_groups () {
       return this.$store.state.menu_groups
     },
-    menu_birthdays () {
-      return this.$store.state.menu_birthdays
+    menu_community () {
+      return this.$store.state.menu_community
     },
     menu_practice () {
       return this.$store.state.menu_practice
