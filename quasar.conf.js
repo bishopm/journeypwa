@@ -89,7 +89,7 @@ module.exports = function (ctx) {
         description: 'Together on the way',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#000000',
+        background_color: '#ffffff',
         theme_color: '#4d7227',
         icons: [
           {
