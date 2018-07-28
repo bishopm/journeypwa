@@ -1,8 +1,8 @@
 <template>
   <div class="q-mt-xs layout-padding" v-if="contents.length">
-    <div v-for="item in contents" :key="item.title">
-      <div class="text-center caption">{{item.title}}<br><small><i>{{item.source}}</i></small></div>
-      <div v-html="item.body"></div>
+    <div v-for="item in contents" :key="item.feedpost.title">
+      <div class="text-center caption">{{item.feedpost.title}}<br><small><i>{{item.source}}</i></small></div>
+      <div v-html="item.feedpost.body"></div>
     </div>
   </div>
 </template>

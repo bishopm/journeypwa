@@ -12,8 +12,8 @@ const store = new Vuex.Store({
     menu_media: false,
     menu_community: false,
     menu_practice: false,
-    // hostname: 'http://localhost/churchnet/public/api'
-    hostname: 'https://church.net.za/api'
+    hostname: 'http://localhost/churchnet/public/api'
+    // hostname: 'https://church.net.za/api'
   },
   mutations: {
     setProfile (state, newprofile) {
