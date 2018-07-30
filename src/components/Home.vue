@@ -1,5 +1,6 @@
 <template>
   <div class="layout-padding">
+    <router-link to="phoneverification" v-if="!phoneverified"><div class="text-center">Click here to verify your phone number</div></router-link>
     <div class="row q-mt-lg">
       <div class="col-6 text-center q-mb-md">
         <div>Sunday's readings</div>
@@ -11,6 +12,18 @@
         <div>Faith for daily living</div>
         <router-link to="/ffdl" class="text-white" style="text-decoration:none;">
           <q-icon class="text-primary" name="games" size="6rem" />
+        </router-link>
+      </div>
+      <div v-if="menu_blogs()" class="col-6 text-center q-mb-md">
+        <router-link to="/blogs" class="text-white" style="text-decoration:none;">
+          <div class="text-black">Blog</div>
+          <q-icon class="text-primary" name="create" size="6rem" />
+        </router-link>
+      </div>
+      <div v-if="menu_sermons()" class="col-6 text-center q-mb-md">
+        <router-link to="/sermons" class="text-white" style="text-decoration:none;">
+          <div class="text-black">Sermon</div>
+          <q-icon class="text-primary" name="mic" size="6rem" />
         </router-link>
       </div>
       <div v-if="menu_media()" class="col-6 text-center q-mb-md">
@@ -41,6 +54,12 @@
 
 <script>
 export default {
+  data () {
+    return {
+      phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
+      user: {}
+    }
+  },
   async mounted () {
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
@@ -74,6 +93,30 @@ export default {
           } else {
             this.$store.commit('setPractice', false)
           }
+          if (response.data.blog) {
+            this.$store.commit('setBlogs', true)
+          } else {
+            this.$store.commit('setBlogs', false)
+          }
+          if (response.data.sermon) {
+            this.$store.commit('setSermons', true)
+          } else {
+            this.$store.commit('setSermons', false)
+          }
+          if (this.phoneverified) {
+            this.$axios.post(this.$store.state.hostname + '/phone',
+              {
+                phone: localStorage.getItem('JOURNEY_VerifiedPhone')
+              })
+              .then(response => {
+                if (response.data.household) {
+                  this.$store.commit('setIndividual', response.data)
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
+          }
         })
         .catch(function (error) {
           console.log(error)
@@ -93,6 +136,12 @@ export default {
     },
     menu_practice () {
       return this.$store.state.menu_practice
+    },
+    menu_blogs () {
+      return this.$store.state.menu_blogs
+    },
+    menu_sermons () {
+      return this.$store.state.menu_sermons
     }
   }
 }

@@ -1,7 +1,8 @@
 <template>
   <div class="text-center layout-padding">
     <div v-if="devotion" class="q-mt-md">
-      DEVOTION: <span class="caption" v-html="devotion.title"></span>
+      <span class="caption" v-html="devotion.title"></span>
+      <p>{{devotion.pubdate}}</p>
       <div class="text-justify" v-html="devotion.content"></div>
     </div>
     <div class="text-justify"><small>Faith for daily living was first published in January 1961, an initiative of Rev Arnold Walker. Visit <a href="http://www.faithfordailyliving.org">www.faithfordailyliving.org</a> for more devotionals. Used by permission.</small></div>
@@ -25,15 +26,12 @@ export default {
     }
   },
   mounted () {
-    this.$q.loading.show()
     this.$axios.get(this.$store.state.hostname + '/feeds/ffdl')
       .then(response => {
         this.devotion = response.data.devotion
-        this.$q.loading.hide()
       })
       .catch(function (error) {
         console.log(error)
-        this.$q.loading.hide()
       })
   }
 }

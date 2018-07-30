@@ -23,6 +23,14 @@
             <q-item-side icon="book" />
             <q-item-main label="Devotions" sublabel="Faith for daily living" />
           </q-item>
+          <q-item v-if="menu_blogs()" to="/blogs">
+            <q-item-side icon="create" />
+            <q-item-main label="Blog" sublabel="This week's blog post/s" />
+          </q-item>
+          <q-item v-if="menu_sermons()" to="/sermons">
+            <q-item-side icon="mic" />
+            <q-item-main label="Sermon" sublabel="This week's sermon/s" />
+          </q-item>
           <q-item v-if="menu_groups()" to="/content/groups">
             <q-item-side icon="group" />
             <q-item-main label="Groups" sublabel="Small group material" />
@@ -54,6 +62,10 @@
           <q-item to="/settings">
             <q-item-side icon="settings" />
             <q-item-main label="Settings" sublabel="App settings" />
+          </q-item>
+          <q-item to="/me">
+            <q-item-side icon="person_pin" />
+            <q-item-main label="My details" sublabel="My personal and household details" />
           </q-item>
         </q-collapsible>
 
@@ -104,6 +116,12 @@ export default {
     },
     menu_practice () {
       return this.$store.state.menu_practice
+    },
+    menu_blogs () {
+      return this.$store.state.menu_blogs
+    },
+    menu_sermons () {
+      return this.$store.state.menu_sermons
     },
     societyname () {
       return this.$store.state.societyname

@@ -12,6 +12,8 @@ const store = new Vuex.Store({
     menu_media: false,
     menu_community: false,
     menu_practice: false,
+    menu_blogs: false,
+    menu_sermons: false,
     hostname: 'http://localhost/churchnet/public/api'
     // hostname: 'https://church.net.za/api'
   },
@@ -43,8 +45,17 @@ const store = new Vuex.Store({
     setMedia (state, newmedia) {
       state.menu_media = newmedia
     },
+    setBlogs (state, newblogs) {
+      state.menu_blogs = newblogs
+    },
+    setSermons (state, newsermons) {
+      state.menu_sermons = newsermons
+    },
     setPractice (state, newprac) {
       state.menu_practice = newprac
+    },
+    setIndividual (state, newindiv) {
+      state.individual = newindiv
     }
   }
 })
