@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs layout-padding" v-if="contents.length">
+  <div class="q-ma-md" v-if="contents.length">
     <div class="caption text-center">For the week beginning: {{ monday() }}</div>
     <div v-for="item in contents" :key="item.feedpost.title">
       <div class="text-center caption">{{item.feedpost.title}}<br><small><i>{{item.source}}</i></small></div>

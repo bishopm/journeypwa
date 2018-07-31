@@ -7,30 +7,39 @@
 
 <script>
 export default {
+  data () {
+    return {
+      uiConfig: {}
+    }
+  },
   mounted () {
     if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+      console.log('registerme')
       this.$router.push({ name: 'home' })
-    }
-    var uiConfig = {
-      signInSuccessUrl: 'https://journey.church.net.za',
-      signInOptions: [ this.$firebase.auth.PhoneAuthProvider.PROVIDER_ID ],
-      // Terms of service url.
-      tosUrl: '<your-tos-url>',
-      callbacks: {
-        signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-          if (authResult.user) {
-            var phone = '0' + authResult.user.phoneNumber.substr(authResult.user.phoneNumber.length - 9)
-            localStorage.setItem('JOURNEY_VerifiedPhone', phone)
+    } else {
+      this.uiConfig = {
+        signInSuccessUrl: 'https://journey.church.net.za',
+        signInOptions: [{ provider: this.$firebase.auth.PhoneAuthProvider.PROVIDER_ID, defaultCountry: 'ZA' }],
+        // Terms of service url.
+        tosUrl: '<your-tos-url>',
+        callbacks: {
+          signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+            if (authResult.user) {
+              var phone = '0' + authResult.user.phoneNumber.substr(authResult.user.phoneNumber.length - 9)
+              localStorage.setItem('JOURNEY_VerifiedPhone', phone)
+            }
           }
         }
       }
+      // Initialize the FirebaseUI Widget using Firebase.
+      let ui = this.$firebaseui.auth.AuthUI.getInstance()
+      if (!ui) {
+        ui = new this.$firebaseui.auth.AuthUI(this.$firebase.auth())
+      }
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', this.uiConfig)
     }
-    // Initialize the FirebaseUI Widget using Firebase.
-    var ui = new this.$firebaseui.auth.AuthUI(this.$firebase.auth())
-    // The start method will wait until the DOM is loaded.
-    ui.start('#firebaseui-auth-container', uiConfig)
   }
-
 }
 </script>
 <style>

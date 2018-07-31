@@ -1,6 +1,6 @@
 <template>
   <div class="layout-padding">
-    <router-link to="phoneverification" v-if="!phoneverified"><div class="text-center">Click here to verify your phone number</div></router-link>
+    <div class="text-center q-mt-md" v-if="!phoneverified"><q-btn color="secondary" to="phoneverification">Verify your phone number</q-btn></div>
     <div class="row q-mt-lg">
       <div class="col-6 text-center q-mb-md">
         <div>Sunday's readings</div>

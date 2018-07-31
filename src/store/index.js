@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    profile: {},
+    token: '',
     circuitname: '',
     circuitid: 0,
     menu_groups: false,
@@ -18,9 +18,6 @@ const store = new Vuex.Store({
     // hostname: 'https://church.net.za/api'
   },
   mutations: {
-    setProfile (state, newprofile) {
-      state.profile = newprofile
-    },
     setCircuitName (state, newname) {
       state.circuitname = newname
     },
