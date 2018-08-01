@@ -10,6 +10,7 @@ export default [
       { name: 'ffdl', path: '/ffdl', component: () => import('components/FFDL'), meta: {auth: true} },
       { name: 'home', path: '/', component: () => import('components/Home'), meta: {auth: true} },
       { name: 'me', path: '/me', component: () => import('components/Me'), meta: {auth: true} },
+      { name: 'message', path: '/message/:id', component: () => import('components/Message'), meta: {auth: true} },
       { name: 'messages', path: '/messages', component: () => import('components/Messages'), meta: {auth: true} },
       { name: 'phoneverification', path: '/phoneverification', component: () => import('components/Phoneverification'), meta: {auth: true} },
       { name: 'reading', path: '/reading/:reading', component: () => import('components/Reading'), meta: {auth: true} },

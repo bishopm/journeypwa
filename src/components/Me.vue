@@ -13,7 +13,8 @@
           <q-icon v-if="indiv.surname" name="person" color="primary"></q-icon> {{indiv.title}} {{indiv.firstname}} {{indiv.surname}}<br>
           <q-icon v-if="indiv.cellphone" name="phone" color="primary"></q-icon> {{indiv.cellphone}}<br>
           <q-icon v-if="indiv.email" name="email" color="primary"></q-icon> {{indiv.email}}<br>
-          <q-icon v-if="indiv.memberstatus" name="account_box" color="memberstatus"></q-icon> {{indiv.memberstatus}}<br>
+          <q-icon v-if="indiv.birthdate" name="cake" color="primary"></q-icon> {{indiv.birthdate}}<br>
+          <q-icon v-if="indiv.memberstatus" name="account_box" color="primary"></q-icon> {{indiv.memberstatus}}<br>
         </q-tab-pane>
       </q-tabs>
     </div>

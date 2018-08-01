@@ -17,7 +17,6 @@
       </q-item>
       <p class="text-center q-mt-lg" v-if="!anysocieties">No societies have been added for this circuit</p>
     </q-list>
-    <q-btn v-if="isAuthorised" round color="primary" @click="addSociety" class="fixed" icon="add" style="right: 18px; bottom: 68px" />
   </div>
 </template>
 

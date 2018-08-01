@@ -2,9 +2,9 @@
   <div class="layout-padding">
     <p class="caption text-center">Messages</p>
     <q-list class="no-border">
-      <q-item v-if="messages" v-for="message in messages" :key="message.id" :to="'/societies/'">
+      <q-item v-if="messages" v-for="message in messages" :key="message.id" :to="'/message/' + message.id">
         <q-item-main>
-          {{message.chatable_type.slice(1+message.chatable_type.lastIndexOf('\\'))}}
+          {{message.source}}
         </q-item-main>
         <q-item-side class="text-right">
           Side
@@ -29,7 +29,7 @@ export default {
   methods: {
     getSaveStateConfig () {
       return {
-        'cacheKey': 'JOURNEY_Societies'
+        'cacheKey': 'JOURNEY_Messages'
       }
     }
 

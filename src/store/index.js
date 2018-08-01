@@ -8,6 +8,8 @@ const store = new Vuex.Store({
     token: '',
     circuitname: '',
     circuitid: 0,
+    individual: {},
+    chats: [],
     menu_groups: false,
     menu_media: false,
     menu_community: false,
@@ -53,6 +55,9 @@ const store = new Vuex.Store({
     },
     setIndividual (state, newindiv) {
       state.individual = newindiv
+    },
+    setChats (state, newchats) {
+      state.chats = newchats
     }
   }
 })

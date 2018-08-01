@@ -111,6 +111,7 @@ export default {
               .then(response => {
                 if (response.data.household) {
                   this.$store.commit('setIndividual', response.data)
+                  this.$store.commit('setChats', response.data.chats)
                 }
               })
               .catch(function (error) {

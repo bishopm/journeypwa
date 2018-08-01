@@ -17,7 +17,7 @@
         <q-collapsible opened class="text-center text-primary" group="somegroup" :label="societyname() + ' Society'">
           <q-item v-if="messages()" to="/messages">
             <q-item-side icon="message" />
-            <q-item-main :label="messages() + ' Messages'" sublabel="Inbox messages" />
+            <q-item-main :label="'Messages: ' + messages().length" sublabel="Inbox messages" />
           </q-item>
           <q-item v-if="menu_community()" to="/community">
             <q-item-side icon="people_outline" />
@@ -29,11 +29,11 @@
           </q-item>
           <q-item v-if="menu_blogs()" to="/blogs">
             <q-item-side icon="create" />
-            <q-item-main label="Blog" sublabel="This week's blog post/s" />
+            <q-item-main label="Blog" sublabel="From our blog" />
           </q-item>
           <q-item v-if="menu_sermons()" to="/sermons">
             <q-item-side icon="mic" />
-            <q-item-main label="Sermon" sublabel="This week's sermon/s" />
+            <q-item-main label="Sermon" sublabel="Last week's sermon" />
           </q-item>
           <q-item v-if="menu_groups()" to="/content/groups">
             <q-item-side icon="group" />
@@ -78,24 +78,11 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-layout-footer>
-      <q-toolbar>
-        <q-item>
-          <router-link :to="{ name: 'home' }"><q-item-side style="text-decoration:none;" icon="home" color="white"/></router-link>
-        </q-item>
-        <q-item to="/societies">
-          <q-item-side icon="group" color="white"/>
-        </q-item>
-        <q-item to="/sunday">
-          <q-item-side icon="book" color="white"/>
-        </q-item>
-        <q-item to="/lectionary">
-          <q-item-side icon="library_books" color="white"/>
-        </q-item>
-        <q-item to="/settings">
-          <q-item-side icon="settings" color="white"/>
-        </q-item>
-      </q-toolbar>
+    <q-layout-footer id="toolbar" class="bg-primary text-center q-py-sm q-px-md">
+        <router-link :to="{ name: 'home' }"><q-icon size="2rem" name="home" color="white"/></router-link>
+        <router-link :to="{ name: 'societies' }"><q-icon size="2rem" name="group" color="white"/></router-link>
+        <router-link :to="{ name: 'sunday' }"><q-icon size="2rem" name="book" color="white"/></router-link>
+        <router-link :to="{ name: 'settings' }"><q-icon size="2rem" name="settings" color="white"/></router-link>
     </q-layout-footer>
   </q-layout>
 </template>
@@ -134,9 +121,7 @@ export default {
       return this.$store.state.circuitname
     },
     messages () {
-      if (this.$store.state.individual) {
-        return this.$store.state.individual.chats.length
-      }
+      return this.$store.state.chats
     }
   }
 }
@@ -151,5 +136,9 @@ a, a:hover {
   border-bottom:white solid 2px;
   color: white;
   text-align:center;
+}
+#toolbar {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
