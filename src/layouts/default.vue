@@ -2,22 +2,21 @@
   <q-layout view="lHh Lpr lFf">
     <q-layout-header>
       <q-toolbar color="primary" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
-        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
+        <q-toolbar-title>
+          <router-link to="/" class="text-white" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs" name="home" color="white"/> Journey</router-link>
+          <div class="q-ml-xs" slot="subtitle">together on the way</div>
+        </q-toolbar-title>
+        <q-btn flat dense round @click="rightDrawerOpen = !rightDrawerOpen" aria-label="Menu">
           <q-icon name="menu" />
         </q-btn>
-        <q-toolbar-title>
-          <router-link to="/" class="text-white" style="text-decoration:none;">Journey</router-link>
-          <div slot="subtitle">together on the way</div>
-        </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
-
-    <q-layout-drawer v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
+    <q-layout-drawer side="right" v-model="rightDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
         <q-collapsible opened class="text-center text-primary" group="somegroup" :label="societyname() + ' Society'">
           <q-item v-if="messages()" to="/messages">
             <q-item-side icon="message" />
-            <q-item-main :label="'Messages: ' + messages().length" sublabel="Inbox messages" />
+            <q-item-main :label="'Messages: ' + messages()" sublabel="Inbox messages" />
           </q-item>
           <q-item v-if="menu_community()" to="/community">
             <q-item-side icon="people_outline" />
@@ -72,18 +71,11 @@
             <q-item-main label="My details" sublabel="My personal and household details" />
           </q-item>
         </q-collapsible>
-
       </q-list>
     </q-layout-drawer>
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-layout-footer id="toolbar" class="bg-primary text-center q-py-sm q-px-md">
-        <router-link :to="{ name: 'home' }"><q-icon size="2rem" name="home" color="white"/></router-link>
-        <router-link :to="{ name: 'societies' }"><q-icon size="2rem" name="group" color="white"/></router-link>
-        <router-link :to="{ name: 'sunday' }"><q-icon size="2rem" name="book" color="white"/></router-link>
-        <router-link :to="{ name: 'settings' }"><q-icon size="2rem" name="settings" color="white"/></router-link>
-    </q-layout-footer>
   </q-layout>
 </template>
 
@@ -92,7 +84,7 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      rightDrawerOpen: this.$q.platform.is.desktop
     }
   },
   methods: {
@@ -121,7 +113,7 @@ export default {
       return this.$store.state.circuitname
     },
     messages () {
-      return this.$store.state.chats
+      return this.$store.state.chats.length
     }
   }
 }

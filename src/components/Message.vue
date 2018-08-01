@@ -29,7 +29,7 @@ export default {
             } else if (response.data[chat].chatable_type === 'Bishopm\\Churchnet\\Models\\Group') {
               newitem.sender = response.data[chat].chatable.groupname
             } else if (response.data[chat].chatable_type === 'Bishopm\\Churchnet\\Models\\District') {
-              newitem.sender = response.data[chat].chatable.society + ' District'
+              newitem.sender = response.data[chat].chatable.district + ' District'
             }
             console.log(response.data[chat].chatable_type)
           }
