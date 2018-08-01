@@ -15,6 +15,10 @@
     <q-layout-drawer v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
         <q-collapsible opened class="text-center text-primary" group="somegroup" :label="societyname() + ' Society'">
+          <q-item v-if="messages()" to="/messages">
+            <q-item-side icon="message" />
+            <q-item-main :label="messages() + ' Messages'" sublabel="Inbox messages" />
+          </q-item>
           <q-item v-if="menu_community()" to="/community">
             <q-item-side icon="people_outline" />
             <q-item-main label="Community" sublabel="Community news and needs" />
@@ -128,6 +132,11 @@ export default {
     },
     circuitname () {
       return this.$store.state.circuitname
+    },
+    messages () {
+      if (this.$store.state.individual) {
+        return this.$store.state.individual.chats.length
+      }
     }
   }
 }
