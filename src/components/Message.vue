@@ -1,7 +1,12 @@
 <template>
   <div class="layout-padding">
-    <p class="caption text-center">Messages</p>
-    <q-chat-message class="q-mx-sm" v-for="chat in chats" :key="chat.id" :name="chat.sender" :text="[chat.chat]" :stamp="chat.created_at" :sent="chat.sent"/>
+    <div v-if="chat.chatable">
+      <p v-if="chat.chatable.society" class="caption text-center">Messages: {{chat.chatable.society}} society</p>
+      <p v-else-if="chat.chatable.groupname" class="caption text-center">Messages: {{chat.chatable.groupname}}</p>
+      <p v-else-if="chat.chatable.circuit" class="caption text-center">MESSAGES: {{chat.chatable.circuit}}</p>
+      <q-chat-message class="q-mx-sm" v-for="message in chat.messages" :key="message.id" :name="message.individual.firstname + ' ' + message.individual.surname" :text="[message.chat]" :stamp="message.ago" :sent="checksent(message.individual)"/>
+    </div>
+    <q-input v-model="newmess.chat" type="textarea" float-label="Reply" :max-height="60" rows="4" :after="[{icon: 'keyboard_return', handler: sendmsg}]"></q-input>
   </div>
 </template>
 
@@ -9,44 +14,42 @@
 export default {
   data () {
     return {
-      chats: []
+      chat: {},
+      newmess: {}
     }
   },
   mounted () {
     this.$axios.get(this.$store.state.hostname + '/message/' + this.$route.params.id)
       .then((response) => {
-        for (var chat in response.data) {
-          var newitem = response.data[chat]
-          if (response.data[chat].individual) {
-            newitem.sender = response.data[chat].individual.firstname + ' ' + response.data[chat].individual.surname
-            newitem.sent = true
-          } else {
-            newitem.sent = false
-            if (response.data[chat].chatable_type === 'Bishopm\\Churchnet\\Models\\Society') {
-              newitem.sender = response.data[chat].chatable.society + ' Society'
-            } else if (response.data[chat].chatable_type === 'Bishopm\\Churchnet\\Models\\Circuit') {
-              newitem.sender = response.data[chat].chatable.circuit
-            } else if (response.data[chat].chatable_type === 'Bishopm\\Churchnet\\Models\\Group') {
-              newitem.sender = response.data[chat].chatable.groupname
-            } else if (response.data[chat].chatable_type === 'Bishopm\\Churchnet\\Models\\District') {
-              newitem.sender = response.data[chat].chatable.district + ' District'
-            }
-            console.log(response.data[chat].chatable_type)
-          }
-          this.chats.push(newitem)
-        }
+        this.chat = response.data
       })
       .catch(function (error) {
         console.log(error)
       })
   },
   methods: {
-    getSaveStateConfig () {
-      return {
-        'cacheKey': 'JOURNEY_Societies'
+    sendmsg () {
+      this.newmess.individual_id = this.$store.state.individual.id
+      this.newmess.chat_id = this.chat.id
+      this.$axios.post(this.$store.state.hostname + '/message',
+        {
+          message: this.newmess
+        })
+        .then((response) => {
+          this.chat.messages.push(response.data)
+          this.newmess.chat = ''
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    checksent (indiv) {
+      if ((indiv) && (indiv.id === this.$store.state.individual.id)) {
+        return true
+      } else {
+        return false
       }
     }
-
   }
 }
 </script>

@@ -56,7 +56,7 @@ export default {
       }
     },
     populateDistricts () {
-      this.$axios.get(this.$store.state.hostname + '/methodist/districts')
+      this.$axios.get(this.$store.state.hostname + '/districts')
         .then(response => {
           this.districtOptions = []
           for (var dkey in response.data) {
@@ -72,7 +72,7 @@ export default {
         })
     },
     chooseDistrict () {
-      this.$axios.get(this.$store.state.hostname + '/methodist/districts/' + this.district)
+      this.$axios.get(this.$store.state.hostname + '/districts/' + this.district)
         .then(response => {
           this.circuitOptions = []
           for (var ckey in response.data) {
@@ -97,7 +97,7 @@ export default {
       }
       this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
       this.$store.commit('setCircuitId', this.circuit)
-      this.$axios.get(this.$store.state.hostname + '/methodist/circuits/' + this.circuit + '/societies')
+      this.$axios.get(this.$store.state.hostname + '/circuits/' + this.circuit + '/societies')
         .then(response => {
           this.societyOptions = []
           for (var skey in response.data) {

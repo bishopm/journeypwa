@@ -70,7 +70,7 @@ export default {
         this.$store.commit('setCircuitId', localStorage.getItem('JOURNEY_Circuit'))
         this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
       }
-      this.$axios.get(this.$store.state.hostname + '/methodist/feeditems/' + this.$store.state.societyid)
+      this.$axios.get(this.$store.state.hostname + '/feeditems/' + this.$store.state.societyid)
         .then(response => {
           this.$store.commit('setFeeditems', response.data)
           if (response.data.groups) {

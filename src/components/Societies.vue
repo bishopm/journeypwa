@@ -44,7 +44,7 @@ export default {
   },
   mounted () {
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-    this.$axios.get(this.$store.state.hostname + '/methodist/circuits/' + this.$store.state.circuitid + '/societies/thisweek')
+    this.$axios.get(this.$store.state.hostname + '/circuits/' + this.$store.state.circuitid + '/societies/thisweek')
       .then(response => {
         this.societies = response.data
       })
