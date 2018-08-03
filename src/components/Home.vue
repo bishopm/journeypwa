@@ -71,7 +71,8 @@ export default {
               name: localStorage.getItem('JOURNEY_VerifiedPhone')
             })
             .then(response => {
-              console.log(response.data)
+              localStorage.setItem('JOURNEY_Token', response.data.token)
+              this.$store.commit('setToken', response.data.token)
             })
             .catch(function (error) {
               console.log(error)
@@ -120,6 +121,7 @@ export default {
             this.$store.commit('setSermons', false)
           }
           if (this.phoneverified) {
+            this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
             this.$axios.post(this.$store.state.hostname + '/phone',
               {
                 phone: localStorage.getItem('JOURNEY_VerifiedPhone')
