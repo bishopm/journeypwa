@@ -5,35 +5,32 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    token: '',
+    chats: [],
     circuitname: '',
     circuitid: 0,
     individual: {},
-    chats: [],
     menu_groups: false,
     menu_media: false,
     menu_community: false,
     menu_practice: false,
     menu_blogs: false,
     menu_sermons: false,
+    token: '',
     hostname: 'http://localhost/churchnet/public/api'
     // hostname: 'https://church.net.za/api'
   },
   mutations: {
+    setBlogs (state, newblogs) {
+      state.menu_blogs = newblogs
+    },
+    setChats (state, newchats) {
+      state.chats = newchats
+    },
     setCircuitName (state, newname) {
       state.circuitname = newname
     },
     setCircuitId (state, newid) {
       state.circuitid = newid
-    },
-    setSocietyId (state, newsocietyid) {
-      state.societyid = newsocietyid
-    },
-    setSocietyName (state, newsocietyname) {
-      state.societyname = newsocietyname
-    },
-    setGroups (state, newgroups) {
-      state.menu_groups = newgroups
     },
     setCommunity (state, newbdays) {
       state.menu_community = newbdays
@@ -41,23 +38,29 @@ const store = new Vuex.Store({
     setFeeditems (state, newitems) {
       state.feeditems = newitems
     },
-    setMedia (state, newmedia) {
-      state.menu_media = newmedia
-    },
-    setBlogs (state, newblogs) {
-      state.menu_blogs = newblogs
-    },
-    setSermons (state, newsermons) {
-      state.menu_sermons = newsermons
-    },
-    setPractice (state, newprac) {
-      state.menu_practice = newprac
+    setGroups (state, newgroups) {
+      state.menu_groups = newgroups
     },
     setIndividual (state, newindiv) {
       state.individual = newindiv
     },
-    setChats (state, newchats) {
-      state.chats = newchats
+    setMedia (state, newmedia) {
+      state.menu_media = newmedia
+    },
+    setPractice (state, newprac) {
+      state.menu_practice = newprac
+    },
+    setSermons (state, newsermons) {
+      state.menu_sermons = newsermons
+    },
+    setSocietyId (state, newsocietyid) {
+      state.societyid = newsocietyid
+    },
+    setSocietyName (state, newsocietyname) {
+      state.societyname = newsocietyname
+    },
+    setToken (state, newtoken) {
+      state.token = newtoken
     }
   }
 })

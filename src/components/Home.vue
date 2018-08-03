@@ -64,6 +64,22 @@ export default {
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
     } else {
+      if (!localStorage.getItem('JOURNEY_Token')) {
+        if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+          this.$axios.post(this.$store.state.hostname + '/login',
+            {
+              name: localStorage.getItem('JOURNEY_VerifiedPhone')
+            })
+            .then(response => {
+              console.log(response.data)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }
+      } else {
+        this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
+      }
       this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
       this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
       if (localStorage.getItem('JOURNEY_Circuit')) {
