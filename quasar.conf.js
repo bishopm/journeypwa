@@ -6,7 +6,8 @@ module.exports = function (ctx) {
     plugins: [
       'axios',
       'maps',
-      'firebase'
+      'firebase',
+      'vuelidate'
     ],
     css: [
       'app.styl'

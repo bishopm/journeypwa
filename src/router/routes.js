@@ -9,6 +9,8 @@ export default [
       { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: {auth: true} },
       { name: 'ffdl', path: '/ffdl', component: () => import('components/FFDL'), meta: {auth: true} },
       { name: 'home', path: '/', component: () => import('components/Home'), meta: {auth: true} },
+      { name: 'householdform', path: '/household/:action/:id?', component: () => import('components/forms/Household'), meta: {auth: true} },
+      { name: 'individualform', path: '/individual/:action/:id?', component: () => import('components/forms/Individual'), meta: {auth: true} },
       { name: 'me', path: '/me', component: () => import('components/Me'), meta: {auth: true} },
       { name: 'message', path: '/message/:id', component: () => import('components/Message'), meta: {auth: true} },
       { name: 'messages', path: '/messages', component: () => import('components/Messages'), meta: {auth: true} },

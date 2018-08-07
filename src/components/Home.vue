@@ -57,7 +57,8 @@ export default {
   data () {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
-      user: {}
+      user: {},
+      token: ''
     }
   },
   async mounted () {
@@ -68,7 +69,8 @@ export default {
         if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
           this.$axios.post(this.$store.state.hostname + '/login',
             {
-              name: localStorage.getItem('JOURNEY_VerifiedPhone')
+              phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+              phonetoken: localStorage.getItem('JOURNEY_Phonetoken')
             })
             .then(response => {
               localStorage.setItem('JOURNEY_Token', response.data.token)
@@ -120,7 +122,7 @@ export default {
           } else {
             this.$store.commit('setSermons', false)
           }
-          if (this.phoneverified) {
+          if (this.phoneverified && this.$store.state.token) {
             this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
             this.$axios.post(this.$store.state.hostname + '/phone',
               {

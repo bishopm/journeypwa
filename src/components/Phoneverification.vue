@@ -9,12 +9,13 @@
 export default {
   data () {
     return {
-      uiConfig: {}
+      uiConfig: {},
+      showcode: false,
+      token: ''
     }
   },
   mounted () {
-    if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
-      console.log('registerme')
+    if ((localStorage.getItem('JOURNEY_VerifiedPhone')) && (localStorage.getItem('JOURNEY_Phonetoken'))) {
       this.$router.push({ name: 'home' })
     } else {
       this.uiConfig = {
@@ -27,6 +28,7 @@ export default {
             if (authResult.user) {
               var phone = '0' + authResult.user.phoneNumber.substr(authResult.user.phoneNumber.length - 9)
               localStorage.setItem('JOURNEY_VerifiedPhone', phone)
+              localStorage.setItem('JOURNEY_Phonetoken', authResult.user.uid)
             }
           }
         }

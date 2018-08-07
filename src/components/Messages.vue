@@ -4,8 +4,10 @@
     <q-list class="no-border">
       <q-item v-if="messages" v-for="message in messages" :key="message.id" :to="'/message/' + message.id">
         <q-item-main>
-          <span v-if="message.chatable.society">{{message.chatable.society}} society</span>
-          <span v-if="message.chatable.groupname">{{message.chatable.groupname}}</span>
+          <span v-if="message.chatable.society">{{message.chatable.society}} Society</span>
+          <span v-else-if="message.chatable.groupname">{{message.chatable.groupname}}</span>
+          <span v-else-if="message.chatable.circuit">{{message.chatable.circuit}}</span>
+          <span v-else-if="message.chatable.district">{{message.chatable.district}} District</span>
         </q-item-main>
         <q-item-side class="text-right">
           <q-chip color="primary">{{message.messages.length}}</q-chip>

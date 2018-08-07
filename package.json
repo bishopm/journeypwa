@@ -15,7 +15,8 @@
     "firebase": "^5.0.4",
     "firebaseui": "^3.0.0",
     "vue-save-state": "^1.2.0",
-    "vue2-google-maps": "^0.9.7"
+    "vue2-google-maps": "^0.9.7",
+    "vuelidate": "^0.7.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
