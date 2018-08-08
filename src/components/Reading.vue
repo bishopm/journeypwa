@@ -31,7 +31,13 @@ export default {
     }
   },
   mounted () {
-    this.$q.loading.show()
+    this.$q.loading.show({
+      message: 'Retrieving Bible reading',
+      messageColor: 'white',
+      spinnerSize: 250, // in pixels
+      spinnerColor: 'white',
+      customClass: 'bg-primary'
+    })
     if (localStorage.getItem('JOURNEY_Bible')) {
       this.bible = localStorage.getItem('JOURNEY_Bible')
     } else {

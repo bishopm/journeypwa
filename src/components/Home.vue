@@ -1,6 +1,11 @@
 <template>
   <div class="layout-padding">
     <div class="text-center q-mt-md" v-if="!phoneverified"><q-btn color="secondary" to="phoneverification">Verify your phone number</q-btn></div>
+    <div class="text-center q-mt-md" v-else-if="!user.name">Your phone number has been verified but we don't have your details in our membership database:
+      <q-btn class="q-my-md" color="secondary" to="$router.push({ name: 'addmember' })">Add your member details</q-btn>
+      <p>or</p>
+      <q-btn class="q-mt-xs" color="secondary" :to="$router.push({ name: 'anonymous' })">Use the app anonymously</q-btn>
+    </div>
     <div class="row q-mt-lg">
       <div class="col-6 text-center q-mb-md">
         <div>Sunday's readings</div>

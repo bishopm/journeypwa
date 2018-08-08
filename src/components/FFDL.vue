@@ -26,12 +26,21 @@ export default {
     }
   },
   mounted () {
+    this.$q.loading.show({
+      message: 'Loading today\'s devotional',
+      messageColor: 'white',
+      spinnerSize: 250, // in pixels
+      spinnerColor: 'white',
+      customClass: 'bg-primary'
+    })
     this.$axios.get(this.$store.state.hostname + '/feeds/ffdl')
       .then(response => {
         this.devotion = response.data.devotion
+        this.$q.loading.hide()
       })
       .catch(function (error) {
         console.log(error)
+        this.$q.loading.hide()
       })
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="layout-padding">
     <div v-if="$route.params.action" class="q-mx-md q-mt-md text-center caption">
-      {{$route.params.action.toUpperCase()}} HOUSEHOLD
+      {{$route.params.action.toUpperCase()}} HOUSEHOLD <small>{{$store.state.societyname}} society</small>
     </div>
     <div class="q-ma-md">
       <q-field :error="$v.form.addressee.$error" error-label="The addressee field is required">

@@ -4,6 +4,7 @@ export default [
     path: '/',
     component: () => import('layouts/default'),
     children: [
+      { name: 'anonymous', path: '/anonymous', component: () => import('components/Anonymous'), meta: {auth: true} },
       { name: 'blogs', path: '/blogs', component: () => import('components/Blogs'), meta: {auth: true} },
       { name: 'content', path: '/content/:ctype', component: () => import('components/Content'), meta: {auth: true} },
       { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: {auth: true} },
