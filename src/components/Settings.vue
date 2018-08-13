@@ -17,8 +17,10 @@
       <q-field icon="place" label="Society" class="q-my-md">
         <q-select @input="chooseSociety" placeholder="Select a society" v-model="society" :options="societyOptions"/>
       </q-field>
-      <q-btn v-if="!phone && circuit" color="secondary" label="Click here to set up notifications (eg: preaching/meeting reminders)" :to="{ name: 'verification' }"/>
     </form>
+    <div class="text-center" v-if="society > 0">
+      <q-btn class="q-my-md" color="secondary" to="home">All done! Back to home page</q-btn>
+    </div>
   </div>
 </template>
 
@@ -33,7 +35,7 @@ export default {
       societyOptions: [],
       bible: 'eng-GNTUK',
       church: 'mcsa',
-      district: 0,
+      district: null,
       circuit: {},
       society: {},
       phone: ''
@@ -127,6 +129,19 @@ export default {
     }
   },
   mounted () {
+    if (localStorage.getItem('JOURNEY_District')) {
+      this.populateDistricts()
+      this.district = parseInt(localStorage.getItem('JOURNEY_District'))
+      this.chooseDistrict()
+    }
+    if (localStorage.getItem('JOURNEY_Circuit')) {
+      this.circuit = parseInt(localStorage.getItem('JOURNEY_Circuit'))
+      this.chooseCircuit()
+    }
+    if (localStorage.getItem('JOURNEY_Society')) {
+      this.society = parseInt(localStorage.getItem('JOURNEY_Society'))
+      this.chooseSociety()
+    }
     if (!localStorage.getItem('JOURNEY_Bible')) {
       localStorage.setItem('JOURNEY_Bible', this.bible)
     }

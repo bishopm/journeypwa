@@ -39,10 +39,10 @@ export default {
         addr1: '',
         addr2: '',
         addr3: '',
-        homephone: ''
+        homephone: '',
+        householdcell: '',
+        id: ''
       },
-      map: '',
-      marker: '',
       housecellOptions: []
     }
   },
@@ -55,13 +55,28 @@ export default {
   methods: {
     submit () {
       this.$v.form.$touch()
-      this.form.latitude = this.marker.position.lat().toString()
-      this.form.longitude = this.marker.position.lng().toString()
       if (this.$v.form.$error) {
         this.$q.notify('Please check for errors!')
       } else {
-        // if action = edit / add
-        this.$q.notify('Good to go!')
+        this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+        this.$axios.post(this.$store.state.hostname + '/household',
+          {
+            addressee: this.form.addressee,
+            addr1: this.form.addr1,
+            addr2: this.form.addr2,
+            addr3: this.form.addr3,
+            homephone: this.form.homephone,
+            householdcell: this.form.householdcell,
+            id: this.form.id
+          })
+          .then(response => {
+            this.$q.notify('Database successfully updated')
+            this.$router.push({ name: 'home' })
+          })
+          .catch(function (error) {
+            console.log(error)
+            this.$q.loading.hide()
+          })
       }
     }
   },

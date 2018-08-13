@@ -1,10 +1,11 @@
 <template>
   <div class="layout-padding">
-    <div class="text-center q-mt-md" v-if="!phoneverified"><q-btn color="secondary" to="phoneverification">Verify your phone number</q-btn></div>
-    <div class="text-center q-mt-md" v-else-if="!user.name">Your phone number has been verified but we don't have your details in our membership database:
-      <q-btn class="q-my-md" color="secondary" to="$router.push({ name: 'addmember' })">Add your member details</q-btn>
-      <p>or</p>
-      <q-btn class="q-mt-xs" color="secondary" :to="$router.push({ name: 'anonymous' })">Use the app anonymously</q-btn>
+    <div class="text-center q-mt-md">
+      <q-btn v-if="!phoneverified" color="secondary" to="phoneverification">Verify your phone number</q-btn>
+      <div v-else-if="!individual">
+        Your phone number has been verified but we don't have your details in our membership database:
+        <q-btn class="q-my-md" color="secondary" to="adduser">Add your member details</q-btn>
+      </div>
     </div>
     <div class="row q-mt-lg">
       <div class="col-6 text-center q-mb-md">
@@ -63,10 +64,33 @@ export default {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
       user: {},
-      token: ''
+      token: '',
+      params: this.$route.params
     }
   },
   async mounted () {
+    if (this.params.district) {
+      localStorage.setItem('JOURNEY_District', this.params.district)
+      localStorage.setItem('JOURNEY_Bible', 'eng-GNTUK')
+      if (this.params.circuit) {
+        localStorage.setItem('JOURNEY_Circuit', this.params.circuit)
+        this.$axios.get(this.$store.state.hostname + '/circuits/' + this.params.circuit + '/withsocieties')
+          .then(response => {
+            localStorage.setItem('JOURNEY_Circuitname', response.data.circuitnumber + ' ' + response.data.circuit)
+            if (this.params.society) {
+              localStorage.setItem('JOURNEY_Society', this.params.society)
+              for (var skey in response.data.societies) {
+                if (parseInt(response.data.societies[skey].id) === parseInt(this.params.society)) {
+                  localStorage.setItem('JOURNEY_Societyname', response.data.societies[skey].society)
+                }
+              }
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    }
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
     } else {
@@ -131,7 +155,8 @@ export default {
             this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
             this.$axios.post(this.$store.state.hostname + '/phone',
               {
-                phone: localStorage.getItem('JOURNEY_VerifiedPhone')
+                phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+                society_id: localStorage.getItem('JOURNEY_Society')
               })
               .then(response => {
                 if (response.data.household) {
@@ -168,6 +193,13 @@ export default {
     },
     menu_sermons () {
       return this.$store.state.menu_sermons
+    }
+  },
+  computed: {
+    individual () {
+      if (this.$store.state.individual.id) {
+        return true
+      }
     }
   }
 }

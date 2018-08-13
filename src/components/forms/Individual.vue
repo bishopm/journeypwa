@@ -17,12 +17,10 @@
       <q-select float-label="Sex" v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]"/>
     </div>
     <div class="q-ma-md">
-      <q-select float-label="Title" v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Rev', value: 'Rev' }]"/>
+      <q-select float-label="Title" v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
     </div>
     <div class="q-ma-md">
-      <q-field :error="$v.form.birthdate.$error" error-label="Must be a valid date">
-        <q-input float-label="Date of birth" v-model="form.birthdate" @blur="$v.form.birthdate.$touch()" :error="$v.form.birthdate.$error" />
-      </q-field>
+      <q-datetime class="q-mb-md" float-label="Date of birth" v-model="form.birthdate" format="YYYY-MM-DD" type="date" />
     </div>
     <div class="q-ma-md">
       <q-field :error="$v.form.email.$error" error-label="Must be a valid email address">
@@ -49,12 +47,15 @@ export default {
   data () {
     return {
       form: {
-        surname: '',
+        surname: this.$store.state.individual.household.sortsurname,
         firstname: '',
         birthdate: '',
         title: '',
         email: '',
-        cellphone: ''
+        sex: 'female',
+        cellphone: '',
+        household_id: this.$store.state.individual.household_id,
+        id: ''
       }
     }
   },
@@ -62,7 +63,6 @@ export default {
     form: {
       surname: { required },
       firstname: { required },
-      birthdate: { required },
       email: { email },
       cellphone: { numeric }
     }
@@ -73,8 +73,28 @@ export default {
       if (this.$v.form.$error) {
         this.$q.notify('Please check for errors!')
       } else {
-        // if action = edit / add
-        this.$q.notify('Good to go!')
+        this.form.birthdate = this.form.birthdate.slice(0, 10)
+        this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+        this.$axios.post(this.$store.state.hostname + '/individual',
+          {
+            surname: this.form.surname,
+            firstname: this.form.firstname,
+            sex: this.form.sex,
+            cellphone: this.form.cellphone,
+            birthdate: this.form.birthdate,
+            title: this.form.title,
+            email: this.form.email,
+            household_id: this.form.household_id,
+            id: this.form.id
+          })
+          .then(response => {
+            this.$q.notify('Database successfully updated')
+            this.$router.push({ name: 'home' })
+          })
+          .catch(function (error) {
+            console.log(error)
+            this.$q.loading.hide()
+          })
       }
     }
   },

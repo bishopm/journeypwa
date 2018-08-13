@@ -30,8 +30,7 @@ export default {
       message: 'Loading today\'s devotional',
       messageColor: 'white',
       spinnerSize: 250, // in pixels
-      spinnerColor: 'white',
-      customClass: 'bg-primary'
+      spinnerColor: 'white'
     })
     this.$axios.get(this.$store.state.hostname + '/feeds/ffdl')
       .then(response => {
