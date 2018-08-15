@@ -2,7 +2,7 @@
   <div class="layout-padding">
     <div class="text-center q-mt-md">
       <q-btn v-if="!phoneverified" color="secondary" to="phoneverification">Verify your phone number</q-btn>
-      <div v-else-if="!individual">
+      <div v-else-if="!indivset">
         Your phone number has been verified but we don't have your details in our membership database:
         <q-btn class="q-my-md" color="secondary" to="adduser">Add your member details</q-btn>
       </div>
@@ -63,7 +63,7 @@ export default {
   data () {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
-      user: {},
+      indivset: true,
       token: '',
       params: this.$route.params
     }
@@ -94,29 +94,16 @@ export default {
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
     } else {
-      if (!localStorage.getItem('JOURNEY_Token')) {
-        if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
-          this.$axios.post(this.$store.state.hostname + '/login',
-            {
-              phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
-              phonetoken: localStorage.getItem('JOURNEY_Phonetoken')
-            })
-            .then(response => {
-              localStorage.setItem('JOURNEY_Token', response.data.token)
-              this.$store.commit('setToken', response.data.token)
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
-        }
-      } else {
-        this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
-      }
       this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
       this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
       if (localStorage.getItem('JOURNEY_Circuit')) {
         this.$store.commit('setCircuitId', localStorage.getItem('JOURNEY_Circuit'))
         this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
+      }
+      if (!localStorage.getItem('JOURNEY_Token')) {
+        await this.get_token()
+      } else {
+        this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
       }
       this.$axios.get(this.$store.state.hostname + '/feeditems/' + this.$store.state.societyid)
         .then(response => {
@@ -162,6 +149,13 @@ export default {
                 if (response.data.household) {
                   this.$store.commit('setIndividual', response.data)
                   this.$store.commit('setChats', response.data.chats)
+                } else {
+                  if (response.data === 'No individual') {
+                    this.indivset = false
+                    console.log(this.indivset)
+                  } else {
+                    console.log(this.$store.state.individual.id)
+                  }
                 }
               })
               .catch(function (error) {
@@ -176,6 +170,22 @@ export default {
     }
   },
   methods: {
+    async get_token () {
+      if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+        this.$axios.post(this.$store.state.hostname + '/login',
+          {
+            phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+            phonetoken: localStorage.getItem('JOURNEY_Phonetoken')
+          })
+          .then(response => {
+            localStorage.setItem('JOURNEY_Token', response.data.token)
+            this.$store.commit('setToken', response.data.token)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
     menu_media () {
       return this.$store.state.menu_media
     },

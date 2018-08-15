@@ -19,6 +19,7 @@ module.exports = function (ctx) {
       // 'mdi',
       // 'fontawesome'
     ],
+    preFetch: true,
     supportIE: false,
     build: {
       scopeHoisting: true,
