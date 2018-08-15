@@ -128,19 +128,19 @@ export default {
       localStorage.setItem('JOURNEY_Bible', JSON.stringify(this.bible))
     }
   },
-  mounted () {
+  async mounted () {
     if (localStorage.getItem('JOURNEY_District')) {
       this.populateDistricts()
       this.district = parseInt(localStorage.getItem('JOURNEY_District'))
-      this.chooseDistrict()
+      await this.chooseDistrict()
     }
     if (localStorage.getItem('JOURNEY_Circuit')) {
       this.circuit = parseInt(localStorage.getItem('JOURNEY_Circuit'))
-      this.chooseCircuit()
+      await this.chooseCircuit()
     }
     if (localStorage.getItem('JOURNEY_Society')) {
       this.society = parseInt(localStorage.getItem('JOURNEY_Society'))
-      this.chooseSociety()
+      await this.chooseSociety()
     }
     if (!localStorage.getItem('JOURNEY_Bible')) {
       localStorage.setItem('JOURNEY_Bible', this.bible)
