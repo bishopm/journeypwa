@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-layout-header>
-      <q-toolbar color="primary" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
+      <q-toolbar color="black" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
         <q-toolbar-title>
           <router-link to="/" class="text-white" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs" name="home" color="white"/> Journey</router-link>
           <div class="q-ml-xs" slot="subtitle">together on the way</div>

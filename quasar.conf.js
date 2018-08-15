@@ -19,7 +19,6 @@ module.exports = function (ctx) {
       // 'mdi',
       // 'fontawesome'
     ],
-    preFetch: true,
     supportIE: false,
     build: {
       scopeHoisting: true,
@@ -85,19 +84,21 @@ module.exports = function (ctx) {
       // i18n: 'de' // Quasar language
     },
     // animations: 'all' --- includes all animations
-    animations: [
-    ],
+    animations: [],
+    ssr: {
+      pwa: false
+    },
     pwa: {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {},
       manifest: {
-        name: 'Journey',
-        short_name: 'Journey',
-        description: 'Together on the way',
+        // name: 'Quasar App',
+        // short_name: 'Quasar-PWA',
+        // description: 'Best PWA App in town!',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#4d7227',
+        theme_color: '#027be3',
         icons: [
           {
             'src': 'statics/icons/icon-128x128.png',

@@ -1,6 +1,6 @@
 <template>
   <div class="text-center" v-if="readings.length">
-    <q-tabs v-model="selectedTab" color="black" class="no-border" q-tabs-two-lines>
+    <q-tabs v-model="selectedTab" color="primary" class="no-border" q-tabs-two-lines>
       <q-tab v-for="readingHeader in readingHeaders" slot="title" :name="readingHeader" :key="readingHeader">{{cleanup(readingHeader)}}</q-tab>
       <q-tab-pane v-for="reading in readings" :key="reading.title" :name="reading.title" class="no-border">
         <div v-for="section in reading.reading" :key="section['reading']" class="text-justify">
