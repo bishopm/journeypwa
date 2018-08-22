@@ -3,7 +3,7 @@
     <h3 class="text-center">App settings</h3>
     <form>
       <q-field icon="book" label="Bible version" class="q-my-md">
-        <q-option-group @input="chooseTranslation" type="radio" placeholder="Choose a Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' } ]"/>
+        <q-option-group @input="chooseTranslation" type="radio" placeholder="Choose a Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' }, { label: 'The Message', value: 'eng-MSG' } ]"/>
       </q-field>
       <q-field icon="games" label="Church" class="q-my-md">
         <q-select placeholder="Select church" v-model="church" :options="churchOptions"/>
