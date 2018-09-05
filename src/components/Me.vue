@@ -1,6 +1,6 @@
 <template>
   <div class="layout-padding">
-    <div v-if="household" class="text-center q-mt-md">
+    <div v-if="household.id" class="text-center q-mt-md">
       <p class="caption q-mt-md">{{household.addressee}} <q-icon class="cursor-pointer" @click.native="editHousehold" name="edit"></q-icon></p>
       <p class="text-left q-mx-md">
         <q-icon name="place" color="tertiary"></q-icon> {{household.addr1}} {{household.addr2}} {{household.addr3}}<br>
@@ -48,15 +48,15 @@
 export default {
   data () {
     return {
+      household: {}
+    }
+  },
+  mounted () {
+    if (this.$store.state.individual.household) {
+      this.household = this.$store.state.individual.household
     }
   },
   computed: {
-    individual () {
-      return this.$store.state.individual
-    },
-    household () {
-      return this.$store.state.individual.household
-    },
     society () {
       return this.$store.state.societyname
     },
