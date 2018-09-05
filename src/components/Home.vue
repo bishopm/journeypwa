@@ -63,7 +63,6 @@ export default {
   data () {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
-      indivset: true,
       token: '',
       params: this.$route.params
     }
@@ -93,97 +92,12 @@ export default {
     }
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
-    } else {
-      this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
-      this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
-      if (localStorage.getItem('JOURNEY_Circuit')) {
-        this.$store.commit('setCircuitId', localStorage.getItem('JOURNEY_Circuit'))
-        this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
-      }
-      if (!localStorage.getItem('JOURNEY_Token')) {
-        await this.get_token()
-      } else {
-        this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
-      }
-      this.$axios.get(this.$store.state.hostname + '/feeditems/' + this.$store.state.societyid)
-        .then(response => {
-          this.$store.commit('setFeeditems', response.data)
-          if (response.data.groups) {
-            this.$store.commit('setGroups', true)
-          } else {
-            this.$store.commit('setGroups', false)
-          }
-          if (response.data.community) {
-            this.$store.commit('setCommunity', true)
-          } else {
-            this.$store.commit('setCommunity', false)
-          }
-          if (response.data.media) {
-            this.$store.commit('setMedia', true)
-          } else {
-            this.$store.commit('setMedia', false)
-          }
-          if (response.data.practice) {
-            this.$store.commit('setPractice', true)
-          } else {
-            this.$store.commit('setPractice', false)
-          }
-          if (response.data.blog) {
-            this.$store.commit('setBlogs', true)
-          } else {
-            this.$store.commit('setBlogs', false)
-          }
-          if (response.data.sermon) {
-            this.$store.commit('setSermons', true)
-          } else {
-            this.$store.commit('setSermons', false)
-          }
-          if (this.phoneverified && this.$store.state.token) {
-            this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-            this.$axios.post(this.$store.state.hostname + '/phone',
-              {
-                phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
-                society_id: localStorage.getItem('JOURNEY_Society')
-              })
-              .then(response => {
-                if (response.data.household) {
-                  this.$store.commit('setIndividual', response.data)
-                  this.$store.commit('setChats', response.data.chats)
-                } else {
-                  if (response.data === 'No individual') {
-                    this.indivset = false
-                    console.log(this.indivset)
-                  } else {
-                    console.log(this.$store.state.individual.id)
-                  }
-                }
-              })
-              .catch(function (error) {
-                console.log(error)
-              })
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-          // this.$q.loading.hide()
-        })
     }
   },
   methods: {
-    async get_token () {
-      if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
-        this.$axios.post(this.$store.state.hostname + '/login',
-          {
-            phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
-            phonetoken: localStorage.getItem('JOURNEY_Phonetoken')
-          })
-          .then(response => {
-            localStorage.setItem('JOURNEY_Token', response.data.token)
-            this.$store.commit('setToken', response.data.token)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+    indivset () {
+      if (this.$store.state.individual) {
+        return true
       }
     },
     menu_media () {
@@ -203,13 +117,6 @@ export default {
     },
     menu_sermons () {
       return this.$store.state.menu_sermons
-    }
-  },
-  computed: {
-    individual () {
-      if (this.$store.state.individual.id) {
-        return true
-      }
     }
   }
 }

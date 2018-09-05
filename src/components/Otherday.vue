@@ -71,6 +71,6 @@ p.caption {
   line-height: 12px;
 }
 .q-list-striped > .q-item:nth-child(even) {
-  background-color: #ffe5e5;
+  background-color: #E6f2d9;
 }
 </style>

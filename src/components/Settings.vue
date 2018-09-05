@@ -125,7 +125,7 @@ export default {
       this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
     },
     chooseTranslation () {
-      localStorage.setItem('JOURNEY_Bible', JSON.stringify(this.bible))
+      localStorage.setItem('JOURNEY_Bible', this.bible)
     }
   },
   async mounted () {

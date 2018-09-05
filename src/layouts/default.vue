@@ -13,7 +13,7 @@
     </q-layout-header>
     <q-layout-drawer side="right" v-model="rightDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
-        <q-collapsible opened class="text-center text-primary" group="somegroup" :label="societyname() + ' Society'">
+        <q-collapsible v-if="societyname()" opened class="text-center society" :label="societyname() + ' Society'">
           <q-item v-if="messages()" to="/messages">
             <q-item-side icon="message" />
             <q-item-main :label="'Messages: ' + messages()" sublabel="Inbox messages" />
@@ -51,7 +51,7 @@
             <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
           </q-item>
         </q-collapsible>
-        <q-collapsible class="text-center text-primary" group="somegroup" :label="circuitname() || 'Circuit'">
+        <q-collapsible v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
             <q-item-side icon="people" />
             <q-item-main label="Societies" sublabel="My circuit" />
@@ -61,12 +61,12 @@
             <q-item-main label="Circuit diary" sublabel="Upcoming circuit meetings and events" />
           </q-item>
         </q-collapsible>
-        <q-collapsible class="text-center text-primary" group="somegroup" label="App administration">
+        <q-collapsible class="text-center administration" label="App administration">
           <q-item to="/settings">
             <q-item-side icon="settings" />
             <q-item-main label="Settings" sublabel="App settings" />
           </q-item>
-          <q-item to="/me">
+          <q-item v-if="household()" to="/me">
             <q-item-side icon="person_pin" />
             <q-item-main label="My details" sublabel="My personal and household details" />
           </q-item>
@@ -84,10 +84,27 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
+      phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
       rightDrawerOpen: this.$q.platform.is.desktop
     }
   },
   methods: {
+    async get_token () {
+      if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+        this.$axios.post(this.$store.state.hostname + '/login',
+          {
+            phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+            phonetoken: localStorage.getItem('JOURNEY_Phonetoken')
+          })
+          .then(response => {
+            localStorage.setItem('JOURNEY_Token', response.data.token)
+            this.$store.commit('setToken', response.data.token)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
     menu_media () {
       return this.$store.state.menu_media
     },
@@ -114,7 +131,87 @@ export default {
     },
     messages () {
       return this.$store.state.chats.length
+    },
+    household () {
+      if (this.$store.state.individual.id) {
+        return true
+      }
     }
+  },
+  async mounted () {
+    this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
+    this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
+    if (localStorage.getItem('JOURNEY_Circuit')) {
+      this.$store.commit('setCircuitId', localStorage.getItem('JOURNEY_Circuit'))
+      this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
+    }
+    if (!localStorage.getItem('JOURNEY_Token')) {
+      await this.get_token()
+    } else {
+      this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
+    }
+    this.$axios.get(this.$store.state.hostname + '/feeditems/' + this.$store.state.societyid)
+      .then(response => {
+        this.$store.commit('setFeeditems', response.data)
+        if (response.data.groups) {
+          this.$store.commit('setGroups', true)
+        } else {
+          this.$store.commit('setGroups', false)
+        }
+        if (response.data.community) {
+          this.$store.commit('setCommunity', true)
+        } else {
+          this.$store.commit('setCommunity', false)
+        }
+        if (response.data.media) {
+          this.$store.commit('setMedia', true)
+        } else {
+          this.$store.commit('setMedia', false)
+        }
+        if (response.data.practice) {
+          this.$store.commit('setPractice', true)
+        } else {
+          this.$store.commit('setPractice', false)
+        }
+        if (response.data.blog) {
+          this.$store.commit('setBlogs', true)
+        } else {
+          this.$store.commit('setBlogs', false)
+        }
+        if (response.data.sermon) {
+          this.$store.commit('setSermons', true)
+        } else {
+          this.$store.commit('setSermons', false)
+        }
+        if (this.phoneverified && this.$store.state.token) {
+          this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+          this.$axios.post(this.$store.state.hostname + '/phone',
+            {
+              phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+              society_id: localStorage.getItem('JOURNEY_Society')
+            })
+            .then(response => {
+              if (response.data.household) {
+                this.$store.commit('setIndividual', response.data)
+                this.$store.commit('setChats', response.data.chats)
+              } else {
+                if (response.data === 'No individual') {
+                  this.indivset = false
+                  console.log(this.indivset)
+                } else {
+                  console.log(this.$store.state.individual.id)
+                }
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+        // this.$q.loading.hide()
+      })
   }
 }
 </script>
@@ -123,8 +220,20 @@ export default {
 a, a:hover {
   text-decoration: none;
 }
-#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.text-primary.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
+#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.society.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
   background-color:#4d7227;
+  border-bottom:white solid 2px;
+  color: white;
+  text-align:center;
+}
+#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.circuit.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
+  background-color:#81be41;
+  border-bottom:white solid 2px;
+  color: white;
+  text-align:center;
+}
+#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.administration.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
+  background-color:#000000;
   border-bottom:white solid 2px;
   color: white;
   text-align:center;
