@@ -15,7 +15,7 @@
           </p>
         </q-item-side>
       </q-item>
-      <p class="text-center q-mt-lg" v-if="!anysocieties">No societies have been added for this circuit</p>
+      <p class="text-center q-mt-lg" v-if="!societies">No societies have been added for this circuit</p>
     </q-list>
   </div>
 </template>
@@ -31,9 +31,6 @@ export default {
   },
   mixins: [saveState],
   computed: {
-    anysocieties () {
-      return this.societies.length
-    },
     isAuthorised () {
       if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
         return true

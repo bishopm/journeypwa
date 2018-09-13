@@ -20,6 +20,12 @@
           <q-icon class="text-primary" name="games" size="6rem" />
         </router-link>
       </div>
+      <div class="col-6 text-center q-mb-md">
+        <div>Grace</div>
+        <router-link to="/grace" class="text-white" style="text-decoration:none;">
+          <q-icon class="text-primary" name="cake" size="6rem" />
+        </router-link>
+      </div>
       <div v-if="menu_blogs()" class="col-6 text-center q-mb-md">
         <router-link to="/blogs" class="text-white" style="text-decoration:none;">
           <div class="text-black">Blog</div>

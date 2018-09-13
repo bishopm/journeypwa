@@ -9,6 +9,7 @@ export default [
       { name: 'content', path: '/content/:ctype', component: () => import('components/Content'), meta: {auth: true} },
       { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: {auth: true} },
       { name: 'ffdl', path: '/ffdl', component: () => import('components/FFDL'), meta: {auth: true} },
+      { name: 'grace', path: '/grace', component: () => import('components/Grace'), meta: {auth: true} },
       { name: 'householdform', path: '/household/:action/:id?', component: () => import('components/forms/Household'), meta: {auth: true} },
       { name: 'individualform', path: '/individual/:action/:id?', component: () => import('components/forms/Individual'), meta: {auth: true} },
       { name: 'lectionary', path: '/lectionary', component: () => import('components/Lectionary'), meta: {auth: true} },
