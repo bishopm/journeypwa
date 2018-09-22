@@ -20,7 +20,7 @@
           <q-icon class="text-primary" name="games" size="6rem" />
         </router-link>
       </div>
-      <div class="col-6 text-center q-mb-md">
+      <div v-if="grace" class="col-6 text-center q-mb-md">
         <div>Grace</div>
         <router-link to="/grace" class="text-white" style="text-decoration:none;">
           <q-icon class="text-primary" name="cake" size="6rem" />
@@ -70,6 +70,7 @@ export default {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
       token: '',
+      grace: false,
       params: this.$route.params
     }
   },

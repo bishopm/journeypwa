@@ -1,7 +1,7 @@
 <template>
   <div class="layout-padding">
     <h3 class="text-center">Seeking grace</h3>
-    <p class="text-justify">St Ignatius encouraged followers of Jesus to daily bring their deep longings to God and ask for grace from God. From the list below what is the gift you may be seeking today?</p>
+    <p class="text-justify">St Ignatius encouraged followers of Jesus to daily bring their deep longings to God and ask for grace from God. What grace are you seeking today?</p>
     <q-list no-border>
       <q-item>
         <q-item-side icon="people" color="primary" class="text-left text-primary">
@@ -17,6 +17,14 @@
         </q-item-side>
         <q-item-main class="text-right">
           <small>the gift of hearing God speak</small>
+        </q-item-main>
+      </q-item>
+      <q-item>
+        <q-item-side icon="local_hospital" color="primary" class="text-left text-primary">
+          COMPASSION
+        </q-item-side>
+        <q-item-main class="text-right">
+          <small>the gift of caring deeply for the things that break God's heart</small>
         </q-item-main>
       </q-item>
       <q-item>

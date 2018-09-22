@@ -1,8 +1,8 @@
 {
-  "name": "journey",
+  "name": "Journey",
   "version": "1.0.0",
-  "description": "PWA for Journey",
-  "productName": "Journey PWA",
+  "description": "Journey",
+  "productName": "Journey",
   "cordovaId": "org.cordova.quasar.app",
   "author": "Michael Bishop <michael@goodworx.co.za>",
   "private": true,
@@ -30,7 +30,7 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "eslint-plugin-vue": "^4.3.0",
-    "quasar-cli": "^0.17.13",
+    "quasar-cli": "^0.17.19",
     "strip-ansi": "=3.0.1"
   },
   "engines": {

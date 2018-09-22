@@ -2,7 +2,7 @@
   <div class="q-mt-xs layout-padding" v-if="sermons.length">
     <div v-for="sermon in sermons" :key="sermon.sermon.title">
       <p class="caption text-center">{{sermon.sermon.title}} <small>[{{sermon.sermon.servicedate}}]</small></p>
-      <div class="text-center">
+      <div v-if="sermon" class="text-center">
         <img :src="sermon.image"/>
         <audio controls><source :src="sermon.sermon.mp3" type="audio/mpeg"></audio>
         <br>

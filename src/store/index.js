@@ -16,8 +16,8 @@ const store = new Vuex.Store({
     menu_blogs: false,
     menu_sermons: false,
     token: '',
-    hostname: 'http://localhost/churchnet/public/api'
-    // hostname: 'https://church.net.za/api'
+    // hostname: 'http://localhost/churchnet/public/api'
+    hostname: 'https://church.net.za/api'
   },
   mutations: {
     setBlogs (state, newblogs) {
