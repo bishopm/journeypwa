@@ -83,4 +83,8 @@ h5.r {
   font-style: italic;
   font-size: 70%;
 }
+.q-tabs {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
 </style>

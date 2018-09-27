@@ -4,7 +4,7 @@
       <p class="caption text-center">{{sermon.sermon.title}} <small>[{{sermon.sermon.servicedate}}]</small></p>
       <div v-if="sermon" class="text-center">
         <img :src="sermon.image"/>
-        <audio controls><source :src="sermon.sermon.mp3" type="audio/mpeg"></audio>
+        <audio preload="none" controls><source :src="sermon.sermon.mp3" type="audio/mpeg"></audio>
         <br>
         <span v-for="(reading, ndx) in sermon.readings" :key="reading">
           <router-link :to="'/reading/' + encodeURI(reading)">{{reading}}</router-link><span v-if="ndx < sermon.readings.length - 1">, </span>
