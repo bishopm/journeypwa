@@ -56,39 +56,10 @@
 </template>
 
 <script>
-import saveState from 'vue-save-state'
 export default {
   data () {
     return {
-      events: null
     }
-  },
-  mixins: [saveState],
-  methods: {
-    getSaveStateConfig () {
-      return {
-        'cacheKey': 'JOURNEY_Events'
-      }
-    }
-  },
-  computed: {
-    anyevents () {
-      return this.events.length
-    }
-  },
-  mounted () {
-    if (!localStorage.getItem('Journey_Events')) {
-      this.$q.loading.show()
-    }
-    this.$axios.get(this.$store.state.hostname + '/circuits/' + this.$store.state.circuitid + '/upcomingmeetings')
-      .then(response => {
-        this.events = response.data
-        this.$q.loading.hide()
-      })
-      .catch(function (error) {
-        console.log(error)
-        this.$q.loading.hide()
-      })
   }
 
 }
