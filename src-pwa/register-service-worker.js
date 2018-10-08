@@ -16,7 +16,7 @@ register(process.env.SERVICE_WORKER_FILE, {
     console.log('Content has been cached for offline use.')
   },
   updated (registration) { // registration -> a ServiceWorkerRegistration instance
-    console.log('New content is available; please refresh.')
+    console.log('New content is being loaded.')
   },
   offline () {
     console.log('No internet connection found. App is running in offline mode.')

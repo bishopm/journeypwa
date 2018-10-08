@@ -66,7 +66,7 @@
             <q-item-side icon="settings" />
             <q-item-main label="Settings" sublabel="App settings" />
           </q-item>
-          <q-item v-if="household()" to="/me">
+          <q-item to="/me">
             <q-item-side icon="person_pin" />
             <q-item-main label="My details" sublabel="My personal and household details" />
           </q-item>
