@@ -29,6 +29,7 @@ export default {
               var phone = '0' + authResult.user.phoneNumber.substr(authResult.user.phoneNumber.length - 9)
               localStorage.setItem('JOURNEY_VerifiedPhone', phone)
               localStorage.setItem('JOURNEY_Phonetoken', authResult.user.uid)
+              window.location.reload()
             }
           }
         }

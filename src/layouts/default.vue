@@ -3,7 +3,7 @@
     <q-layout-header>
       <q-toolbar color="black" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
         <q-toolbar-title>
-          <router-link to="/" class="text-white" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs" name="fas fa-home" color="white"/> Journey</router-link>
+          <router-link to="/" class="text-white" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs fas" name="fas fa-hiking" color="white"/> Journey</router-link>
           <div class="q-ml-xs" slot="subtitle">together on the way</div>
         </q-toolbar-title>
         <q-btn flat dense round @click="rightDrawerOpen = !rightDrawerOpen" aria-label="Menu">
@@ -53,7 +53,7 @@
         </q-collapsible>
         <q-collapsible v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
-            <q-item-side icon="fas fa-fw fa-users" />
+            <q-item-side icon="fas fa-fw fa-church" />
             <q-item-main label="Societies" sublabel="My circuit" />
           </q-item>
           <q-item to="/diary">
@@ -76,6 +76,22 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-layout-footer>
+      <q-toolbar class="justify-around">
+        <q-item>
+          <router-link :to="{ name: 'home' }"><q-item-side style="text-decoration:none;" icon="fas fa-home" color="white"/></router-link>
+        </q-item>
+        <q-item class="text-center" to="/sunday">
+          <q-item-side icon="fas fa-bible" color="white"/>
+        </q-item>
+        <q-item class="text-center" to="/ffdl">
+          <q-item-side icon="fas fa-pray" color="white"/>
+        </q-item>
+        <q-item class="text-center" to="/me">
+          <q-item-side icon="fas fa-user-cog" color="white"/>
+        </q-item>
+      </q-toolbar>
+    </q-layout-footer>
   </q-layout>
 </template>
 
@@ -91,7 +107,7 @@ export default {
   methods: {
     async get_token () {
       if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
-        this.$axios.post(this.$store.state.hostname + '/login',
+        this.$axios.post(process.env.API + '/login',
           {
             phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
             phonetoken: localStorage.getItem('JOURNEY_Phonetoken')
@@ -167,7 +183,7 @@ export default {
     } else {
       this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
     }
-    this.$axios.get(this.$store.state.hostname + '/feeditems/' + this.$store.state.societyid)
+    this.$axios.get(process.env.API + '/feeditems/' + this.$store.state.societyid)
       .then(response => {
         this.$store.commit('setFeeditems', response.data)
         if (response.data.groups) {
@@ -202,7 +218,7 @@ export default {
         }
         if (this.phoneverified && this.$store.state.token) {
           this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-          this.$axios.post(this.$store.state.hostname + '/phone',
+          this.$axios.post(process.env.API + '/phone',
             {
               phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
               society_id: localStorage.getItem('JOURNEY_Society')
