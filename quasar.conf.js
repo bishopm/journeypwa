@@ -88,6 +88,11 @@ module.exports = function (ctx) {
         'Notify',
         'Loading'
       ],
+      config: {
+        notify: {
+          color: 'black'
+        }
+      },
       iconSet: 'fontawesome'
       // i18n: 'de' // Quasar language
     },

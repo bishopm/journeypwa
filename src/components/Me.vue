@@ -18,7 +18,8 @@
           <q-icon v-if="indiv.memberstatus" name="fas fa-fw fa-check-square" color="primary"></q-icon> {{indiv.memberstatus}}<br>
           <span v-if="indiv.giving > 0"><q-icon name="fas fa-fw fa-coins" color="primary"></q-icon> {{indiv.giving}}</span>
           <span v-else>
-            <span v-if="indiv.memberstatus !== 'Child'">Sign up as a planned giver</span>
+            <span v-if="indiv.memberstatus !== 'Child'">You do not have a planned giving number </span>
+            <q-btn @click.native="addGiver()">Click here to find out more </q-btn>
           </span>
           <br>
         </q-tab-pane>
@@ -31,10 +32,8 @@
     <div v-else-if="phone" class="text-justify q-mt-md">
       <p class="text-center caption">View / edit my details</p>
       <p>Your verified phone number is: <b>{{phone}}</b> but we don't have your other details in the <b>{{society}}</b> membership records.</p>
-      <p>You can choose to either add your details or continue to use the app anonymously if you prefer. (Note that anonymous users can't use the messaging features).</p>
       <p class="text-center">
-        <q-btn color="secondary" class="q-mr-md">Add my details</q-btn>
-        <q-btn color="secondary">Back to home screen</q-btn>
+        <q-btn color="secondary" class="q-mr-md" @click.native="addUser()">Add my details</q-btn>
       </p>
     </div>
     <div v-else class="text-center q-mt-md">
@@ -72,6 +71,12 @@ export default {
     }
   },
   methods: {
+    addUser () {
+      this.$router.push({name: 'combined'})
+    },
+    addGiver () {
+      this.$router.push({name: 'giving'})
+    },
     editHousehold () {
       this.$router.push({name: 'householdform', params: { id: this.$route.params.id, action: 'edit' }})
     },

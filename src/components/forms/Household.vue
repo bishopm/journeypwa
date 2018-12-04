@@ -21,10 +21,9 @@
     <div class="q-ma-md">
       <q-select float-label="Household cellphone" v-model="form.householdcell" :options="housecellOptions"/>
     </div>
-    <div class="q-ma-md">
-      <q-btn color="primary" @click="submit">Submit</q-btn>
-      <q-btn class="q-ml-md" color="secondary" @click="$router.back()">Cancel</q-btn>
-      <q-btn class="q-ml-md" color="red">Delete</q-btn>
+    <div class="q-ma-md text-center">
+      <q-btn color="primary" @click="submit">OK</q-btn>
+      <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
     </div>
   </div>
 </template>

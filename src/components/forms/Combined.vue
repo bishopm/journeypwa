@@ -18,10 +18,9 @@
       <q-radio v-model="form.sex" val="female" label="Female" />
       <q-radio class="q-ml-md" v-model="form.sex" val="male" label="Male" />
     </div>
-    <div class="q-ma-md">
-      <q-btn color="primary" @click="submit">Submit</q-btn>
-      <q-btn class="q-ml-md" color="secondary" @click="$router.back()">Cancel</q-btn>
-      <q-btn class="q-ml-md" color="red">Delete</q-btn>
+    <div class="q-ma-lg text-center">
+      <q-btn color="primary" @click="submit">OK</q-btn>
+      <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
     </div>
   </div>
 </template>
