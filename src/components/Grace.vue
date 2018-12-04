@@ -1,10 +1,10 @@
 <template>
   <div class="layout-padding">
-    <h3 class="text-center">Seeking grace</h3>
-    <p class="text-justify">St Ignatius encouraged followers of Jesus to daily bring their deep longings to God and ask for grace from God. What grace are you seeking today?</p>
+    <h3 class="text-center">Taking action</h3>
+    <p class="text-justify">Intentional practices put us in a place where God can change us. Where is God wanting to work in you?</p>
     <q-list no-border>
       <q-item>
-        <q-item-side icon="people" color="primary" class="text-left text-primary">
+        <q-item-side icon="fas fa-fw fa-users" color="primary" class="text-left text-primary">
           CONNECT
         </q-item-side>
         <q-item-main class="text-right">
@@ -12,7 +12,7 @@
         </q-item-main>
       </q-item>
       <q-item>
-        <q-item-side icon="hearing" color="primary" class="text-left text-primary">
+        <q-item-side icon="fas fa-fw fa-praying-hands" color="primary" class="text-left text-primary">
           LISTEN
         </q-item-side>
         <q-item-main class="text-right">
@@ -20,7 +20,7 @@
         </q-item-main>
       </q-item>
       <q-item>
-        <q-item-side icon="local_hospital" color="primary" class="text-left text-primary">
+        <q-item-side icon="fas fa-fw fa-heart" color="primary" class="text-left text-primary">
           COMPASSION
         </q-item-side>
         <q-item-main class="text-right">
@@ -28,7 +28,7 @@
         </q-item-main>
       </q-item>
       <q-item>
-        <q-item-side icon="pause_circle_filled" color="primary" class="text-left text-primary">
+        <q-item-side icon="fas fa-fw fa-pause-circle" color="primary" class="text-left text-primary">
           SABBATH
         </q-item-side>
         <q-item-main class="text-right">
@@ -36,7 +36,7 @@
         </q-item-main>
       </q-item>
       <q-item>
-        <q-item-side icon="build" color="primary" class="text-left text-primary">
+        <q-item-side icon="fas fa-fw fa-hands-helping" color="primary" class="text-left text-primary">
           SERVE
         </q-item-side>
         <q-item-main class="text-right">
@@ -44,7 +44,7 @@
         </q-item-main>
       </q-item>
       <q-item>
-        <q-item-side icon="fingerprint" color="primary" class="text-left text-primary">
+        <q-item-side icon="fas fa-fw fa-paint-brush" color="primary" class="text-left text-primary">
           CREATE
         </q-item-side>
         <q-item-main class="text-right">

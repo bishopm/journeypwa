@@ -75,7 +75,7 @@ export default {
       } else {
         this.form.birthdate = this.form.birthdate.slice(0, 10)
         this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-        this.$axios.post(this.$store.state.hostname + '/individual',
+        this.$axios.post(process.env.API + '/individual',
           {
             surname: this.form.surname,
             firstname: this.form.firstname,

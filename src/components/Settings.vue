@@ -2,19 +2,19 @@
   <div class="layout-padding">
     <h3 class="text-center">App settings</h3>
     <form>
-      <q-field icon="book" label="Bible version" class="q-my-md">
+      <q-field icon="fas fa-fw fa-bible" label="Bible version" class="q-my-md">
         <q-option-group @input="chooseTranslation" type="radio" placeholder="Choose a Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' }, { label: 'The Message', value: 'eng-MSG' } ]"/>
       </q-field>
-      <q-field icon="games" label="Church" class="q-my-md">
+      <q-field icon="fas fa-fw fa-church" label="Church" class="q-my-md">
         <q-select placeholder="Select church" v-model="church" :options="churchOptions"/>
       </q-field>
-      <q-field icon="language" label="District" class="q-my-md">
+      <q-field icon="fas fa-fw fa-sitemap" label="District" class="q-my-md">
         <q-select @input="chooseDistrict" placeholder="Select a district" v-model="district" :options="districtOptions"/>
       </q-field>
-      <q-field icon="group" label="Circuit" class="q-my-md">
+      <q-field icon="fas fa-fw fa-users" label="Circuit" class="q-my-md">
         <q-select @input="chooseCircuit" placeholder="Select a circuit" v-model="circuit" :options="circuitOptions"/>
       </q-field>
-      <q-field icon="place" label="Society" class="q-my-md">
+      <q-field icon="fas fa-fw fa-map-marker-alt" label="Society" class="q-my-md">
         <q-select @input="chooseSociety" placeholder="Select a society" v-model="society" :options="societyOptions"/>
       </q-field>
     </form>
@@ -58,7 +58,7 @@ export default {
       }
     },
     populateDistricts () {
-      this.$axios.get(this.$store.state.hostname + '/districts')
+      this.$axios.get(process.env.API + '/districts')
         .then(response => {
           this.districtOptions = []
           for (var dkey in response.data) {
@@ -74,7 +74,7 @@ export default {
         })
     },
     chooseDistrict () {
-      this.$axios.get(this.$store.state.hostname + '/districts/' + this.district)
+      this.$axios.get(process.env.API + '/districts/' + this.district)
         .then(response => {
           this.circuitOptions = []
           for (var ckey in response.data) {
@@ -99,7 +99,7 @@ export default {
       }
       this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
       this.$store.commit('setCircuitId', this.circuit)
-      this.$axios.get(this.$store.state.hostname + '/circuits/' + this.circuit + '/societies')
+      this.$axios.get(process.env.API + '/circuits/' + this.circuit + '/societies')
         .then(response => {
           this.societyOptions = []
           for (var skey in response.data) {

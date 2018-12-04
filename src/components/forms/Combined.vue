@@ -54,7 +54,7 @@ export default {
         this.$q.notify('Please check for errors!')
       } else {
         this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-        this.$axios.post(this.$store.state.hostname + '/combined',
+        this.$axios.post(process.env.API + '/combined',
           {
             surname: this.form.surname,
             firstname: this.form.firstname,

@@ -1,4 +1,5 @@
 // Configuration for your app
+var version = JSON.stringify('0.1.0')
 
 module.exports = function (ctx) {
   return {
@@ -14,13 +15,19 @@ module.exports = function (ctx) {
     ],
     extras: [
       ctx.theme.mat ? 'roboto-font' : null,
-      'material-icons' // optional, you are not bound to it
-      // 'ionicons',
-      // 'mdi',
-      // 'fontawesome'
+      'fontawesome'
     ],
     supportIE: false,
     build: {
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API: JSON.stringify('http://localhost/churchnet/public/api'),
+          VERSION: version
+        }
+        : { // and on build (production):
+          API: JSON.stringify('https://church.net.za/api'),
+          VERSION: version
+        },
       scopeHoisting: true,
       vueRouterMode: 'history',
       // vueCompiler: true,
@@ -77,10 +84,11 @@ module.exports = function (ctx) {
       ],
       // Quasar plugins
       plugins: [
+        'Dialog',
         'Notify',
         'Loading'
-      ]
-      // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
+      ],
+      iconSet: 'fontawesome'
       // i18n: 'de' // Quasar language
     },
     // animations: 'all' --- includes all animations

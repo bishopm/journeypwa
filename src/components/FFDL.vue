@@ -32,7 +32,7 @@ export default {
       spinnerSize: 250, // in pixels
       spinnerColor: 'white'
     })
-    this.$axios.get(this.$store.state.hostname + '/feeds/ffdl')
+    this.$axios.get(process.env.API + '/feeds/ffdl')
       .then(response => {
         this.devotion = response.data.devotion
         this.$q.loading.hide()

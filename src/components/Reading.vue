@@ -42,7 +42,7 @@ export default {
     } else {
       this.bible = 'eng-GNTUK'
     }
-    this.$axios.get(this.$store.state.hostname + '/reading/' + this.$route.params.reading + '/' + this.bible)
+    this.$axios.get(process.env.API + '/reading/' + this.$route.params.reading + '/' + this.bible)
       .then((response) => {
         for (var value in response.data) {
           this.readingHeaders.push(value)

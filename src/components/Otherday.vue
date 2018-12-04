@@ -46,7 +46,7 @@ export default {
   },
   mounted () {
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token
-    this.$axios.get(this.$store.state.hostname + '/sunday/' + this.$route.params.date)
+    this.$axios.get(process.env.API + '/sunday/' + this.$route.params.date)
       .then(response => {
         this.date = response.data.date
         this.description = response.data.description

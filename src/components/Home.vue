@@ -9,56 +9,56 @@
     </div>
     <div class="row q-mt-lg">
       <div class="col-6 text-center q-mb-md">
-        <div>Sunday's readings</div>
+        <div class="q-mb-sm">Sunday's readings</div>
         <router-link to="/sunday" class="text-white" style="text-decoration:none;">
-          <q-icon class="text-primary" name="book" size="6rem" />
+          <q-icon class="text-primary" name="fas fa-bible" size="5rem" />
         </router-link>
       </div>
       <div class="col-6 text-center q-mb-md">
-        <div>Faith for daily living</div>
+        <div class="q-mb-sm">Faith for daily living</div>
         <router-link to="/ffdl" class="text-white" style="text-decoration:none;">
-          <q-icon class="text-primary" name="games" size="6rem" />
+          <q-icon class="text-primary" name="fas fa-pray" size="6rem" />
         </router-link>
       </div>
       <div v-if="grace" class="col-6 text-center q-mb-md">
-        <div>Grace</div>
+        <div class="q-mb-sm">Grace</div>
         <router-link to="/grace" class="text-white" style="text-decoration:none;">
-          <q-icon class="text-primary" name="cake" size="6rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-gift" size="5rem" />
         </router-link>
       </div>
       <div v-if="menu_blogs()" class="col-6 text-center q-mb-md">
         <router-link to="/blogs" class="text-white" style="text-decoration:none;">
-          <div class="text-black">Blog</div>
-          <q-icon class="text-primary" name="create" size="6rem" />
+          <div class="q-mb-sm text-black">Blog</div>
+          <q-icon class="text-primary" name="fas fa-edit" size="5rem" />
         </router-link>
       </div>
       <div v-if="menu_sermons()" class="col-6 text-center q-mb-md">
         <router-link to="/sermons" class="text-white" style="text-decoration:none;">
-          <div class="text-black">Sermon</div>
-          <q-icon class="text-primary" name="mic" size="6rem" />
+          <div class="q-mb-sm text-black">Sermon</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-microphone" size="5rem" />
         </router-link>
       </div>
       <div v-if="menu_media()" class="col-6 text-center q-mb-md">
         <router-link to="/content/media" class="text-white" style="text-decoration:none;">
-          <div class="text-black">Media / articles</div>
-          <q-icon class="text-primary" name="art_track" size="6rem" />
+          <div class="q-mb-sm text-black">Media / articles</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-images" size="5rem" />
         </router-link>
       </div>
       <div v-if="menu_groups()" class="col-6 text-center q-mb-md">
         <router-link to="/content/groups" class="text-white" style="text-decoration:none;">
-          <div class="text-black">Small groups</div>
-          <q-icon class="text-primary" name="group" size="6rem" />
+          <div class="q-mb-sm text-black">Small groups</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-users" size="5rem" />
         </router-link>
       </div>
       <div v-if="menu_practice()" class="col-6 text-center q-mb-md">
         <router-link to="/content/practice" class="text-white" style="text-decoration:none;">
-          <div class="text-black">Practical exercise</div>
-          <q-icon class="text-primary" name="pan_tool" size="6rem" />
+          <div class="q-mb-sm text-black">Practical exercise</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-praying-hands" size="5rem" />
         </router-link>
       </div>
       <div v-if="menu_birthdays()" class="col-6 text-center q-mb-md">
         <div>Community news</div>
-        <q-icon class="text-primary" name="people_outline" size="6rem" />
+        <q-icon class="q-mb-sm text-primary" name="fas fa-fw fa-user-friends" size="5rem" />
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@ export default {
       localStorage.setItem('JOURNEY_Bible', 'eng-GNTUK')
       if (this.params.circuit) {
         localStorage.setItem('JOURNEY_Circuit', this.params.circuit)
-        this.$axios.get(this.$store.state.hostname + '/circuits/' + this.params.circuit + '/withsocieties')
+        this.$axios.get(process.env.API + '/circuits/' + this.params.circuit + '/withsocieties')
           .then(response => {
             localStorage.setItem('JOURNEY_Circuitname', response.data.circuitnumber + ' ' + response.data.circuit)
             if (this.params.society) {

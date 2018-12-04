@@ -20,7 +20,7 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get(this.$store.state.hostname + '/message/' + this.$route.params.id)
+    this.$axios.get(process.env.API + '/message/' + this.$route.params.id)
       .then((response) => {
         this.chat = response.data
       })
@@ -32,7 +32,7 @@ export default {
     sendmsg () {
       this.newmess.individual_id = this.$store.state.individual.id
       this.newmess.chat_id = this.chat.id
-      this.$axios.post(this.$store.state.hostname + '/message',
+      this.$axios.post(process.env.API + '/message',
         {
           message: this.newmess
         })

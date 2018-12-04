@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get(this.$store.state.hostname + '/sunday')
+    this.$axios.get(process.env.API + '/sunday')
       .then(response => {
         this.date = response.data.date
         this.description = response.data.description

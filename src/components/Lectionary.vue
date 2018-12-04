@@ -35,7 +35,7 @@ export default {
       // this.$q.loading.show()
     }
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token
-    this.$axios.get(this.$store.state.hostname + '/lectionary')
+    this.$axios.get(process.env.API + '/lectionary')
       .then(response => {
         this.lections = response.data
         // this.$q.loading.hide()

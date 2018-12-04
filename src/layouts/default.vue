@@ -3,11 +3,11 @@
     <q-layout-header>
       <q-toolbar color="black" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
         <q-toolbar-title>
-          <router-link to="/" class="text-white" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs" name="home" color="white"/> Journey</router-link>
+          <router-link to="/" class="text-white" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs" name="fas fa-home" color="white"/> Journey</router-link>
           <div class="q-ml-xs" slot="subtitle">together on the way</div>
         </q-toolbar-title>
         <q-btn flat dense round @click="rightDrawerOpen = !rightDrawerOpen" aria-label="Menu">
-          <q-icon name="menu" />
+          <q-icon name="fas fa-bars" />
         </q-btn>
       </q-toolbar>
     </q-layout-header>
@@ -23,51 +23,51 @@
             <q-item-main label="Community" sublabel="Community news and needs" />
           </q-item>
           <q-item to="/ffdl">
-            <q-item-side icon="book" />
+            <q-item-side icon="fas fa-fw fa-pray" />
             <q-item-main label="Devotions" sublabel="Faith for daily living" />
           </q-item>
           <q-item v-if="menu_blogs()" to="/blogs">
-            <q-item-side icon="create" />
+            <q-item-side icon="fas fa-fw fa-edit" />
             <q-item-main label="Blog" sublabel="From our blog" />
           </q-item>
           <q-item v-if="menu_sermons()" to="/sermons">
-            <q-item-side icon="mic" />
+            <q-item-side icon="fas fa-fw fa-microphone" />
             <q-item-main label="Sermon" sublabel="Last week's sermon" />
           </q-item>
           <q-item v-if="menu_groups()" to="/content/groups">
-            <q-item-side icon="group" />
+            <q-item-side icon="fas fa-fw fa-users" />
             <q-item-main label="Groups" sublabel="Small group material" />
           </q-item>
           <q-item v-if="menu_media()" to="/content/media">
-            <q-item-side icon="art_track" />
+            <q-item-side icon="fas fa-fw fa-images" />
             <q-item-main label="Extra" sublabel="Media / articles" />
           </q-item>
           <q-item v-if="menu_practice()" to="/content/practice">
-            <q-item-side icon="pan_tool" />
+            <q-item-side icon="fas fa-fw fa-praying-hands" />
             <q-item-main label="Practice" sublabel="Practice or discipline for the week" />
           </q-item>
           <q-item to="/sunday">
-            <q-item-side icon="book" />
+            <q-item-side icon="fas fa-fw fa-bible" />
             <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
           </q-item>
         </q-collapsible>
         <q-collapsible v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
-            <q-item-side icon="people" />
+            <q-item-side icon="fas fa-fw fa-users" />
             <q-item-main label="Societies" sublabel="My circuit" />
           </q-item>
           <q-item to="/diary">
-            <q-item-side icon="calendar_today" />
+            <q-item-side icon="fas fa-fw fa-calendar-alt" />
             <q-item-main label="Circuit diary" sublabel="Upcoming circuit meetings and events" />
           </q-item>
         </q-collapsible>
         <q-collapsible class="text-center administration" label="App administration">
           <q-item to="/settings">
-            <q-item-side icon="settings" />
+            <q-item-side icon="fas fa-fw fa-cogs" />
             <q-item-main label="Settings" sublabel="App settings" />
           </q-item>
           <q-item to="/me">
-            <q-item-side icon="person_pin" />
+            <q-item-side icon="fas fa-fw fa-user-cog" />
             <q-item-main label="My details" sublabel="My personal and household details" />
           </q-item>
         </q-collapsible>
@@ -139,6 +139,23 @@ export default {
     }
   },
   async mounted () {
+    if (localStorage.getItem('JOURNEY_Version')) {
+      if (localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
+        this.$q.dialog({
+          title: 'New version available',
+          message: 'Click OK to restart the app and upgrade to version ' + process.env.VERSION,
+          ok: 'OK',
+          cancel: 'LATER'
+        }).then(() => {
+          localStorage.setItem('JOURNEY_Version', process.env.VERSION)
+          window.location.reload()
+        }).catch(() => {
+          console.log('Delaying upgrade')
+        })
+      }
+    } else {
+      localStorage.setItem('JOURNEY_Version', process.env.VERSION)
+    }
     this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
     this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
     if (localStorage.getItem('JOURNEY_Circuit')) {
