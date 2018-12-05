@@ -1,7 +1,7 @@
 <template>
   <div class="layout-padding">
     <div class="q-mx-md q-mt-md text-center caption">
-      Add my details to the {{$store.state.societyname}} database
+      Add my details to the {{$store.state.societyname}} member database
       <p id="instructions">Please complete this brief form - you can add other details and other members of your household later.</p>
     </div>
     <div class="q-ma-md">

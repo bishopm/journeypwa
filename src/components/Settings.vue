@@ -19,7 +19,7 @@
       </q-field>
     </form>
     <div class="text-center" v-if="society > 0">
-      <q-btn class="q-my-md" color="secondary" to="/">All done! Back to home page</q-btn>
+      <q-btn class="q-my-md" color="secondary" @click.native="goHome()">All done! Back to home page</q-btn>
     </div>
   </div>
 </template>
@@ -52,6 +52,9 @@ export default {
     }
   },
   methods: {
+    goHome () {
+      this.$router.push('/')
+    },
     getSaveStateConfig () {
       return {
         'cacheKey': 'JOURNEY_Settings'

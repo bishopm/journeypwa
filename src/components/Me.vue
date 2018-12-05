@@ -1,7 +1,7 @@
 <template>
   <div class="layout-padding">
     <div v-if="household.id" class="text-center q-mt-md">
-      <p class="caption q-mt-md">{{household.addressee}} <q-icon class="cursor-pointer" @click.native="editHousehold" name="fas fa-fw fa-edit"></q-icon></p>
+      <p class="caption q-mt-md">{{household.addressee}} <q-btn color="primary" round size="sm" @click.native="editHousehold">edit</q-btn></p>
       <p class="text-left q-mx-md">
         <q-icon name="fas fa-fw fa-map-marker-alt" color="tertiary"></q-icon> {{household.addr1}} {{household.addr2}} {{household.addr3}}<br>
         <q-icon name="fas fa-fw fa-envelope" color="tertiary"></q-icon> {{household.post1}} {{household.post2}} {{household.post3}}<br>
@@ -11,7 +11,7 @@
       <q-tabs color="secondary" no-pane-border align="justify" class="q-mt-md">
         <q-tab v-for="(indiv, ndx) in household.individuals" :default="!ndx" :key="indiv.id" slot="title" :name="'tab' + indiv.id" :label="indiv.firstname"/>
         <q-tab-pane v-for="indiv in household.individuals" :key="indiv.id" :name="'tab' + indiv.id">
-          <q-icon v-if="indiv.surname" name="fas fa-fw fa-user" color="primary"></q-icon> <b>{{indiv.title}} {{indiv.firstname}} {{indiv.surname}}</b>&nbsp;<q-icon class="cursor-pointer" @click.native="editIndividual(indiv)" name="fas fa-fw fa-edit"></q-icon><br>
+          <q-icon v-if="indiv.surname" name="fas fa-fw fa-user" color="primary"></q-icon> <b>{{indiv.title}} {{indiv.firstname}} {{indiv.surname}}</b>&nbsp;<q-btn color="primary" round size="sm" @click.native="editIndividual(indiv)">edit</q-btn><br>
           <q-icon v-if="indiv.cellphone" name="fas fa-fw fa-mobile-alt" color="primary"></q-icon> {{indiv.cellphone}}<br>
           <q-icon v-if="indiv.email" name="fas fa-fw fa-envelope" color="primary"></q-icon> {{indiv.email}}<br>
           <q-icon v-if="indiv.birthdate" name="fas fa-fw fa-birthday-cake" color="primary"></q-icon> {{indiv.birthdate}}<br>
@@ -35,7 +35,7 @@
       </p>
     </div>
     <div v-else class="text-center q-mt-md">
-      <q-btn color="secondary" to="phoneverification">Verify your phone number</q-btn>
+      <q-btn color="secondary" to="phoneverification">Please verify your phone number</q-btn>
     </div>
 
   </div>
