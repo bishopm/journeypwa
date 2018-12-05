@@ -11,15 +11,13 @@
       <q-tabs color="secondary" no-pane-border align="justify" class="q-mt-md">
         <q-tab v-for="(indiv, ndx) in household.individuals" :default="!ndx" :key="indiv.id" slot="title" :name="'tab' + indiv.id" :label="indiv.firstname"/>
         <q-tab-pane v-for="indiv in household.individuals" :key="indiv.id" :name="'tab' + indiv.id">
-          <q-icon v-if="indiv.surname" name="fas fa-fw fa-user" color="primary"></q-icon> {{indiv.title}} {{indiv.firstname}} {{indiv.surname}}  <q-icon class="cursor-pointer" @click.native="editIndividual(indiv)" name="fas fa-fw fa-edit"></q-icon><br>
+          <q-icon v-if="indiv.surname" name="fas fa-fw fa-user" color="primary"></q-icon> <b>{{indiv.title}} {{indiv.firstname}} {{indiv.surname}}</b>&nbsp;<q-icon class="cursor-pointer" @click.native="editIndividual(indiv)" name="fas fa-fw fa-edit"></q-icon><br>
           <q-icon v-if="indiv.cellphone" name="fas fa-fw fa-mobile-alt" color="primary"></q-icon> {{indiv.cellphone}}<br>
           <q-icon v-if="indiv.email" name="fas fa-fw fa-envelope" color="primary"></q-icon> {{indiv.email}}<br>
           <q-icon v-if="indiv.birthdate" name="fas fa-fw fa-birthday-cake" color="primary"></q-icon> {{indiv.birthdate}}<br>
           <q-icon v-if="indiv.memberstatus" name="fas fa-fw fa-check-square" color="primary"></q-icon> {{indiv.memberstatus}}<br>
-          <span v-if="indiv.giving > 0"><q-icon name="fas fa-fw fa-coins" color="primary"></q-icon> {{indiv.giving}}</span>
-          <span v-else>
-            <span v-if="indiv.memberstatus !== 'Child'">You do not have a planned giving number </span>
-            <q-btn @click.native="addGiver()">Click here to find out more </q-btn>
+          <span v-if="indiv.memberstatus !== 'child'">
+            <q-btn class="q-ma-md" @click.native="giver(indiv.id)">Planned Giving</q-btn>
           </span>
           <br>
         </q-tab-pane>
@@ -74,8 +72,8 @@ export default {
     addUser () {
       this.$router.push({name: 'combined'})
     },
-    addGiver () {
-      this.$router.push({name: 'giving'})
+    giver (id) {
+      this.$router.push({name: 'giving', params: { id: id }})
     },
     editHousehold () {
       this.$router.push({name: 'householdform', params: { id: this.$route.params.id, action: 'edit' }})

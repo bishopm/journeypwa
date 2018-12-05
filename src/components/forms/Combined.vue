@@ -62,8 +62,23 @@ export default {
             society_id: this.form.society_id
           })
           .then(response => {
-            this.$q.notify('Your details have been added')
-            this.$router.push({ name: 'home' })
+            this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+            this.$axios.post(process.env.API + '/phone',
+              {
+                phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+                society_id: localStorage.getItem('JOURNEY_Society')
+              })
+              .then(response => {
+                if (response.data.household) {
+                  this.$store.commit('setIndividual', response.data)
+                  this.$store.commit('setChats', response.data.chats)
+                }
+                this.$q.notify('Success! You may now edit your details as needed')
+                this.$router.push({ name: 'me' })
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           })
           .catch(function (error) {
             console.log(error)

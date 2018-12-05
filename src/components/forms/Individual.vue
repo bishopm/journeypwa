@@ -14,15 +14,6 @@
       </q-field>
     </div>
     <div class="q-mx-md">
-      <q-select float-label="Sex" v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]"/>
-    </div>
-    <div class="q-mx-md">
-      <q-select float-label="Title" v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
-    </div>
-    <div class="q-mx-md">
-      <q-datetime class="q-mb-md" float-label="Date of birth" v-model="form.birthdate" format="YYYY-MM-DD" type="date" />
-    </div>
-    <div class="q-mx-md">
       <q-field :error="$v.form.email.$error" error-label="Must be a valid email address">
         <q-input float-label="Email" v-model="form.email" @blur="$v.form.email.$touch()" :error="$v.form.email.$error" />
       </q-field>
@@ -32,7 +23,19 @@
         <q-input float-label="Cellphone" v-model="form.cellphone" @blur="$v.form.cellphone.$touch()" :error="$v.form.cellphone.$error" />
       </q-field>
     </div>
-    <div class="q-mx-md text-center">
+    <div class="q-mx-md">
+      <q-select float-label="Sex" v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]"/>
+    </div>
+    <div class="q-mx-md">
+      <q-select float-label="Title" v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
+    </div>
+    <div class="q-mx-md">
+      <q-select float-label="Membership" v-model="form.memberstatus" :options="[{ label: 'Child', value: 'child' }, { label: 'Member', value: 'member' }, { label: 'Non-member', value: 'non-member' }]"/>
+    </div>
+    <div class="q-mx-md">
+      <q-datetime class="q-mb-md" float-label="Date of birth" v-model="form.birthdate" format="YYYY-MM-DD" type="date" />
+    </div>
+    <div class="q-ma-md text-center">
       <q-btn color="primary" @click="submit">OK</q-btn>
       <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
     </div>
@@ -52,6 +55,7 @@ export default {
         title: '',
         email: '',
         sex: 'female',
+        memberstatus: '',
         cellphone: '',
         household_id: this.$store.state.individual.household_id,
         id: ''
@@ -84,6 +88,7 @@ export default {
             cellphone: this.form.cellphone,
             birthdate: this.form.birthdate,
             title: this.form.title,
+            memberstatus: this.form.memberstatus,
             email: this.form.email,
             household_id: this.form.household_id,
             id: this.form.id

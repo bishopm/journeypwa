@@ -78,8 +78,8 @@
     </q-page-container>
     <q-layout-footer>
       <q-toolbar class="justify-around">
-        <q-item>
-          <router-link :to="{ name: 'home' }"><q-item-side style="text-decoration:none;" icon="fas fa-home" color="white"/></router-link>
+        <q-item class="text-center" to="/home">
+          <q-item-side icon="fas fa-home" color="white"/>
         </q-item>
         <q-item class="text-center" to="/sunday">
           <q-item-side icon="fas fa-bible" color="white"/>
