@@ -226,6 +226,9 @@ export default {
             .then(response => {
               if (response.data.household) {
                 this.$store.commit('setIndividual', response.data)
+                if (!localStorage.getItem('JOURNEY_Individual')) {
+                  localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data))
+                }
                 this.$store.commit('setChats', response.data.chats)
               }
             })

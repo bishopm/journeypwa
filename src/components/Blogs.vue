@@ -16,6 +16,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.$store.state.feeditems) {
+      this.$router.push({ name: 'home' })
+    }
     this.blogs = this.$store.state.feeditems['blog']
   }
 }

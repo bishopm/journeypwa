@@ -24,6 +24,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.$store.state.feeditems) {
+      this.$router.push({ name: 'home' })
+    }
     for (var sermon in this.$store.state.feeditems['sermon']) {
       var serm = JSON.parse(this.$store.state.feeditems['sermon'][sermon].content)
       var readings = serm.readings.split(';')

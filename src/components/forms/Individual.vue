@@ -105,6 +105,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.$store.state.individual.household) {
+      this.$router.push({ name: 'home' })
+    }
     if (this.$route.params.action === 'edit') {
       this.form = this.$route.params.individual
     }

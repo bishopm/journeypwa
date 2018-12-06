@@ -49,9 +49,10 @@ export default {
     }
   },
   mounted () {
-    if (this.$store.state.individual.household) {
-      this.household = this.$store.state.individual.household
+    if (!this.$store.state.individual.household) {
+      this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
     }
+    this.household = this.$store.state.individual.household
   },
   computed: {
     society () {

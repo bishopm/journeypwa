@@ -31,30 +31,34 @@ export default {
     }
   },
   mounted () {
-    this.$q.loading.show({
-      message: 'Retrieving Bible reading',
-      messageColor: 'white',
-      spinnerSize: 250, // in pixels
-      spinnerColor: 'white'
-    })
-    if (localStorage.getItem('JOURNEY_Bible')) {
-      this.bible = localStorage.getItem('JOURNEY_Bible')
+    if (navigator.onLine) {
+      this.$q.loading.show({
+        message: 'Retrieving Bible reading',
+        messageColor: 'white',
+        spinnerSize: 250, // in pixels
+        spinnerColor: 'white'
+      })
+      if (localStorage.getItem('JOURNEY_Bible')) {
+        this.bible = localStorage.getItem('JOURNEY_Bible')
+      } else {
+        this.bible = 'eng-GNTUK'
+      }
+      this.$axios.get(process.env.API + '/reading/' + this.$route.params.reading + '/' + this.bible)
+        .then((response) => {
+          for (var value in response.data) {
+            this.readingHeaders.push(value)
+            this.readings.push({title: value, reading: response.data[value]})
+          }
+          this.selectedTab = this.readingHeaders[0]
+          this.$q.loading.hide()
+        })
+        .catch(function (error) {
+          console.log(error)
+          this.$q.loading.hide()
+        })
     } else {
-      this.bible = 'eng-GNTUK'
+      this.$q.notify('Reading can\'t be fetched - do you have data enabled?')
     }
-    this.$axios.get(process.env.API + '/reading/' + this.$route.params.reading + '/' + this.bible)
-      .then((response) => {
-        for (var value in response.data) {
-          this.readingHeaders.push(value)
-          this.readings.push({title: value, reading: response.data[value]})
-        }
-        this.selectedTab = this.readingHeaders[0]
-        this.$q.loading.hide()
-      })
-      .catch(function (error) {
-        console.log(error)
-        this.$q.loading.hide()
-      })
   }
 }
 </script>

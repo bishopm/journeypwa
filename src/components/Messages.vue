@@ -27,6 +27,9 @@ export default {
   },
   mixins: [saveState],
   mounted () {
+    if (!this.$store.state.individual) {
+      this.$router.push({ name: 'home' })
+    }
     this.messages = this.$store.state.individual.chats
   },
   methods: {
