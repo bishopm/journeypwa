@@ -2,7 +2,7 @@
   <div v-if="settings" class="layout-padding">
     <div class="caption text-center q-mt-md">
       <q-btn v-if="!phoneverified" color="secondary" to="phoneverification">Please verify your phone number</q-btn>
-      <div  v-else-if="!indivset">
+      <div v-else-if="anon">
         Welcome, {{phoneverified}}<br>
         <q-btn to="adduser" color="secondary">Update my details</q-btn>
       </div>
@@ -70,7 +70,7 @@ export default {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
       grace: false,
-      params: this.$route.params
+      anon: false
     }
   },
   computed: {
@@ -86,13 +86,11 @@ export default {
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
     }
+    if (!this.$store.state.individual.hasOwnProperty('firstname')) {
+      this.anon = true
+    }
   },
   methods: {
-    indivset () {
-      if (this.$store.state.individual) {
-        return true
-      }
-    },
     menu_media () {
       return this.$store.state.menu_media
     },

@@ -227,13 +227,6 @@ export default {
               if (response.data.household) {
                 this.$store.commit('setIndividual', response.data)
                 this.$store.commit('setChats', response.data.chats)
-              } else {
-                if (response.data === 'No individual') {
-                  this.indivset = false
-                  console.log(this.indivset)
-                } else {
-                  console.log(this.$store.state.individual.id)
-                }
               }
             })
             .catch(function (error) {
