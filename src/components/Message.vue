@@ -20,6 +20,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.$store.state.individual) {
+      this.$router.push({ name: 'home' })
+    }
     this.$axios.get(process.env.API + '/message/' + this.$route.params.id)
       .then((response) => {
         this.chat = response.data

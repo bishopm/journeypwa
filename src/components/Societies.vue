@@ -40,6 +40,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.$store.state.feeditems) {
+      this.$router.push({ name: 'home' })
+    }
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
     this.$axios.get(process.env.API + '/circuits/' + this.$store.state.circuitid + '/societies/thisweek')
       .then(response => {

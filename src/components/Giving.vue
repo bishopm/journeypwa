@@ -82,7 +82,10 @@ export default {
     }
   },
   mounted () {
-    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+    if (!this.$store.state.individual.household) {
+      this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
+    }
+    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('JOURNEY_Token')
     this.$axios.post(process.env.API + '/giving',
       {
         id: this.$route.params.id,
@@ -110,7 +113,7 @@ export default {
         }
         for (var gndx in response.data.available) {
           var newt = {
-            label: response.data.available[gndx],
+            label: String(response.data.available[gndx]),
             value: response.data.available[gndx]
           }
           this.pgs.push(newt)
