@@ -69,12 +69,8 @@ export default {
   data () {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
-<<<<<<< HEAD
       grace: false,
       anon: false
-=======
-      params: this.$route.params
->>>>>>> 0287363981c03dbea118c61d9c1b56a84a3a2db6
     }
   },
   computed: {
@@ -90,8 +86,11 @@ export default {
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
     }
-    if (!this.$store.state.individual.hasOwnProperty('firstname')) {
-      this.anon = true
+    if (!this.$store.state.individual.household) {
+      this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
+      if (!this.$store.state.individual.firstname) {
+        this.anon = true
+      }
     }
   },
   methods: {
