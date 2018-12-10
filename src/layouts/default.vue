@@ -46,6 +46,10 @@
             <q-item-side icon="fas fa-fw fa-praying-hands" />
             <q-item-main label="Practice" sublabel="Practice or discipline for the week" />
           </q-item>
+          <q-item to="/library">
+            <q-item-side icon="fas fa-fw fa-warehouse" />
+            <q-item-main label="Resources" sublabel="Resource library" />
+          </q-item>
           <q-item to="/sunday">
             <q-item-side icon="fas fa-fw fa-bible" />
             <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
@@ -233,7 +237,12 @@ export default {
               }
             })
             .catch(function (error) {
-              console.log(error)
+              if (error.response.status === 401) {
+                localStorage.removeItem('JOURNEY_Token')
+                window.location.reload()
+              } else {
+                console.log(error)
+              }
             })
         }
       })
