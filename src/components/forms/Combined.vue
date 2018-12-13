@@ -59,7 +59,8 @@ export default {
             firstname: this.form.firstname,
             sex: this.form.sex,
             phone: this.form.phone,
-            society_id: this.form.society_id
+            society_id: this.form.society_id,
+            adduser: 'yes'
           })
           .then(response => {
             this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
