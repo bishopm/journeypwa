@@ -34,6 +34,10 @@
             <q-item-side icon="fas fa-fw fa-microphone" />
             <q-item-main label="Sermon" sublabel="Last week's sermon" />
           </q-item>
+          <q-item to="/diary">
+            <q-item-side icon="fas fa-fw fa-calendar-alt" />
+            <q-item-main label="Calendar" sublabel="Events for your diary" />
+          </q-item>
           <q-item v-if="menu_groups()" to="/content/groups">
             <q-item-side icon="fas fa-fw fa-users" />
             <q-item-main label="Groups" sublabel="Small group material" />

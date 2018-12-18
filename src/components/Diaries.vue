@@ -1,6 +1,6 @@
 <template>
   <div class="layout-padding">
-    <h3 class="text-center">{{entity}} Diary</h3>
+    <p class="text-center caption">{{entity}} Diary</p>
     <q-list no-border>
       <q-item v-if="events" v-for="event in events" :key="event.id">
         <q-item-side class="text-left">
@@ -47,7 +47,7 @@ export default {
 .layout-padding {
   padding-top:0;
 }
-h3 {
+h4 {
   line-height:0px;
 }
 .bgp {

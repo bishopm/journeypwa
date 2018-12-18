@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-list class="no-border">
+      <q-list-header class="text-center">Services this Sunday: {{sunday}}</q-list-header>
       <q-item v-if="societies" v-for="society in societies" :key="society.id" :to="'/societies/' + society.id">
         <q-item-main>
           {{society.society}}
@@ -46,7 +47,8 @@ export default {
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
     this.$axios.get(process.env.API + '/circuits/' + this.$store.state.circuitid + '/societies/thisweek')
       .then(response => {
-        this.societies = response.data
+        this.societies = response.data.societies
+        this.sunday = response.data.sunday
       })
       .catch(function (error) {
         console.log(error)

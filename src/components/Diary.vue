@@ -2,9 +2,9 @@
   <div class="layout-padding">
     <h3 class="text-center">Upcoming events</h3>
     <div class="text-center">
-      <q-btn color="primary" :to="{ name: 'diaries', params: { scope: 'Society' }}" class="q-mr-sm">Society Diary</q-btn>
-      <q-btn color="secondary" :to="{ name: 'diaries', params: { scope: 'Circuit' }}" class="q-mr-sm">Circuit Diary</q-btn>
-      <q-btn color="black" :to="{ name: 'diaries', params: { scope: 'District' }}">District Diary</q-btn>
+      <q-btn color="primary" :to="{ name: 'diaries', params: { scope: 'Society' }}" class="q-mr-sm">Society</q-btn>
+      <q-btn color="secondary" :to="{ name: 'diaries', params: { scope: 'Circuit' }}" class="q-mr-sm">Circuit</q-btn>
+      <q-btn color="black" :to="{ name: 'diaries', params: { scope: 'District' }}">District</q-btn>
     </div>
     <q-list no-border>
       <q-item v-if="anyevents" v-for="event in events" :key="event.id">
@@ -16,7 +16,7 @@
         </q-item-main>
       </q-item>
     </q-list>
-    <p class="text-center" v-if="!anyevents">No upcoming circuit events have been added</p>
+    <p class="text-center" v-if="!anyevents">No diary entries for the next 10 days</p>
   </div>
 </template>
 
