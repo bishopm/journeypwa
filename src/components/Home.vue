@@ -26,6 +26,12 @@
           <q-icon class="text-primary" name="fas fa-fw fa-warehouse" size="4rem" />
         </router-link>
       </div>
+      <div v-if="menu_diary()" class="col-6 text-center q-mb-md">
+        <div class="q-mb-sm caption">Coming up <q-btn size="sm" color="secondary" round>{{$store.state.feeditems.diarycount}}</q-btn></div>
+        <router-link to="/diary" class="text-white" style="text-decoration:none;">
+          <q-icon class="text-primary" name="fas fa-fw fa-calendar-alt" size="4rem" />
+        </router-link>
+      </div>
       <div v-if="menu_blogs()" class="col-6 text-center q-mb-md">
         <router-link to="/blogs" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Blog</div>
@@ -96,6 +102,9 @@ export default {
   methods: {
     menu_media () {
       return this.$store.state.menu_media
+    },
+    menu_diary () {
+      return this.$store.state.menu_diary
     },
     menu_groups () {
       return this.$store.state.menu_groups

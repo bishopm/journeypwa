@@ -58,11 +58,7 @@
         <q-collapsible v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
             <q-item-side icon="fas fa-fw fa-church" />
-            <q-item-main label="Societies" sublabel="My circuit" />
-          </q-item>
-          <q-item to="/diary">
-            <q-item-side icon="fas fa-fw fa-calendar-alt" />
-            <q-item-main label="Circuit diary" sublabel="Upcoming circuit meetings and events" />
+            <q-item-main label="Preaching this Sunday" sublabel="Societies and preachers" />
           </q-item>
         </q-collapsible>
         <q-collapsible class="text-center administration" label="App administration">
@@ -194,6 +190,11 @@ export default {
           this.$store.commit('setGroups', true)
         } else {
           this.$store.commit('setGroups', false)
+        }
+        if (response.data.diary) {
+          this.$store.commit('setDiary', true)
+        } else {
+          this.$store.commit('setDiary', false)
         }
         if (response.data.community) {
           this.$store.commit('setCommunity', true)

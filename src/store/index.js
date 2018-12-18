@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     circuitname: '',
     circuitid: 0,
     individual: {},
+    menu_diary: false,
     menu_groups: false,
     menu_media: false,
     menu_community: false,
@@ -32,6 +33,9 @@ const store = new Vuex.Store({
     },
     setCommunity (state, newbdays) {
       state.menu_community = newbdays
+    },
+    setDiary (state, newdiary) {
+      state.menu_diary = newdiary
     },
     setFeeditems (state, newitems) {
       state.feeditems = newitems
