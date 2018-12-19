@@ -62,7 +62,7 @@
         <q-collapsible v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
             <q-item-side icon="fas fa-fw fa-church" />
-            <q-item-main label="Preaching this Sunday" sublabel="Societies and preachers" />
+            <q-item-main label="Services this Sunday" sublabel="Societies and preachers" />
           </q-item>
         </q-collapsible>
         <q-collapsible class="text-center administration" label="App administration">
