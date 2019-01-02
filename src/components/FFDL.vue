@@ -5,7 +5,7 @@
       <p>{{devotion.pubdate}}</p>
       <div class="text-justify" v-html="devotion.content"></div>
     </div>
-    <div class="text-justify"><small>Faith for daily living was first published in January 1961, an initiative of Rev Arnold Walker. Visit <a href="http://www.faithfordailyliving.org">www.faithfordailyliving.org</a> for more devotionals. Used by permission.</small></div>
+    <div class="text-justify"><small>Faith for daily living was first published in January 1961, an initiative of Rev Arnold Walker. Visit <a target="_blank" href="http://www.faithfordailyliving.org">www.faithfordailyliving.org</a> for more devotionals. Used by permission.</small></div>
   </div>
 </template>
 
