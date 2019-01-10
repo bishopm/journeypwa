@@ -26,7 +26,7 @@
           <q-icon class="text-primary" name="fas fa-fw fa-warehouse" size="4rem" />
         </router-link>
       </div>
-      <div v-if="diarycount" class="col-6 text-center q-mb-md">
+      <div v-if="menu_diary()" class="col-6 text-center q-mb-md">
         <div class="q-mb-sm caption">Calendar <q-btn size="sm" color="secondary" round>{{$store.state.feeditems.diarycount}}</q-btn></div>
         <router-link to="/diary" class="text-white" style="text-decoration:none;">
           <q-icon class="text-primary" name="fas fa-fw fa-calendar-alt" size="4rem" />
@@ -86,11 +86,6 @@ export default {
       } else {
         return false
       }
-    },
-    diarycount () {
-      if (this.$store.state.feeditems) {
-        return this.$store.state.feeditems.diarycount
-      }
     }
   },
   async mounted () {
@@ -105,6 +100,9 @@ export default {
     }
   },
   methods: {
+    menu_diary () {
+      return this.$store.state.menu_diary
+    },
     menu_media () {
       return this.$store.state.menu_media
     },

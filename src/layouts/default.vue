@@ -190,6 +190,11 @@ export default {
     this.$axios.get(process.env.API + '/feeditems/' + this.$store.state.societyid)
       .then(response => {
         this.$store.commit('setFeeditems', response.data)
+        if (response.data.diary) {
+          this.$store.commit('setDiary', true)
+        } else {
+          this.$store.commit('setDiary', false)
+        }
         if (response.data.groups) {
           this.$store.commit('setGroups', true)
         } else {
