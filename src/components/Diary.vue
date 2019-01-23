@@ -6,8 +6,8 @@
       <q-btn color="secondary" :to="{ name: 'diaries', params: { scope: 'Circuit' }}" class="q-mr-sm">Circuit</q-btn>
       <q-btn color="black" :to="{ name: 'diaries', params: { scope: 'District' }}">District</q-btn>
     </div>
-    <q-list no-border>
-      <q-item v-if="anyevents" v-for="event in events" :key="event.id">
+    <q-list v-if="anyevents" no-border>
+      <q-item v-for="event in events" :key="event.id">
         <q-item-side class="text-left">
           <small>{{formatme(event.meetingdatetime)}}<br><router-link :to="{ name: 'society', params: { id: event.society_id }}">{{event.society.society}}</router-link></small>
         </q-item-side>
