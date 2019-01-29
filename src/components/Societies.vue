@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-list class="no-border">
+    <q-list v-if="societies" class="no-border">
       <q-list-header class="text-center">Services this Sunday: {{sunday}}</q-list-header>
-      <q-item v-if="societies" v-for="society in societies" :key="society.id" :to="'/societies/' + society.id">
+      <q-item v-for="society in societies" :key="society.id" :to="'/societies/' + society.id">
         <q-item-main>
           {{society.society}}
         </q-item-main>
