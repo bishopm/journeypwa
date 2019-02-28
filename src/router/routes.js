@@ -12,6 +12,8 @@ export default [
       { name: 'ffdl', path: '/ffdl', component: () => import('components/FFDL'), meta: {auth: true} },
       { name: 'giving', path: '/giving/:id', component: () => import('components/Giving'), meta: {auth: true} },
       { name: 'householdform', path: '/household/:action/:id?', component: () => import('components/forms/Household'), meta: {auth: true} },
+      { name: 'hymn', path: '/hymns/:id', component: () => import('components/Hymn'), meta: {auth: true} },
+      { name: 'hymnbook', path: '/hymnbook', component: () => import('components/Hymnbook'), meta: {auth: true} },
       { name: 'individualform', path: '/individual/:action/:id?', component: () => import('components/forms/Individual'), meta: {auth: true} },
       { name: 'lectionary', path: '/lectionary', component: () => import('components/Lectionary'), meta: {auth: true} },
       { name: 'library', path: '/library', component: () => import('components/Library'), meta: {auth: true} },

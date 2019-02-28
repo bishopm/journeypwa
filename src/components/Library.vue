@@ -35,6 +35,13 @@
           </q-item-main>
         </q-item>
       </q-list>
+      <q-list class="no-border" v-if="songs">
+        <div class="text-center"><q-icon size="sm" name="fas fa-music"/>
+          <p><router-link style="color:#4d7227" to="hymnbook">Hymns, songs & liturgy</router-link>
+            <q-chip color="tertiary" class="q-ml-md">{{songs}}</q-chip>
+          </p>
+        </div>
+      </q-list>
     </div>
   </div>
 </template>
@@ -59,6 +66,7 @@ export default {
         this.practices = response.data.practice
         this.groups = response.data.groups
         this.media = response.data.media
+        this.songs = response.data.songs
         this.ready = true
       })
       .catch(function (error) {
