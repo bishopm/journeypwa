@@ -28,8 +28,12 @@ export default {
             if (authResult.user) {
               var phone = '0' + authResult.user.phoneNumber.substr(authResult.user.phoneNumber.length - 9)
               localStorage.setItem('JOURNEY_VerifiedPhone', phone)
-              localStorage.setItem('JOURNEY_Phonetoken', authResult.user.uid)
-              window.location.reload()
+              authResult.user.getIdToken(true).then(function (idToken) {
+                localStorage.setItem('JOURNEY_Phonetoken', idToken)
+                window.location.reload()
+              }).catch(function (error) {
+                console.log(error)
+              })
             }
           }
         }

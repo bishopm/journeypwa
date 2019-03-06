@@ -1,5 +1,5 @@
 // Configuration for your app
-var version = JSON.stringify('0.1.4')
+var version = JSON.stringify('0.1.5')
 
 module.exports = function (ctx) {
   return {
@@ -104,7 +104,7 @@ module.exports = function (ctx) {
       pwa: false
     },
     pwa: {
-      // workboxPluginMode: 'InjectManifest',
+      workboxPluginMode: 'InjectManifest',
       // workboxOptions: {},
       manifest: {
         // name: 'Quasar App',

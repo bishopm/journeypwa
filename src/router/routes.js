@@ -20,6 +20,7 @@ export default [
       { name: 'me', path: '/me', component: () => import('components/Me'), meta: {auth: true} },
       { name: 'message', path: '/message/:id', component: () => import('components/Message'), meta: {auth: true} },
       { name: 'messages', path: '/messages', component: () => import('components/Messages'), meta: {auth: true} },
+      { name: 'notifications', path: '/notifications', component: () => import('components/Notifications'), meta: {auth: true} },
       { name: 'otherday', path: '/otherday/:date', component: () => import('components/Otherday'), meta: {auth: true} },
       { name: 'phoneverification', path: '/phoneverification', component: () => import('components/Phoneverification'), meta: {auth: true} },
       { name: 'reading', path: '/reading/:reading', component: () => import('components/Reading'), meta: {auth: true} },
