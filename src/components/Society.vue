@@ -1,13 +1,14 @@
 <template>
-  <div v-if="society" class="text-center layout-padding">
+  <div v-if="society" class="text-center">
     <h3>{{society.society}}</h3>
     <p v-for="service in society.services" :key="service.id">{{service.servicetime}} ({{service.language}})</p>
     <div v-if="society.website"><a target="_blank" :href="society.websiteurl">{{society.website}}</a></div>
-    <div id="map" class="q-mt-md"></div>
+    <leafletmap v-if="society.location" :latitude="society.location.latitude" :longitude="society.location.longitude" :popuplabel="society.society + ' Methodist Church'" editable="no"></leafletmap>
   </div>
 </template>
 
 <script>
+import leafletmap from './Leafletmap'
 export default {
   data () {
     return {
@@ -16,17 +17,10 @@ export default {
       marker: null
     }
   },
-  methods: {
-    initMap () {
-      this.map = new window.google.maps.Map(document.getElementById('map'), {
-        center: {lat: parseFloat(this.society.location.latitude), lng: parseFloat(this.society.location.longitude)},
-        zoom: 14
-      })
-      this.marker = new window.google.maps.Marker({position: {lat: parseFloat(this.society.location.latitude), lng: parseFloat(this.society.location.longitude)}, map: this.map})
-    }
+  components: {
+    'leafletmap': leafletmap
   },
-  async mounted () {
-    await this.$google()
+  mounted () {
     this.$axios.get(process.env.API + '/circuits/' + this.$store.state.circuitid + '/societies/' + this.$route.params.id)
       .then((response) => {
         this.society = response.data
@@ -39,7 +33,6 @@ export default {
             }
           }
         }
-        this.initMap()
       })
       .catch(function (error) {
         console.log(error)
@@ -49,9 +42,4 @@ export default {
 </script>
 
 <style>
-#map {
-  text-align:center;
-  height: 300px;
-  width: 100%;
-}
 </style>

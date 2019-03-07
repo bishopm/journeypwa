@@ -27,7 +27,8 @@ export default {
   data () {
     return {
       societies: [],
-      search: ''
+      search: '',
+      sunday: ''
     }
   },
   mixins: [saveState],

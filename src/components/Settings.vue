@@ -2,6 +2,9 @@
   <div class="layout-padding">
     <h3 class="text-center">App settings</h3>
     <form>
+      <q-field icon="fas fa-fw fa-comment-alt" label="Notifications" class="q-my-md">
+        Notification permission: <b>{{webpush}}</b>
+      </q-field>
       <q-field icon="fas fa-fw fa-bible" label="Bible version" class="q-my-md">
         <q-option-group @input="chooseTranslation" type="radio" placeholder="Choose a Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' }, { label: 'The Message', value: 'eng-MSG' } ]"/>
       </q-field>
@@ -38,7 +41,8 @@ export default {
       district: null,
       circuit: {},
       society: {},
-      phone: ''
+      phone: '',
+      webpush: Notification.permission
     }
   },
   mixins: [saveState],

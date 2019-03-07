@@ -2,6 +2,7 @@
   <div v-if="settings" class="layout-padding">
     <div class="caption text-center q-mt-md">
       <q-btn v-if="!phoneverified" color="secondary" to="phoneverification">Please verify your phone number</q-btn>
+      <p v-if="permission === 'denied'">Notifications are disabled. Click <router-link to="settings">HERE</router-link> to fix this</p>
       <div v-else-if="anon">
         Welcome, {{phoneverified}}<br>
         <q-btn to="adduser" color="secondary">Update my details</q-btn>
@@ -87,6 +88,9 @@ export default {
       } else {
         return false
       }
+    },
+    permission () {
+      return Notification.permission
     }
   },
   async mounted () {
@@ -121,6 +125,9 @@ export default {
     },
     menu_sermons () {
       return this.$store.state.menu_sermons
+    },
+    enableNotifications () {
+      Notification.requestPermission()
     }
   }
 }
