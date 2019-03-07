@@ -63,6 +63,12 @@
           <q-icon class="text-primary" name="fas fa-fw fa-praying-hands" size="4rem" />
         </router-link>
       </div>
+      <div v-if="menu_reminders()" class="col-6 text-center q-mb-md">
+        <router-link to="/reminders" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Inbox <q-btn size="sm" color="secondary" round>{{$store.state.feeditems.reminders.length}}</q-btn></div>
+          <q-icon class="text-primary" name="fas fa-fw fa-inbox" size="4rem" />
+        </router-link>
+      </div>
       <div v-if="menu_birthdays()" class="col-6 text-center q-mb-md">
         <div>Community news</div>
         <q-icon class="q-mb-sm text-primary" name="fas fa-fw fa-user-friends" size="4rem" />
@@ -126,8 +132,8 @@ export default {
     menu_sermons () {
       return this.$store.state.menu_sermons
     },
-    enableNotifications () {
-      Notification.requestPermission()
+    menu_reminders () {
+      return this.$store.state.menu_reminders
     }
   }
 }

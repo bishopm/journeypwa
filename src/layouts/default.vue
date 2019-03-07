@@ -105,7 +105,8 @@ export default {
   data () {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
-      rightDrawerOpen: this.$q.platform.is.desktop
+      rightDrawerOpen: this.$q.platform.is.desktop,
+      individual: ''
     }
   },
   methods: {
@@ -159,6 +160,9 @@ export default {
     }
   },
   async mounted () {
+    if (this.$store.state.individual.id) {
+      this.individual = this.$store.state.individual.id
+    }
     if (localStorage.getItem('JOURNEY_Version')) {
       if (localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
         this.$q.dialog({
@@ -187,7 +191,12 @@ export default {
     } else {
       this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
     }
-    this.$axios.get(process.env.API + '/feeditems/' + this.$store.state.societyid)
+    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+    this.$axios.post(process.env.API + '/feeditemlist',
+      {
+        society: this.$store.state.societyid,
+        individual: this.individual
+      })
       .then(response => {
         this.$store.commit('setFeeditems', response.data)
         if (response.data.diary) {
@@ -224,6 +233,11 @@ export default {
           this.$store.commit('setBlogs', true)
         } else {
           this.$store.commit('setBlogs', false)
+        }
+        if (response.data.reminders) {
+          this.$store.commit('setReminders', true)
+        } else {
+          this.$store.commit('setReminders', false)
         }
         if (response.data.sermon) {
           this.$store.commit('setSermons', true)

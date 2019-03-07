@@ -1,17 +1,17 @@
 <template>
   <div>
-    <q-list striped class="no-border">
+    <q-list v-if="readings" striped class="no-border">
       <p class="caption text-center q-my-md" v-if="date"><b>{{date}}</b><br><small>({{description}})</small></p>
-      <q-item v-if="readings" v-for="reading in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)">
+      <q-item v-for="reading in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)">
         <q-item-main class="text-center" v-html="cleanup(reading)"/>
       </q-item>
     </q-list>
     <div v-if="isextras">
       <h4 class="text-center">Special services this week</h4>
       <div v-for="(extra, key) in extras" :key="key">
-        <q-list striped class="no-border">
+        <q-list v-if="readings" striped class="no-border">
           <p class="caption text-center"><b>{{key}}</b><br><small>({{extra.description}})</small></p>
-          <q-item v-if="readings" v-for="reading in extra.readings.split(';')" :key="reading" :to="'/reading/' + encodeURI(reading)">
+          <q-item v-for="reading in extra.readings.split(';')" :key="reading" :to="'/reading/' + encodeURI(reading)">
             <q-item-main class="text-center" v-html="cleanup(reading)"/>
           </q-item>
         </q-list>

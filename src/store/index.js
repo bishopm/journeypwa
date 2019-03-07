@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     menu_practice: false,
     menu_blogs: false,
     menu_sermons: false,
+    menu_reminders: false,
     token: ''
   },
   mutations: {
@@ -51,6 +52,9 @@ const store = new Vuex.Store({
     },
     setPractice (state, newprac) {
       state.menu_practice = newprac
+    },
+    setReminders (state, newrem) {
+      state.menu_reminders = newrem
     },
     setSermons (state, newsermons) {
       state.menu_sermons = newsermons
