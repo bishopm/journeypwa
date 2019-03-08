@@ -74,6 +74,10 @@
             <q-item-side icon="fas fa-fw fa-user-cog" />
             <q-item-main label="My details" sublabel="My personal and household details" />
           </q-item>
+          <q-item to="/reminders">
+            <q-item-side icon="fas fa-fw fa-inbox" />
+            <q-item-main label="My inbox" sublabel="Messages and notifications" />
+          </q-item>
         </q-collapsible>
       </q-list>
     </q-layout-drawer>
