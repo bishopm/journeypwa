@@ -16,7 +16,8 @@ export default {
   data () {
     return {
       notifications: [],
-      message: ''
+      message: '',
+      feeditems: []
     }
   },
   mounted () {
@@ -45,10 +46,13 @@ export default {
   },
   methods: {
     deleteme (id) {
+      this.feeditems = this.$store.state.feeditems
       for (var ndx in this.notifications) {
         if (this.notifications[ndx].id === id) {
           this.notifications.splice(ndx, 1)
         }
+        this.feeditems.reminders = this.notifications
+        this.$store.commit('setFeeditems', this.feeditems)
         if (!this.notifications.length) {
           this.message = 'You have no messages'
         }
