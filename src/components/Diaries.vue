@@ -1,10 +1,10 @@
 <template>
   <div class="layout-padding">
     <p class="text-center caption">{{entity}} Diary</p>
-    <q-list no-border>
-      <q-item v-if="events" v-for="event in events" :key="event.id">
+    <q-list v-if="events" no-border>
+      <q-item v-for="event in events" :key="event.id">
         <q-item-side class="text-left">
-          <small>{{event.start}}<br><router-link :to="{ name: 'society', params: { id: event.society_id }}">{{event.society}}</router-link></small>
+          <small>{{formatme(event.start)}}<br><router-link :to="{ name: 'society', params: { id: event.society_id }}">{{event.society}}</router-link></small>
         </q-item-side>
         <q-item-main class="text-right">
           <b>{{event.details}}</b>
