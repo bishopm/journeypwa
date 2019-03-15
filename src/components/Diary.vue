@@ -36,8 +36,8 @@ export default {
       }
     },
     formatme (datein) {
-      var fin = new Date(datein * 1000).toISOString()
-      return fin.substring(0, 10) + ' [' + fin.substring(11, 16) + ']'
+      var fin = new Date(datein * 1000)
+      return fin.toString().substring(4, 21)
     },
     styleme (mt) {
       if (mt === 'Bishopm\\Churchnet\\Models\\Society') {
