@@ -1,4 +1,5 @@
 // Configuration for your app
+var vnotes = JSON.stringify('Fix for timezone issues')
 var version = JSON.stringify('0.1.6')
 
 module.exports = function (ctx) {
@@ -21,10 +22,12 @@ module.exports = function (ctx) {
       env: ctx.dev
         ? { // so on dev we'll have
           API: JSON.stringify('http://localhost/churchnet/public/api'),
+          VNOTES: vnotes,
           VERSION: version
         }
         : { // and on build (production):
           API: JSON.stringify('https://church.net.za/api'),
+          VNOTES: vnotes,
           VERSION: version
         },
       scopeHoisting: true,

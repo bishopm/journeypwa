@@ -171,7 +171,7 @@ export default {
       if (localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
         this.$q.dialog({
           title: 'New version available',
-          message: 'Click OK to restart the app and upgrade to version ' + process.env.VERSION,
+          message: 'Click OK to restart the app and upgrade to version ' + process.env.VERSION + '. This new version includes: ' + process.env.VNOTES,
           ok: 'OK',
           cancel: 'LATER'
         }).then(() => {
