@@ -164,7 +164,7 @@ export default {
     }
   },
   async mounted () {
-    if (this.$store.state.individual.id) {
+    if (this.$store.state.individual) {
       this.individual = this.$store.state.individual.id
     }
     if (localStorage.getItem('JOURNEY_Version')) {
