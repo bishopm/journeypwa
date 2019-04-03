@@ -12,66 +12,72 @@
       <div class="col-6 text-center q-mb-md">
         <div class="q-mb-sm caption">Sunday's readings</div>
         <router-link to="/sunday" class="text-white" style="text-decoration:none;">
-          <q-icon class="text-primary" name="fas fa-fw fa-bible" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-bible" size="3rem" />
         </router-link>
       </div>
       <div class="col-6 text-center q-mb-md">
         <div class="q-mb-sm caption">Faith for daily living</div>
         <router-link to="/ffdl" class="text-white" style="text-decoration:none;">
-          <q-icon class="text-primary" name="fas fa-fw fa-pray" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-pray" size="3rem" />
         </router-link>
       </div>
       <div class="col-6 text-center q-mb-md">
         <div class="q-mb-sm caption">Resources library</div>
         <router-link to="/library" class="text-white" style="text-decoration:none;">
-          <q-icon class="text-primary" name="fas fa-fw fa-warehouse" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-warehouse" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_diary()" class="col-6 text-center q-mb-md">
         <div class="q-mb-sm caption">Calendar <q-btn size="sm" color="secondary" round>{{$store.state.feeditems.diarycount}}</q-btn></div>
         <router-link to="/diary" class="text-white" style="text-decoration:none;">
-          <q-icon class="text-primary" name="fas fa-fw fa-calendar-alt" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-calendar-alt" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_blogs()" class="col-6 text-center q-mb-md">
         <router-link to="/blogs" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Blog</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-edit" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-edit" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_sermons()" class="col-6 text-center q-mb-md">
         <router-link to="/sermons" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Sermon</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-microphone" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-microphone" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_media()" class="col-6 text-center q-mb-md">
         <router-link to="/content/media" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Media / articles</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-images" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-images" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_groups()" class="col-6 text-center q-mb-md">
         <router-link to="/content/groups" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Small groups</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-users" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-users" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_practice()" class="col-6 text-center q-mb-md">
         <router-link to="/content/practice" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Practical exercise</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-praying-hands" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-praying-hands" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_reminders()" class="col-6 text-center q-mb-md">
         <router-link to="/reminders" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Inbox <q-btn size="sm" color="secondary" round>{{$store.state.feeditems.reminders.length}}</q-btn></div>
-          <q-icon class="text-primary" name="fas fa-fw fa-inbox" size="4rem" />
+          <q-icon class="text-primary" name="fas fa-fw fa-inbox" size="3rem" />
+        </router-link>
+      </div>
+      <div v-if="menu_events()" class="col-6 text-center q-mb-md">
+        <router-link to="/events" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Event sign-up</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-clipboard" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_birthdays()" class="col-6 text-center q-mb-md">
         <div>Community news</div>
-        <q-icon class="q-mb-sm text-primary" name="fas fa-fw fa-user-friends" size="4rem" />
+        <q-icon class="q-mb-sm text-primary" name="fas fa-fw fa-user-friends" size="3rem" />
       </div>
     </div>
   </div>
@@ -113,6 +119,9 @@ export default {
   methods: {
     menu_diary () {
       return this.$store.state.menu_diary
+    },
+    menu_events () {
+      return this.$store.state.menu_events
     },
     menu_media () {
       return this.$store.state.menu_media

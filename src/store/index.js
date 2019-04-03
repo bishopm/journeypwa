@@ -38,6 +38,9 @@ const store = new Vuex.Store({
     setDiary (state, newdiary) {
       state.menu_diary = newdiary
     },
+    setEvents (state, newevents) {
+      state.menu_events = newevents
+    },
     setFeeditems (state, newitems) {
       state.feeditems = newitems
     },

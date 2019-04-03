@@ -213,6 +213,11 @@ export default {
         } else {
           this.$store.commit('setGroups', false)
         }
+        if (response.data.events) {
+          this.$store.commit('setEvents', true)
+        } else {
+          this.$store.commit('setEvents', false)
+        }
         if (response.data.diary) {
           this.$store.commit('setDiary', true)
         } else {
