@@ -3,11 +3,8 @@
     <q-list v-if="events.length" class="no-border">
       <q-list-header class="text-center">Upcoming events</q-list-header>
       <q-item v-for="event in events" :key="event.id" :to="'/events/' + event.id">
-        <q-item-side>
-          <b>{{event.groupname}}</b><br>
-          {{formatme(event.eventdatetime)}}
-        </q-item-side>
-        <q-item-main>
+        <q-item-main class="text-center">
+          <div class="caption">{{event.groupname}}</div><div class="q-ml-md text-weight-thin">{{formatme(event.eventdatetime)}}</div>
           <small>{{event.description}}</small>
         </q-item-main>
       </q-item>

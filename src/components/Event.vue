@@ -1,12 +1,18 @@
 <template>
-  <div v-if="event && event.group" class="text-center q-ma-md">
-    <h3>{{event.group.groupname}}</h3>
-    <p class="caption">{{event.group.description}}</p>
-    <p class="text-left q-mt-md"><b>Date & time:</b> {{formatme(event.group.eventdatetime)}}</p>
-    <div class="text-left q-mt-md">
-      <b>Attending (so far):</b> {{participantstring}}.
+  <div>
+    <div v-if="event && event.group" class="text-center q-ma-md">
+      <h3>{{event.group.groupname}}</h3>
+      <p class="caption">{{event.group.description}}</p>
+      <p class="text-left q-mt-md"><b>Date & time:</b> {{formatme(event.group.eventdatetime)}}</p>
+      <div class="text-left q-mt-md">
+        <b>Attending (so far):</b> {{participantstring}}.
+      </div>
+      <q-select class="q-mt-md" @input="updateChanges" multiple chips float-label="Household members signed up" v-model="signups" :options="householdOptions"/>
     </div>
-    <q-select class="q-mt-md" @input="updateChanges" multiple chips float-label="Household members signed up" v-model="signups" :options="householdOptions"/>
+    <div class="q-ma-md caption text-center" v-if="!$store.state.token">
+      We need to verify your phone number before you can sign up!
+      <q-btn class="q-ma-md" color="secondary" to="/phoneverification">Verify my number</q-btn>
+    </div>
   </div>
 </template>
 
@@ -52,37 +58,39 @@ export default {
         })
     },
     populateData () {
-      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-      this.$axios.get(process.env.API + '/groups/' + this.$route.params.id)
-        .then((response) => {
-          this.event = response.data
-          this.householdmembers = {}
-          this.householdOptions = []
-          this.attenders = []
-          this.signups = []
-          for (var ikey in this.$store.state.individual.household.individuals) {
-            this.householdmembers[this.$store.state.individual.household.individuals[ikey].id] = {
-              name: this.$store.state.individual.household.individuals[ikey].firstname + ' ' + this.$store.state.individual.household.individuals[ikey].surname,
-              attending: 0
-            }
-            this.householdOptions.push(
-              {
-                value: this.$store.state.individual.household.individuals[ikey].id,
-                label: this.$store.state.individual.household.individuals[ikey].firstname + ' ' + this.$store.state.individual.household.individuals[ikey].surname
+      if (this.$store.state.token) {
+        this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+        this.$axios.get(process.env.API + '/groups/' + this.$route.params.id)
+          .then((response) => {
+            this.event = response.data
+            this.householdmembers = {}
+            this.householdOptions = []
+            this.attenders = []
+            this.signups = []
+            for (var ikey in this.$store.state.individual.household.individuals) {
+              this.householdmembers[this.$store.state.individual.household.individuals[ikey].id] = {
+                name: this.$store.state.individual.household.individuals[ikey].firstname + ' ' + this.$store.state.individual.household.individuals[ikey].surname,
+                attending: 0
               }
-            )
-          }
-          for (var gkey in this.event.members) {
-            if (this.event.members[gkey].id in this.householdmembers) {
-              this.signups.push(this.event.members[gkey].id)
-            } else {
-              this.attenders.push(this.event.members[gkey].id)
+              this.householdOptions.push(
+                {
+                  value: this.$store.state.individual.household.individuals[ikey].id,
+                  label: this.$store.state.individual.household.individuals[ikey].firstname + ' ' + this.$store.state.individual.household.individuals[ikey].surname
+                }
+              )
             }
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+            for (var gkey in this.event.members) {
+              if (this.event.members[gkey].id in this.householdmembers) {
+                this.signups.push(this.event.members[gkey].id)
+              } else {
+                this.attenders.push(this.event.members[gkey].id)
+              }
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
     }
   },
   mounted () {
