@@ -213,12 +213,12 @@ export default {
         } else {
           this.$store.commit('setGroups', false)
         }
-        if (response.data.events) {
+        if ((response.data.events) && (response.data.events.length)) {
           this.$store.commit('setEvents', true)
         } else {
           this.$store.commit('setEvents', false)
         }
-        if (response.data.diary) {
+        if ((response.data.diary) && (response.data.diary.length)) {
           this.$store.commit('setDiary', true)
         } else {
           this.$store.commit('setDiary', false)
@@ -243,7 +243,7 @@ export default {
         } else {
           this.$store.commit('setBlogs', false)
         }
-        if (response.data.reminders) {
+        if ((response.data.reminders) && (response.data.reminders.length)) {
           this.$store.commit('setReminders', true)
         } else {
           this.$store.commit('setReminders', false)

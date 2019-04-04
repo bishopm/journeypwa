@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-list v-if="events.length" class="no-border">
-      <q-list-header class="text-center">Sign up for events <small>Click for details</small></q-list-header>
+      <q-list-header class="text-center">Upcoming events</q-list-header>
       <q-item v-for="event in events" :key="event.id" :to="'/events/' + event.id">
         <q-item-side>
           <b>{{event.groupname}}</b><br>

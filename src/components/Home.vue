@@ -71,7 +71,7 @@
       </div>
       <div v-if="menu_events()" class="col-6 text-center q-mb-md">
         <router-link to="/events" class="text-white" style="text-decoration:none;">
-          <div class="q-mb-sm text-black caption">Event sign-up</div>
+          <div class="q-mb-sm text-black caption">Event sign-up <q-btn size="sm" color="secondary" round>{{$store.state.feeditems.events.length}}</q-btn></div>
           <q-icon class="text-primary" name="fas fa-fw fa-clipboard" size="3rem" />
         </router-link>
       </div>
