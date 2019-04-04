@@ -3,13 +3,13 @@
     <q-list v-if="events.length" class="no-border">
       <q-list-header class="text-center">Sign up for events <small>Click for details</small></q-list-header>
       <q-item v-for="event in events" :key="event.id" :to="'/events/' + event.id">
-        <q-item-main>
+        <q-item-side>
           <b>{{event.groupname}}</b><br>
           {{formatme(event.eventdatetime)}}
-        </q-item-main>
-        <q-item-side>
-          <small>{{event.description}}</small>
         </q-item-side>
+        <q-item-main>
+          <small>{{event.description}}</small>
+        </q-item-main>
       </q-item>
     </q-list>
   </div>
