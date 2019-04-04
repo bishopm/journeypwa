@@ -1,6 +1,6 @@
 // Configuration for your app
 var vnotes = JSON.stringify('New feature: sign up for events')
-var version = JSON.stringify('0.1.7')
+var version = JSON.stringify('0.1.7.1')
 
 module.exports = function (ctx) {
   return {
