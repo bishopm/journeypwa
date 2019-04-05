@@ -195,6 +195,7 @@ export default {
     } else {
       this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
     }
+    this.$q.loading.show()
     this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
     this.$axios.post(process.env.API + '/feeditemlist',
       {
@@ -278,6 +279,7 @@ export default {
               }
             })
         }
+        this.$q.loading.hide()
       })
       .catch(function (error) {
         console.log(error)

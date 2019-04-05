@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-if="event && event.group" class="text-center q-ma-md">
-      <h3>{{event.group.groupname}}</h3>
+      <h5>{{event.group.groupname}}</h5>
+      <small>{{event.group.till}}</small>
       <p class="caption">{{event.group.description}}</p>
       <p class="text-left q-mt-md"><b>Date & time:</b> {{formatme(event.group.eventdatetime)}}</p>
       <div class="text-left q-mt-md">
@@ -59,6 +60,7 @@ export default {
     },
     populateData () {
       if (this.$store.state.token) {
+        this.$q.loading.show()
         this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
         this.$axios.get(process.env.API + '/groups/' + this.$route.params.id)
           .then((response) => {
@@ -86,8 +88,10 @@ export default {
                 this.attenders.push(this.event.members[gkey].id)
               }
             }
+            this.$q.loading.hide()
           })
           .catch(function (error) {
+            this.$q.loading.hide()
             console.log(error)
           })
       }
