@@ -54,6 +54,10 @@ module.exports = function (ctx) {
     framework: {
       components: [
         'QBtn',
+        'QCard',
+        'QCardMain',
+        'QCardMedia',
+        'QCardTitle',
         'QChatMessage',
         'QChip',
         'QCollapsible',
@@ -64,6 +68,7 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
+        'QItemTile',
         'QOptionGroup',
         'QLayout',
         'QLayoutDrawer',

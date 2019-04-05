@@ -11,15 +11,26 @@
       <q-tabs color="secondary" no-pane-border align="justify" class="q-mt-md">
         <q-tab v-for="(indiv, ndx) in household.individuals" :default="!ndx" :key="indiv.id" slot="title" :name="'tab' + indiv.id" :label="indiv.firstname"/>
         <q-tab-pane v-for="indiv in household.individuals" :key="indiv.id" :name="'tab' + indiv.id">
-          <q-icon v-if="indiv.surname" name="fas fa-fw fa-user" color="primary"></q-icon> <b>{{indiv.title}} {{indiv.firstname}} {{indiv.surname}}</b>&nbsp;<q-btn color="primary" round size="sm" @click.native="editIndividual(indiv)">edit</q-btn><br>
-          <q-icon v-if="indiv.cellphone" name="fas fa-fw fa-mobile-alt" color="primary"></q-icon> {{indiv.cellphone}}<br>
-          <q-icon v-if="indiv.email" name="fas fa-fw fa-envelope" color="primary"></q-icon> {{indiv.email}}<br>
-          <q-icon v-if="indiv.birthdate" name="fas fa-fw fa-birthday-cake" color="primary"></q-icon> {{indiv.birthdate}}<br>
-          <q-icon v-if="indiv.memberstatus" name="fas fa-fw fa-check-square" color="primary"></q-icon> {{indiv.memberstatus}}<br>
-          <span v-if="indiv.memberstatus !== 'child'">
-            <q-btn class="q-ma-md" @click.native="giver(indiv.id)">Planned Giving</q-btn>
-          </span>
-          <br>
+          <q-card>
+            <q-item>
+              <q-item-side>
+                <q-item-tile>
+                  <img v-if="indiv.image" style="border-radius:50%" width="100px" :src="'http://localhost/churchnet/public/vendor/bishopm/images/profile/' + indiv.id + '.png'">
+                  <img v-else class="img-rounded" width="100px" src="http://localhost/churchnet/public/vendor/bishopm/images/face.png">
+                </q-item-tile>
+              </q-item-side>
+              <q-item-main>
+                <q-icon v-if="indiv.surname" name="fas fa-fw fa-user" color="primary"></q-icon> <b>{{indiv.title}} {{indiv.firstname}} {{indiv.surname}}</b>&nbsp;<q-btn color="primary" round size="sm" @click.native="editIndividual(indiv)">edit</q-btn><br>
+                <q-icon v-if="indiv.cellphone" name="fas fa-fw fa-mobile-alt" color="primary"></q-icon> {{indiv.cellphone}}<br>
+                <q-icon v-if="indiv.email" name="fas fa-fw fa-envelope" color="primary"></q-icon> {{indiv.email}}<br>
+                <q-icon v-if="indiv.birthdate" name="fas fa-fw fa-birthday-cake" color="primary"></q-icon> {{indiv.birthdate}}<br>
+                <q-icon v-if="indiv.memberstatus" name="fas fa-fw fa-check-square" color="primary"></q-icon> {{indiv.memberstatus}}<br>
+                <span v-if="indiv.memberstatus !== 'child'">
+                  <q-btn class="q-ma-md" @click.native="giver(indiv.id)">Planned Giving</q-btn>
+                </span>
+              </q-item-main>
+            </q-item>
+          </q-card>
         </q-tab-pane>
         <q-tab key="0" slot="title" name="tabadd" icon="fas fa-fw fa-plus-circle"/>
         <q-tab-pane name="tabadd">
@@ -37,7 +48,6 @@
     <div v-else class="text-center q-mt-md">
       <q-btn color="secondary" to="phoneverification">Please verify your phone number</q-btn>
     </div>
-
   </div>
 </template>
 
