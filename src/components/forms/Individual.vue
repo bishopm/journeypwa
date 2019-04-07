@@ -35,6 +35,16 @@
     <div class="q-mx-md">
       <q-datetime class="q-mb-md" float-label="Date of birth" v-model="form.birthdate" format="YYYY-MM-DD" type="date" />
     </div>
+    <div class="text-center" v-if="form.id">
+      <div class="card-body">
+        <img :src="profilepic" style="border-radius:50%" width="250"/>
+        <div class="card-img-overlay">
+          <button class="btn btn-primary btn-sm" id="pick-avatar">Change image</button>
+        </div>
+      </div>
+      <div class="card-footer text-muted" v-html="message"></div>
+      <avatar-cropper @uploading="handleUploading" @uploaded="handleUploaded" @completed="handleCompleted" @error="handlerError" trigger="#pick-avatar" :upload-url="uploadurl" :upload-headers="uploadHeaders"/>
+    </div>
     <div class="q-ma-md text-center">
       <q-btn color="primary" @click="submit">OK</q-btn>
       <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
@@ -44,7 +54,8 @@
 
 <script>
 import { required, numeric, email } from 'vuelidate/lib/validators'
-// https://github.com/monterail/vuelidate/tree/master/src/validators
+import AvatarCropper from 'vue-avatar-cropper'
+
 export default {
   data () {
     return {
@@ -58,7 +69,21 @@ export default {
         memberstatus: '',
         cellphone: '',
         household_id: this.$store.state.individual.household_id,
-        id: ''
+        id: '',
+        image: ''
+      },
+      uploadurl: null,
+      userAvatar: null,
+      message: null,
+      uploadHeaders: {
+        'Authorization': 'Bearer ' + this.$store.state.token
+      }
+    }
+  },
+  computed: {
+    profilepic () {
+      if (this.form.image) {
+        return process.env.WEB + '/vendor/bishopm/images/profile/' + this.form.id + '.jpg'
       }
     }
   },
@@ -70,7 +95,26 @@ export default {
       cellphone: { numeric }
     }
   },
+  components: {
+    AvatarCropper
+  },
   methods: {
+    handleUploading (form, xhr) {
+      this.message = 'uploading...'
+    },
+    handleUploaded (response) {
+      console.log(response)
+      if (response.status === 'success') {
+        this.user.avatar = response.url
+        this.message = 'user avatar updated'
+      }
+    },
+    handleCompleted (response, form, xhr) {
+      this.message = 'upload completed'
+    },
+    handlerError (message, type, xhr) {
+      this.message = 'Oops! Something went wrong...'
+    },
     submit () {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
@@ -111,6 +155,8 @@ export default {
     if (this.$route.params.action === 'edit') {
       this.form = this.$route.params.individual
     }
+    this.userAvatar = this.profilepic
+    this.uploadurl = process.env.API + '/individuals/' + this.form.id + '/image'
   }
 }
 </script>
@@ -119,5 +165,23 @@ export default {
   a {
     text-decoration: none;
     color:white;
+  }
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .flex .lg {
+    flex-basis: 0;
+    flex-grow: 3;
+    margin: 3px;
+  }
+  .flex .md {
+    flex-basis: 0;
+    margin: 3px;
+    flex-grow: 2;
+  }
+  .basic {
+    max-width: 700px;
+    min-width: 270px;
   }
 </style>

@@ -15,8 +15,8 @@
             <q-item>
               <q-item-side>
                 <q-item-tile>
-                  <img v-if="indiv.image" style="border-radius:50%" width="100px" :src="'http://localhost/churchnet/public/vendor/bishopm/images/profile/' + indiv.id + '.png'">
-                  <img v-else class="img-rounded" width="100px" src="http://localhost/churchnet/public/vendor/bishopm/images/face.png">
+                  <img v-if="indiv.image" style="border-radius:50%" width="100px" :src="'http://localhost/churchnet/public/vendor/bishopm/images/profile/' + indiv.image">
+                  <img v-else class="img-rounded" width="100px" src="http://localhost/churchnet/public/vendor/bishopm/images/journeyface.png">
                 </q-item-tile>
               </q-item-side>
               <q-item-main>
