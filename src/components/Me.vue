@@ -15,8 +15,8 @@
             <q-item>
               <q-item-side>
                 <q-item-tile>
-                  <img v-if="indiv.image" style="border-radius:50%" width="100px" :src="'http://localhost/churchnet/public/vendor/bishopm/images/profile/' + indiv.image">
-                  <img v-else class="img-rounded" width="100px" src="http://localhost/churchnet/public/vendor/bishopm/images/journeyface.png">
+                  <img v-if="indiv.image" style="border-radius:50%" width="100px" :src="url + 'profile/' + indiv.image">
+                  <img v-else class="img-rounded" width="100px" :src="url + 'journeyface.png'">
                 </q-item-tile>
               </q-item-side>
               <q-item-main>
@@ -55,10 +55,12 @@
 export default {
   data () {
     return {
-      household: {}
+      household: {},
+      url: ''
     }
   },
   mounted () {
+    this.url = process.env.WEB + '/vendor/bishopm/images/'
     if (!this.$store.state.individual.household) {
       this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
     }

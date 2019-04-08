@@ -5,6 +5,7 @@ export default [
     component: () => import('layouts/default'),
     children: [
       { name: 'blogs', path: '/blogs', component: () => import('components/Blogs'), meta: {auth: true} },
+      { name: 'church', path: '/church', component: () => import('components/Church'), meta: {auth: true} },
       { name: 'combined', path: '/adduser', component: () => import('components/forms/Combined'), meta: {auth: true} },
       { name: 'content', path: '/content/:ctype/:id?', component: () => import('components/Content'), meta: {auth: true} },
       { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: {auth: true} },

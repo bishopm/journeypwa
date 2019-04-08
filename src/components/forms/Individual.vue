@@ -39,11 +39,12 @@
       <div class="card-body">
         <img :src="profilepic" style="border-radius:50%" width="250"/>
         <div class="card-img-overlay">
-          <button class="btn btn-primary btn-sm" id="pick-avatar">Change image</button>
+          <q-btn color="primary" id="pick-avatar">{{buttontext}}</q-btn>
+          <q-btn v-if="form.image" @click="removeImage" class="q-ml-md" color="negative">Delete image</q-btn>
         </div>
       </div>
       <div class="card-footer text-muted" v-html="message"></div>
-      <avatar-cropper @uploading="handleUploading" @uploaded="handleUploaded" @completed="handleCompleted" @error="handlerError" trigger="#pick-avatar" :upload-url="uploadurl" :upload-headers="uploadHeaders"/>
+      <avatar-cropper  :labels="{submit: 'OK', cancel: 'Cancel'}" @uploading="handleUploading" @uploaded="handleUploaded" @completed="handleCompleted" @error="handlerError" trigger="#pick-avatar" :upload-url="uploadurl" :upload-headers="uploadHeaders"/>
     </div>
     <div class="q-ma-md text-center">
       <q-btn color="primary" @click="submit">OK</q-btn>
@@ -83,7 +84,14 @@ export default {
   computed: {
     profilepic () {
       if (this.form.image) {
-        return process.env.WEB + '/vendor/bishopm/images/profile/' + this.form.id + '.jpg'
+        return process.env.WEB + '/vendor/bishopm/images/profile/' + this.form.image
+      }
+    },
+    buttontext () {
+      if (this.form.image) {
+        return 'Change image'
+      } else {
+        return 'Add profile image'
       }
     }
   },
@@ -99,18 +107,22 @@ export default {
     AvatarCropper
   },
   methods: {
+    removeImage () {
+      this.form.image = ''
+      this.$q.notify('Press OK to make this change permanent')
+    },
     handleUploading (form, xhr) {
       this.message = 'uploading...'
     },
     handleUploaded (response) {
-      console.log(response)
       if (response.status === 'success') {
-        this.user.avatar = response.url
         this.message = 'user avatar updated'
       }
     },
     handleCompleted (response, form, xhr) {
       this.message = 'upload completed'
+      this.$store.commit('setIndividual', response)
+      this.$router.push('/me')
     },
     handlerError (message, type, xhr) {
       this.message = 'Oops! Something went wrong...'
@@ -134,6 +146,7 @@ export default {
             title: this.form.title,
             memberstatus: this.form.memberstatus,
             email: this.form.email,
+            image: this.form.image,
             household_id: this.form.household_id,
             id: this.form.id
           })

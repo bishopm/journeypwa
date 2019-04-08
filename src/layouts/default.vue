@@ -14,6 +14,10 @@
     <q-layout-drawer side="right" v-model="rightDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
         <q-collapsible v-if="societyname()" opened class="text-center society" :label="societyname() + ' Society'">
+          <q-item to="/church">
+            <q-item-side icon="fas fa-fw fa-users" />
+            <q-item-main label="My church" sublabel="Names and faces" />
+          </q-item>
           <q-item v-if="messages()" to="/messages">
             <q-item-side icon="message" />
             <q-item-main :label="'Messages: ' + messages()" sublabel="Inbox messages" />
