@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('New feature: profile pictures and church gallery')
-var version = JSON.stringify('0.1.8.2')
+var vnotes = JSON.stringify('Special services lectionary')
+var version = JSON.stringify('0.1.8.4')
 
 module.exports = function (ctx) {
   return {

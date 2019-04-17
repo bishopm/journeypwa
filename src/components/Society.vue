@@ -21,7 +21,7 @@ export default {
     'leafletmap': leafletmap
   },
   mounted () {
-    this.$axios.get(process.env.API + '/circuits/' + this.$store.state.circuitid + '/societies/' + this.$route.params.id)
+    this.$axios.get(process.env.API + '/societies/' + this.$route.params.id)
       .then((response) => {
         this.society = response.data
         if (this.society.website) {

@@ -199,96 +199,98 @@ export default {
     } else {
       this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
     }
-    this.$q.loading.show()
     this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-    this.$axios.post(process.env.API + '/feeditemlist',
-      {
-        society: this.$store.state.societyid,
-        individual: this.individual
-      })
-      .then(response => {
-        this.$store.commit('setFeeditems', response.data)
-        if (response.data.diary) {
-          this.$store.commit('setDiary', true)
-        } else {
-          this.$store.commit('setDiary', false)
-        }
-        if (response.data.groups) {
-          this.$store.commit('setGroups', true)
-        } else {
-          this.$store.commit('setGroups', false)
-        }
-        if ((response.data.events) && (response.data.events.length)) {
-          this.$store.commit('setEvents', true)
-        } else {
-          this.$store.commit('setEvents', false)
-        }
-        if ((response.data.diary) && (response.data.diary.length)) {
-          this.$store.commit('setDiary', true)
-        } else {
-          this.$store.commit('setDiary', false)
-        }
-        if (response.data.community) {
-          this.$store.commit('setCommunity', true)
-        } else {
-          this.$store.commit('setCommunity', false)
-        }
-        if (response.data.media) {
-          this.$store.commit('setMedia', true)
-        } else {
-          this.$store.commit('setMedia', false)
-        }
-        if (response.data.practice) {
-          this.$store.commit('setPractice', true)
-        } else {
-          this.$store.commit('setPractice', false)
-        }
-        if (response.data.blog) {
-          this.$store.commit('setBlogs', true)
-        } else {
-          this.$store.commit('setBlogs', false)
-        }
-        if ((response.data.reminders) && (response.data.reminders.length)) {
-          this.$store.commit('setReminders', true)
-        } else {
-          this.$store.commit('setReminders', false)
-        }
-        if (response.data.sermon) {
-          this.$store.commit('setSermons', true)
-        } else {
-          this.$store.commit('setSermons', false)
-        }
-        if (this.phoneverified && this.$store.state.token) {
-          this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-          this.$axios.post(process.env.API + '/phone',
-            {
-              phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
-              society_id: localStorage.getItem('JOURNEY_Society')
-            })
-            .then(response => {
-              if (response.data.household) {
-                this.$store.commit('setIndividual', response.data)
-                if (!localStorage.getItem('JOURNEY_Individual')) {
-                  localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data))
+    if (this.$store.state.societyid) {
+      this.$q.loading.show()
+      this.$axios.post(process.env.API + '/feeditemlist',
+        {
+          society: this.$store.state.societyid,
+          individual: this.individual
+        })
+        .then(response => {
+          this.$store.commit('setFeeditems', response.data)
+          if (response.data.diary) {
+            this.$store.commit('setDiary', true)
+          } else {
+            this.$store.commit('setDiary', false)
+          }
+          if (response.data.groups) {
+            this.$store.commit('setGroups', true)
+          } else {
+            this.$store.commit('setGroups', false)
+          }
+          if ((response.data.events) && (response.data.events.length)) {
+            this.$store.commit('setEvents', true)
+          } else {
+            this.$store.commit('setEvents', false)
+          }
+          if ((response.data.diary) && (response.data.diary.length)) {
+            this.$store.commit('setDiary', true)
+          } else {
+            this.$store.commit('setDiary', false)
+          }
+          if (response.data.community) {
+            this.$store.commit('setCommunity', true)
+          } else {
+            this.$store.commit('setCommunity', false)
+          }
+          if (response.data.media) {
+            this.$store.commit('setMedia', true)
+          } else {
+            this.$store.commit('setMedia', false)
+          }
+          if (response.data.practice) {
+            this.$store.commit('setPractice', true)
+          } else {
+            this.$store.commit('setPractice', false)
+          }
+          if (response.data.blog) {
+            this.$store.commit('setBlogs', true)
+          } else {
+            this.$store.commit('setBlogs', false)
+          }
+          if ((response.data.reminders) && (response.data.reminders.length)) {
+            this.$store.commit('setReminders', true)
+          } else {
+            this.$store.commit('setReminders', false)
+          }
+          if (response.data.sermon) {
+            this.$store.commit('setSermons', true)
+          } else {
+            this.$store.commit('setSermons', false)
+          }
+          if (this.phoneverified && this.$store.state.token) {
+            this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+            this.$axios.post(process.env.API + '/phone',
+              {
+                phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+                society_id: localStorage.getItem('JOURNEY_Society')
+              })
+              .then(response => {
+                if (response.data.household) {
+                  this.$store.commit('setIndividual', response.data)
+                  if (!localStorage.getItem('JOURNEY_Individual')) {
+                    localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data))
+                  }
+                  this.$store.commit('setChats', response.data.chats)
                 }
-                this.$store.commit('setChats', response.data.chats)
-              }
-            })
-            .catch(function (error) {
-              if (error.response.status === 401) {
-                localStorage.removeItem('JOURNEY_Token')
-                window.location.reload()
-              } else {
-                console.log(error)
-              }
-            })
-        }
-        this.$q.loading.hide()
-      })
-      .catch(function (error) {
-        console.log(error)
-        // this.$q.loading.hide()
-      })
+              })
+              .catch(function (error) {
+                if (error.response.status === 401) {
+                  localStorage.removeItem('JOURNEY_Token')
+                  window.location.reload()
+                } else {
+                  console.log(error)
+                }
+              })
+          }
+          this.$q.loading.hide()
+        })
+        .catch(function (error) {
+          console.log(error)
+          // this.$q.loading.hide()
+        })
+    }
   }
 }
 </script>
