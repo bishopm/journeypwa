@@ -2,8 +2,7 @@
   <div class="q-mt-xs q-ma-md">
     <q-list>
       <q-item v-for="(sub, index) in subscriptions" :key="index">
-        <q-item-section>{{sub.title}}</q-item-section>
-        <q-item-section avatar>{{sub.subs}}</q-item-section>
+        <q-checkbox right-label :disable="sub.subval > 1" v-model="tick" :label="sub.title" />
       </q-item>
     </q-list>
   </div>
@@ -13,7 +12,8 @@
 export default {
   data () {
     return {
-      subscriptions: []
+      subscriptions: [],
+      tick: null
     }
   },
   mounted () {
@@ -21,16 +21,15 @@ export default {
       this.$router.push({ name: 'home' })
     }
     for (var sndx in this.$store.state.feeditems.feeds) {
-      var thissub = this.$store.state.feeditems.feeds[sndx]
-      if (thissub.subs === '') {
-        thissub.subval = 0
-      } else if (thissub.subs === 'Bishopm\Churchnet\Models\User') {
-        thissub.subval = 1
+      if (!this.$store.state.feeditems.feeds[sndx].subs) {
+        this.$store.state.feeditems.feeds[sndx].subval = 0
+      } else if (this.$store.state.feeditems.feeds[sndx].subs === 'Bishopm\Churchnet\Models\User') {
+        this.$store.state.feeditems.feeds[sndx].subval = 1
       } else {
-        thissub.subval = 2
+        this.$store.state.feeditems.feeds[sndx].subval = 2
       }
+      this.subscriptions.push(this.$store.state.feeditems.feeds[sndx])
     }
-    this.subscriptions.push(thissub)
   }
 }
 </script>
