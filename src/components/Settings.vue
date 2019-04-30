@@ -1,28 +1,43 @@
 <template>
-  <div class="layout-padding">
-    <h3 class="text-center">App settings</h3>
+  <div class="q-ma-lg">
+    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">App settings</p>
     <form>
-      <q-field icon="fas fa-fw fa-comment-alt" label="Notifications" class="q-my-md">
-        Notification permission: <b>{{webpush}}</b>
+      <q-field class="q-my-md" borderless label="Notifications" stack-label>
+        <template v-slot:prepend>
+          <q-icon name="fa fa-comment-alt" />
+        </template>
+        <template v-slot:control>
+          <div class="self-center full-width no-outline" tabindex="0">Notification permission: <b>{{webpush}}</b></div>
+        </template>
       </q-field>
-      <q-field icon="fas fa-fw fa-bible" label="Bible version" class="q-my-md">
-        <q-option-group @input="chooseTranslation" type="radio" placeholder="Choose a Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' }, { label: 'The Message', value: 'eng-MSG' } ]"/>
-      </q-field>
-      <q-field icon="fas fa-fw fa-church" label="Church" class="q-my-md">
-        <q-select placeholder="Select church" v-model="church" :options="churchOptions"/>
-      </q-field>
-      <q-field icon="fas fa-fw fa-sitemap" label="District" class="q-my-md">
-        <q-select @input="chooseDistrict" placeholder="Select a district" v-model="district" :options="districtOptions"/>
-      </q-field>
-      <q-field icon="fas fa-fw fa-users" label="Circuit" class="q-my-md">
-        <q-select @input="chooseCircuit" placeholder="Select a circuit" v-model="circuit" :options="circuitOptions"/>
-      </q-field>
-      <q-field icon="fas fa-fw fa-map-marker-alt" label="Society" class="q-my-md">
-        <q-select @input="chooseSociety" placeholder="Select a society" v-model="society" :options="societyOptions"/>
-      </q-field>
+      <q-select borderless class="q-my-md" label="Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' }, { label: 'The Message', value: 'eng-MSG' } ]" map-options emit-value>
+        <template v-slot:prepend>
+          <q-icon name="fas fa-fw fa-bible" />
+        </template>
+      </q-select>
+      <q-select borderless class="q-my-md" label="Church" v-model="church" :options="churchOptions" map-options emit-value>
+        <template v-slot:prepend>
+          <q-icon name="fas fa-fw fa-church" />
+        </template>
+      </q-select>
+      <q-select borderless class="q-my-md" label="Synod" v-model="district" :options="districtOptions" map-options emit-value>
+        <template v-slot:prepend>
+          <q-icon name="fas fa-fw fa-sitemap" />
+        </template>
+      </q-select>
+      <q-select borderless class="q-my-md" label="Circuit" v-model="circuit" :options="circuitOptions" map-options emit-value>
+        <template v-slot:prepend>
+          <q-icon name="fas fa-fw fa-users" />
+        </template>
+      </q-select>
+      <q-select borderless class="q-my-md" label="Society" v-model="society" :options="societyOptions" map-options emit-value>
+        <template v-slot:prepend>
+          <q-icon name="fas fa-fw fa-map-marker-alt" />
+        </template>
+      </q-select>
     </form>
     <div class="text-center" v-if="society > 0">
-      <q-btn class="q-my-md" color="secondary" @click.native="goHome()">All done! Back to home page</q-btn>
+      <q-btn class="q-my-md" color="secondary" @click.native="goHome()">Back to home page</q-btn>
     </div>
   </div>
 </template>
@@ -163,7 +178,7 @@ export default {
 </script>
 
 <style>
-.layout-padding {
+.q-ma-md {
   padding-top:0;
 }
 p {

@@ -1,19 +1,22 @@
 <template>
   <div>
-    <p class="q-mt-md caption text-center">Sunday's lectionary readings</p>
     <q-list v-if="readings" striped class="no-border">
-      <p class="caption text-center q-my-md" v-if="date"><b>{{date}}</b><br><small>({{description}})</small></p>
-      <q-item v-for="reading in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)">
-        <q-item-main class="text-center" v-html="cleanup(reading)"/>
+      <p v-if="date" class="bg-secondary text-white q-ma-md q-pa-sm header text-center"><b>Lectionary readings: {{date}}</b><br>({{description}})</p>
+      <q-item v-for="(reading, index) in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)" :class="{striped: index % 2 === 1}">
+        <q-item-section class="text-center">
+          <q-item-label v-html="cleanup(reading)"/>
+        </q-item-section>
       </q-item>
     </q-list>
     <div v-if="isextras">
       <h4 class="text-center">Special services this week</h4>
       <div v-for="(extra, key) in extras" :key="key">
-        <q-list v-if="readings" striped class="no-border">
+        <q-list v-if="readings" class="no-border">
           <p class="caption text-center"><b>{{key}}</b><br><small>({{extra.description}})</small></p>
           <q-item v-for="reading in extra.readings.split(';')" :key="reading" :to="'/reading/' + encodeURI(reading)">
-            <q-item-main class="text-center" v-html="cleanup(reading)"/>
+            <q-item-section class="text-center">
+              <q-item-label v-html="cleanup(reading)"/>
+            </q-item-section>
           </q-item>
         </q-list>
       </div>
@@ -78,8 +81,5 @@ h4 {
 }
 p.caption {
   line-height: 12px;
-}
-.q-list-striped > .q-item:nth-child(even) {
-  background-color: #E6f2d9;
 }
 </style>

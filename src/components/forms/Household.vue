@@ -1,25 +1,25 @@
 <template>
-  <div class="layout-padding">
-    <div v-if="$route.params.action" class="q-mx-md q-mt-md text-center caption">
+  <div class="q-ma-md">
+    <div v-if="$route.params.action" class="q-mx-md q-mt-md text-center bg-secondary text-white q-py-md">
       {{$route.params.action.toUpperCase()}} HOUSEHOLD <small>{{$store.state.societyname}} society</small>
     </div>
     <div class="q-ma-md">
       <q-field :error="$v.form.addressee.$error" error-label="The addressee field is required">
-        <q-input float-label="Addressee" v-model="form.addressee" @blur="$v.form.addressee.$touch()" :error="$v.form.addressee.$error" />
+        <q-input label="Addressee" v-model="form.addressee" @blur="$v.form.addressee.$touch()" :error="$v.form.addressee.$error" />
       </q-field>
     </div>
     <div class="q-ma-md">
-      <q-input float-label="Residential Address" v-model="form.addr1"/>
+      <q-input label="Residential Address" v-model="form.addr1"/>
       <q-input v-model="form.addr2"/>
       <q-input v-model="form.addr3"/>
     </div>
     <div class="q-ma-md">
       <q-field :error="$v.form.homephone.$error" error-label="Phone numbers must be numeric">
-        <q-input float-label="Home phone" v-model="form.homephone" @blur="$v.form.homephone.$touch()" :error="$v.form.homephone.$error" />
+        <q-input label="Home phone" v-model="form.homephone" @blur="$v.form.homephone.$touch()" :error="$v.form.homephone.$error" />
       </q-field>
     </div>
     <div class="q-ma-md">
-      <q-select float-label="Household cellphone" v-model="form.householdcell" :options="housecellOptions"/>
+      <q-select label="Household cellphone" v-model="form.householdcell" :options="housecellOptions"/>
     </div>
     <div class="q-ma-md text-center">
       <q-btn color="primary" @click="submit">OK</q-btn>

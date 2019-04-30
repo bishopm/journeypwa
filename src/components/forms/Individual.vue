@@ -1,39 +1,39 @@
 <template>
-  <div class="layout-padding">
-    <div v-if="$route.params.action" class="q-mx-md q-mt-md text-center caption">
+  <div class="q-ma-md">
+    <div v-if="$route.params.action" class="bg-secondary q-mx-md q-mt-md text-center text-white q-py-md">
       {{$route.params.action.toUpperCase()}} INDIVIDUAL
     </div>
-    <div class="q-mx-md">
-      <q-field :error="$v.form.surname.$error" error-label="The surname field is required">
-        <q-input float-label="Surname" v-model="form.surname" @blur="$v.form.surname.$touch()" :error="$v.form.surname.$error" />
-      </q-field>
+    <div class="q-ma-md">
+      <q-input outlined hide-bottom-space error-message="Surname is required" label="Surname" v-model="form.surname" :rules="[ val => val.length >= 1 ]"/>
     </div>
-    <div class="q-mx-md">
-      <q-field :error="$v.form.firstname.$error" error-label="The firstname field is required">
-        <q-input float-label="First name" v-model="form.firstname" @blur="$v.form.firstname.$touch()" :error="$v.form.firstname.$error" />
-      </q-field>
+    <div class="q-ma-md">
+      <q-input outlined hide-bottom-space error-message="The firstname field is required" label="First name" v-model="form.firstname" :rules="[ val => val.length >= 1 ]" />
     </div>
-    <div class="q-mx-md">
-      <q-field :error="$v.form.email.$error" error-label="Must be a valid email address">
-        <q-input float-label="Email" v-model="form.email" @blur="$v.form.email.$touch()" :error="$v.form.email.$error" />
-      </q-field>
+    <div class="q-ma-md">
+      <q-input outlined hide-bottom-space label="Email" error-message="Must be a valid email address" v-model="form.email"/>
     </div>
-    <div class="q-mx-md">
-      <q-field :error="$v.form.cellphone.$error" error-label="Phone numbers must be numeric">
-        <q-input float-label="Cellphone" v-model="form.cellphone" @blur="$v.form.cellphone.$touch()" :error="$v.form.cellphone.$error" />
-      </q-field>
+    <div class="q-ma-md">
+      <q-input outlined hide-bottom-space error-message="Phone numbers must be numeric" label="Cellphone" v-model="form.cellphone" @blur="$v.form.cellphone.$touch()" :error="$v.form.cellphone.$error" />
     </div>
-    <div class="q-mx-md">
-      <q-select float-label="Sex" v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]"/>
+    <div class="q-ma-md">
+      <q-select label="Sex" outlined v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]" map-options emit-value/>
     </div>
-    <div class="q-mx-md">
-      <q-select float-label="Title" v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
+    <div class="q-ma-md">
+      <q-select label="Title" outlined v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
     </div>
-    <div class="q-mx-md">
-      <q-select float-label="Membership" v-model="form.memberstatus" :options="[{ label: 'Child', value: 'child' }, { label: 'Member', value: 'member' }, { label: 'Non-member', value: 'non-member' }]"/>
+    <div class="q-ma-md">
+      <q-select label="Membership" outlined v-model="form.memberstatus" :options="[{ label: 'Child', value: 'child' }, { label: 'Member', value: 'member' }, { label: 'Non-member', value: 'non-member' }]"/>
     </div>
-    <div class="q-mx-md">
-      <q-datetime class="q-mb-md" float-label="Date of birth" v-model="form.birthdate" format="YYYY-MM-DD" type="date" />
+    <div class="q-ma-md">
+      <q-input outlined label="Date of birth" v-model="form.birthdate" mask="date" :rules="['date']">
+        <template v-slot:append>
+          <q-icon name="fa fa-calendar" class="cursor-pointer">
+            <q-popup-proxy>
+              <q-date v-model="form.birthdate" />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     </div>
     <div class="text-center" v-if="form.id">
       <div class="card-body">
@@ -61,7 +61,7 @@ export default {
   data () {
     return {
       form: {
-        surname: this.$store.state.individual.household.sortsurname,
+        surname: '',
         firstname: '',
         birthdate: '',
         title: '',
@@ -69,7 +69,7 @@ export default {
         sex: 'female',
         memberstatus: '',
         cellphone: '',
-        household_id: this.$store.state.individual.household_id,
+        household_id: 0,
         id: '',
         image: ''
       },
@@ -85,6 +85,8 @@ export default {
     profilepic () {
       if (this.form.image) {
         return process.env.WEB + '/vendor/bishopm/images/profile/' + this.form.image
+      } else {
+        return ''
       }
     },
     buttontext () {
@@ -167,6 +169,9 @@ export default {
     }
     if (this.$route.params.action === 'edit') {
       this.form = this.$route.params.individual
+    } else {
+      this.form.surname = this.$store.state.individual.household.sortsurname
+      this.form.household_id = this.$store.state.individual.household_id
     }
     this.userAvatar = this.profilepic
     this.uploadurl = process.env.API + '/individuals/' + this.form.id + '/image'

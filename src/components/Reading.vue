@@ -1,17 +1,19 @@
 <template>
   <div class="text-center" v-if="readings.length">
-    <q-tabs v-model="selectedTab" color="primary" class="no-border" q-tabs-two-lines>
-      <q-tab v-for="readingHeader in readingHeaders" slot="title" :name="readingHeader" :key="readingHeader">{{cleanup(readingHeader)}}</q-tab>
-      <q-tab-pane v-for="reading in readings" :key="reading.title" :name="reading.title" class="no-border">
+    <q-tabs v-model="selectedTab" active-color="white" indicator-color="primary" class="no-border bg-secondary text-primary" q-tabs-two-lines>
+      <q-tab v-for="readingHeader in readingHeaders" :name="readingHeader" :key="readingHeader">{{cleanup(readingHeader)}}</q-tab>
+    </q-tabs>
+    <q-tab-panels v-model="selectedTab" animated class="q-ma-sm">
+      <q-tab-panel v-for="reading in readings" :key="reading.title" :name="reading.title" class="no-border">
         <div v-for="section in reading.reading" :key="section['reading']" class="text-justify">
-          <div class="q-my-lg" v-if="section['type']=='optional'"><b>Optional verses</b>
+          <div class="q-my-md" v-if="section['type']=='optional'"><b>Optional verses</b>
             <i><div v-html="section['text']"></div></i>
           </div>
-          <div v-else class="q-my-lg" v-html="section['text']"></div>
+          <div v-else class="q-my-md" v-html="section['text']"></div>
         </div>
-      </q-tab-pane>
-      <small><div class="text-justify layout-padding" v-html="readings[0].reading[0].copyright"></div></small>
-    </q-tabs>
+      </q-tab-panel>
+    </q-tab-panels>
+    <small><div class="text-justify q-ma-md" v-html="readings[0].reading[0].copyright"></div></small>
   </div>
 </template>
 
@@ -46,7 +48,7 @@ export default {
       .then((response) => {
         for (var value in response.data) {
           this.readingHeaders.push(value)
-          this.readings.push({title: value, reading: response.data[value]})
+          this.readings.push({ title: value, reading: response.data[value] })
         }
         this.selectedTab = this.readingHeaders[0]
         this.$q.loading.hide()

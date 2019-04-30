@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs layout-padding">
+  <div class="q-mt-xs q-ma-md">
     <p v-if="song" class="text-center caption">{{song.title}}</p>
     <div class="q-mx-md" v-if="song" v-html="song.body"></div>
   </div>

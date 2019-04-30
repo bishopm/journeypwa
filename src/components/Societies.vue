@@ -1,12 +1,14 @@
 <template>
   <div>
     <q-list v-if="societies" class="no-border">
-      <q-list-header class="text-center">Services this Sunday: {{sunday}}</q-list-header>
+      <q-item-label header class="text-center">Services this Sunday: {{sunday}}</q-item-label>
       <q-item v-for="society in societies" :key="society.id" :to="'/societies/' + society.id">
-        <q-item-main>
-          {{society.society}}
-        </q-item-main>
-        <q-item-side class="text-right">
+        <q-item-section>
+          <q-item-label>
+            {{society.society}}
+          </q-item-label>
+        </q-item-section>
+        <q-item-section side>
           <p v-for="service in society['services']" :key="service.id">
             <span v-if="service.person">
               <small>{{service.person.title}} {{service.person.firstname}} {{service.person.surname}}&nbsp;
@@ -14,7 +16,7 @@
               </small>
             </span>&nbsp;&nbsp;<b>{{service.servicetime}}</b>
           </p>
-        </q-item-side>
+        </q-item-section>
       </q-item>
       <p class="text-center q-mt-lg" v-if="!societies">No societies have been added for this circuit</p>
     </q-list>

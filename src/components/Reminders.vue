@@ -1,10 +1,10 @@
 <template>
   <div class="q-mt-xs">
     <q-list striped v-if="notifications" no-border>
-      <q-list-header class="text-center">Messages</q-list-header>
+      <p class="text-center header">Messages</p>
       <q-item v-for="notification in notifications" :key="notification.id">
-        <q-item-main class="text-justify"><small v-html="notification.message"></small></q-item-main>
-        <q-item-side @click.native="deleteme(notification.id)" class="cursor-pointer q-pl-sm text-center" color="red" icon="fa fa-times"><br><small>{{notification.ndate}}<br>{{notification.ntime}}</small></q-item-side>
+        <q-item-section class="text-justify"><small v-html="notification.message"></small></q-item-section>
+        <q-item-section avatar @click.native="deleteme(notification.id)" class="cursor-pointer q-pl-sm text-center" color="red" icon="fa fa-times"><br><small>{{notification.ndate}}<br>{{notification.ntime}}</small></q-item-section>
       </q-item>
     </q-list>
     <div class="q-ma-md">{{message}}</div>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" class="layout-padding">
+  <div v-if="settings" class="q-ma-md">
     <div class="caption text-center q-mt-md">
       <q-btn v-if="!phoneverified" color="secondary" to="phoneverification">Please verify your phone number</q-btn>
       <p v-if="permission === 'denied'">Notifications are disabled. Click <router-link to="settings">HERE</router-link> to fix this</p>
@@ -34,13 +34,21 @@
         </router-link>
       </div>
       <div v-if="menu_blogs()" class="col-6 text-center q-mb-md">
-        <router-link to="/blogs" class="text-white" style="text-decoration:none;">
+        <router-link v-if="this.$store.state.feeditems.blog.length > 1" to="/blogs" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Blog</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-edit" size="3rem" />
+        </router-link>
+        <router-link v-else to="/blogposts/0" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Blog</div>
           <q-icon class="text-primary" name="fas fa-fw fa-edit" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_sermons()" class="col-6 text-center q-mb-md">
-        <router-link to="/sermons" class="text-white" style="text-decoration:none;">
+        <router-link v-if="this.$store.state.feeditems.sermon.length > 1" to="/sermonsites" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Sermon</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-microphone" size="3rem" />
+        </router-link>
+        <router-link v-else to="/sermons/0" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Sermon</div>
           <q-icon class="text-primary" name="fas fa-fw fa-microphone" size="3rem" />
         </router-link>

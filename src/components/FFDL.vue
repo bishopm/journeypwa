@@ -1,11 +1,13 @@
 <template>
-  <div class="text-center layout-padding">
+  <div class="text-center q-ma-md">
     <div v-if="devotion" class="q-mt-md">
-      <span class="caption" v-html="devotion.title"></span>
-      <p>{{devotion.pubdate}}</p>
+      <div class="bg-secondary text-white text-bold q-pt-xs">
+        <span class="caption" v-html="devotion.title"></span>
+        <p>{{devotion.pubdate}}</p>
+      </div>
       <div class="text-justify" v-html="devotion.content"></div>
     </div>
-    <div class="text-justify"><small>Faith for daily living was first published in January 1961, an initiative of Rev Arnold Walker. Visit <a target="_blank" href="http://www.faithfordailyliving.org">www.faithfordailyliving.org</a> for more devotionals. Used by permission.</small></div>
+    <div class="text-justify"><small>Faith for daily living was first published in January 1961, an initiative of Rev Arnold Walker. Visit <a target="_blank" class="text-primary" href="http://www.faithfordailyliving.org">www.faithfordailyliving.org</a> for more devotionals. Used by permission.</small></div>
   </div>
 </template>
 

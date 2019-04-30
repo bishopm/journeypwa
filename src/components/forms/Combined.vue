@@ -1,17 +1,17 @@
 <template>
-  <div class="layout-padding">
+  <div class="q-ma-md">
     <div class="q-mx-md q-mt-md text-center caption">
       Add my details to the {{$store.state.societyname}} member database
       <p id="instructions">Please complete this brief form - you can add other details and other members of your household later.</p>
     </div>
     <div class="q-ma-md">
       <q-field :error="$v.form.firstname.$error" error-label="The firstname field is required">
-        <q-input float-label="First name" v-model="form.firstname" @blur="$v.form.firstname.$touch()" :error="$v.form.firstname.$error" />
+        <q-input label="First name" v-model="form.firstname" @blur="$v.form.firstname.$touch()" :error="$v.form.firstname.$error" />
       </q-field>
     </div>
     <div class="q-ma-md">
       <q-field :error="$v.form.surname.$error" error-label="The surname field is required">
-        <q-input float-label="Surname" v-model="form.surname" @blur="$v.form.surname.$touch()" :error="$v.form.surname.$error" />
+        <q-input label="Surname" v-model="form.surname" @blur="$v.form.surname.$touch()" :error="$v.form.surname.$error" />
       </q-field>
     </div>
     <div class="q-ma-md">

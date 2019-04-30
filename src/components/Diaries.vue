@@ -1,14 +1,21 @@
 <template>
-  <div class="layout-padding">
-    <p class="text-center caption">{{entity}} Diary</p>
+  <div class="q-ma-md">
+    <p class="bg-secondary q-py-md text-white text-bold text-center caption">{{entity}} Diary</p>
     <q-list v-if="events" no-border>
       <q-item v-for="event in events" :key="event.id">
-        <q-item-side class="text-left">
-          <small>{{formatme(event.start)}}<br><router-link :to="{ name: 'society', params: { id: event.society_id }}">{{event.society}}</router-link></small>
-        </q-item-side>
-        <q-item-main class="text-right">
-          <b>{{event.details}}</b>
-        </q-item-main>
+        <q-item-section>
+          <q-item-label>
+            {{formatme(event.start)}}
+          </q-item-label>
+          <q-item-label caption>
+            <router-link class="text-primary" :to="{ name: 'society', params: { id: event.society_id }}">{{event.society}}</router-link>
+          </q-item-label>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>
+            <b>{{event.details}}</b>
+          </q-item-label>
+        </q-item-section>
       </q-item>
     </q-list>
     <p class="text-center" v-if="!events">No upcoming events have been added</p>
@@ -44,7 +51,7 @@ export default {
 </script>
 
 <style>
-.layout-padding {
+.q-ma-md {
   padding-top:0;
 }
 h4 {

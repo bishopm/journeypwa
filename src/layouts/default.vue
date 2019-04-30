@@ -1,109 +1,196 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-layout-header>
-      <q-toolbar color="black" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
+    <q-header>
+      <q-toolbar class="bg-black text-white" :glossy="$q.theme === 'mat'" :inverted="$q.theme === 'ios'">
         <q-toolbar-title>
-          <router-link to="/" class="text-white" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs fas" name="fas fa-hiking" color="white"/> Journey</router-link>
-          <div class="q-ml-xs" slot="subtitle">together on the way</div>
+          <router-link to="/" class="text-white text-bold" style="text-decoration:none;"><q-icon size="1.2rem" class="q-mb-xs fas" name="fas fa-hiking" color="white"/> Journey</router-link>
         </q-toolbar-title>
         <q-btn flat dense round @click="rightDrawerOpen = !rightDrawerOpen" aria-label="Menu">
           <q-icon name="fas fa-bars" />
         </q-btn>
       </q-toolbar>
-    </q-layout-header>
-    <q-layout-drawer side="right" v-model="rightDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
+    </q-header>
+    <q-drawer side="right" v-model="rightDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
-        <q-collapsible v-if="societyname()" opened class="text-center society" :label="societyname() + ' Society'">
+        <q-expansion-item v-if="societyname()" v-model="expanded" class="text-center society" :label="societyname() + ' Society'">
           <q-item to="/church">
-            <q-item-side icon="fas fa-fw fa-users" />
-            <q-item-main label="My church" sublabel="Names and faces" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-users" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>My church</q-item-label>
+              <q-item-label caption>Names and faces</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item v-if="messages()" to="/messages">
-            <q-item-side icon="message" />
-            <q-item-main :label="'Messages: ' + messages()" sublabel="Inbox messages" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="message" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Messages: {{messages()}}</q-item-label>
+              <q-item-label caption>Inbox messages</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item v-if="menu_community()" to="/community">
-            <q-item-side icon="people_outline" />
-            <q-item-main label="Community" sublabel="Community news and needs" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="people_outline" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Community</q-item-label>
+              <q-item-label caption>Community news and needs</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item to="/ffdl">
-            <q-item-side icon="fas fa-fw fa-pray" />
-            <q-item-main label="Devotions" sublabel="Faith for daily living" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-pray" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Devotions</q-item-label>
+              <q-item-label caption>Faith for daily living</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item v-if="menu_blogs()" to="/blogs">
-            <q-item-side icon="fas fa-fw fa-edit" />
-            <q-item-main label="Blog" sublabel="From our blog" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-edit" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Blog</q-item-label>
+              <q-item-label caption>From our blog</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item v-if="menu_sermons()" to="/sermons">
-            <q-item-side icon="fas fa-fw fa-microphone" />
-            <q-item-main label="Sermon" sublabel="Last week's sermon" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-microphone" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Sermon</q-item-label>
+              <q-item-label caption>Last week's sermon</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item to="/diary">
-            <q-item-side icon="fas fa-fw fa-calendar-alt" />
-            <q-item-main label="Calendar" sublabel="Events for your diary" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-calendar-alt" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Calendar</q-item-label>
+              <q-item-label caption>Events for your diary</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item v-if="menu_groups()" to="/content/groups">
-            <q-item-side icon="fas fa-fw fa-users" />
-            <q-item-main label="Groups" sublabel="Small group material" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-users" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Groups</q-item-label>
+              <q-item-label caption>Small group material</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item v-if="menu_media()" to="/content/media">
-            <q-item-side icon="fas fa-fw fa-images" />
-            <q-item-main label="Extra" sublabel="Media / articles" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-images" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Extra</q-item-label>
+              <q-item-label caption>Media / articles</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item v-if="menu_practice()" to="/content/practice">
-            <q-item-side icon="fas fa-fw fa-praying-hands" />
-            <q-item-main label="Practice" sublabel="Practice or discipline for the week" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-praying-hands" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Practice</q-item-label>
+              <q-item-label caption>Practice or discipline for the week</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item to="/library">
-            <q-item-side icon="fas fa-fw fa-warehouse" />
-            <q-item-main label="Resources" sublabel="Resource library" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-warehouse" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Resources</q-item-label>
+              <q-item-label caption>Resource library</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item to="/sunday">
-            <q-item-side icon="fas fa-fw fa-bible" />
-            <q-item-main label="Sunday" sublabel="Lectionary readings for Sunday" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-bible" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Sunday</q-item-label>
+              <q-item-label caption>Lectionary readings</q-item-label>
+            </q-item-section>
           </q-item>
-        </q-collapsible>
-        <q-collapsible v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
+        </q-expansion-item>
+        <q-expansion-item v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
-            <q-item-side icon="fas fa-fw fa-church" />
-            <q-item-main label="Services this Sunday" sublabel="Societies and preachers" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-church" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Services this Sunday</q-item-label>
+              <q-item-label caption>Societies and preachers</q-item-label>
+            </q-item-section>
           </q-item>
-        </q-collapsible>
-        <q-collapsible class="text-center administration" label="App administration">
+        </q-expansion-item>
+        <q-expansion-item class="text-center administration" label="App administration">
           <q-item to="/settings">
-            <q-item-side icon="fas fa-fw fa-cogs" />
-            <q-item-main label="Settings" sublabel="App settings" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-cogs" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Settings</q-item-label>
+              <q-item-label caption>App settings</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item to="/me">
-            <q-item-side icon="fas fa-fw fa-user-cog" />
-            <q-item-main label="My details" sublabel="My personal and household details" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-user-cog" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>My details</q-item-label>
+              <q-item-label caption>My personal details</q-item-label>
+            </q-item-section>
           </q-item>
           <q-item to="/reminders">
-            <q-item-side icon="fas fa-fw fa-inbox" />
-            <q-item-main label="My inbox" sublabel="Messages and notifications" />
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-inbox" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>My inbox</q-item-label>
+              <q-item-label caption>App notifications</q-item-label>
+            </q-item-section>
           </q-item>
-        </q-collapsible>
+        </q-expansion-item>
       </q-list>
-    </q-layout-drawer>
+    </q-drawer>
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-layout-footer>
+    <q-footer>
       <q-toolbar class="justify-around">
         <q-item class="text-center" to="/home">
-          <q-item-side icon="fas fa-home" color="white"/>
+          <q-item-section avatar>
+            <q-icon name="fas fa-home" color="white"/>
+          </q-item-section>
         </q-item>
         <q-item class="text-center" to="/sunday">
-          <q-item-side icon="fas fa-bible" color="white"/>
+          <q-item-section avatar>
+            <q-icon name="fas fa-bible" color="white"/>
+          </q-item-section>
         </q-item>
         <q-item class="text-center" to="/ffdl">
-          <q-item-side icon="fas fa-pray" color="white"/>
+          <q-item-section avatar>
+            <q-icon name="fas fa-pray" color="white"/>
+          </q-item-section>
         </q-item>
         <q-item class="text-center" to="/me">
-          <q-item-side icon="fas fa-user-cog" color="white"/>
+          <q-item-section avatar>
+            <q-icon name="fas fa-user-cog" color="white"/>
+          </q-item-section>
         </q-item>
       </q-toolbar>
-    </q-layout-footer>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -114,7 +201,8 @@ export default {
     return {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
       rightDrawerOpen: this.$q.platform.is.desktop,
-      individual: ''
+      individual: '',
+      expanded: true
     }
   },
   methods: {
@@ -168,9 +256,7 @@ export default {
     }
   },
   async mounted () {
-    if (this.$store.state.individual) {
-      this.individual = this.$store.state.individual.id
-    }
+    // Deal with upgrades
     if (localStorage.getItem('JOURNEY_Version')) {
       if (localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
         this.$q.dialog({
@@ -178,7 +264,7 @@ export default {
           message: 'Click OK to restart the app and upgrade to version ' + process.env.VERSION + '. This new version includes: ' + process.env.VNOTES,
           ok: 'OK',
           cancel: 'LATER'
-        }).then(() => {
+        }).onOk(() => {
           localStorage.setItem('JOURNEY_Version', process.env.VERSION)
           window.location.reload()
         }).catch(() => {
@@ -188,11 +274,19 @@ export default {
     } else {
       localStorage.setItem('JOURNEY_Version', process.env.VERSION)
     }
-    this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
-    this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
     if (localStorage.getItem('JOURNEY_Circuit')) {
+      this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
+      this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
       this.$store.commit('setCircuitId', localStorage.getItem('JOURNEY_Circuit'))
       this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
+    } else {
+      this.$router.push({ name: 'settings' })
+    }
+    // Populate user state
+    if (this.$store.state.individual) {
+      this.individual = this.$store.state.individual.id
+    } else {
+      this.individual = ''
     }
     if (!localStorage.getItem('JOURNEY_Token')) {
       await this.get_token()
@@ -202,12 +296,13 @@ export default {
     this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
     if (this.$store.state.societyid) {
       this.$q.loading.show()
-      this.$axios.post(process.env.API + '/feeditemlist',
+      this.$axios.post(process.env.API + '/userfeed',
         {
           society: this.$store.state.societyid,
           individual: this.individual
         })
         .then(response => {
+          localStorage.setItem('JOURNEY_User', response.data.userid)
           this.$store.commit('setFeeditems', response.data)
           if (response.data.diary) {
             this.$store.commit('setDiary', true)
@@ -267,12 +362,11 @@ export default {
                 society_id: localStorage.getItem('JOURNEY_Society')
               })
               .then(response => {
-                if (response.data.household) {
-                  this.$store.commit('setIndividual', response.data)
+                if (response.data.individual) {
+                  this.$store.commit('setIndividual', response.data.individual)
                   if (!localStorage.getItem('JOURNEY_Individual')) {
-                    localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data))
+                    localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data.individual))
                   }
-                  this.$store.commit('setChats', response.data.chats)
                 }
               })
               .catch(function (error) {
@@ -299,19 +393,19 @@ export default {
 a, a:hover {
   text-decoration: none;
 }
-#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.society.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
+#q-app > div > div.q-drawer-container > aside > div > div > div.q-expansion-item.q-item-type.text-center.society > div > div.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable {
   background-color:#4d7227;
   border-bottom:white solid 2px;
   color: white;
   text-align:center;
 }
-#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.circuit.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
+#q-app > div > div.q-drawer-container > aside > div > div > div.q-expansion-item.q-item-type.text-center.circuit > div > div.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable {
   background-color:#81be41;
   border-bottom:white solid 2px;
   color: white;
   text-align:center;
 }
-#q-app > div > div.q-drawer-container > aside > div > div.q-collapsible.q-item-division.relative-position.text-center.administration.q-collapsible-cursor-pointer > div > div.q-item.q-item-division.relative-position {
+#q-app > div > div.q-drawer-container > aside > div > div > div.q-expansion-item.q-item-type.text-center.administration > div > div.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable {
   background-color:#000000;
   border-bottom:white solid 2px;
   color: white;

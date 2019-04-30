@@ -8,7 +8,7 @@
       <div class="text-left q-mt-md">
         <b>Attending (so far):</b> {{participantstring}}.
       </div>
-      <q-select class="q-mt-md" @input="updateChanges" multiple chips float-label="Household members signed up" v-model="signups" :options="householdOptions"/>
+      <q-select class="q-mt-md" @input="updateChanges" multiple chips label="Household members signed up" v-model="signups" :options="householdOptions"/>
     </div>
     <div class="q-ma-md caption text-center" v-if="!$store.state.token">
       We need to verify your phone number before you can sign up!

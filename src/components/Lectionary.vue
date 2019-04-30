@@ -1,14 +1,14 @@
 <template>
   <div>
     <q-list v-if="lections" striped class="no-border">
-      <p class="q-my-md caption text-center">Revised Common Lectionary: Year {{lections[0].lection.year}}</p>
+      <p class="q-my-md q-mx-md header text-center bg-secondary q-pa-sm text-white text-bold">Revised Common Lectionary: Year {{lections[0].lection.year}}</p>
       <q-item v-for="lection in lections" :key="lection.date" :to="'/otherday/' + lection.date">
-        <q-item-side>
-          {{lection.date}}
-        </q-item-side>
-        <q-item-main>
-          {{lection.lection.description}}
-        </q-item-main>
+        <q-item-section side>
+          <q-item-label caption>{{lection.date}}</q-item-label>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{lection.lection.description}}</q-item-label>
+        </q-item-section>
       </q-item>
     </q-list>
   </div>
@@ -58,5 +58,9 @@ p.caption {
 }
 .q-list-striped > .q-item:nth-child(even) {
   background-color: #E6f2d9;
+}
+.q-item {
+  min-height: 36px;
+  padding-left: 15px;
 }
 </style>

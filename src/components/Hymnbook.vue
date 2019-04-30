@@ -1,19 +1,19 @@
 <template>
-  <div class="q-mt-xs layout-padding">
+  <div class="q-mt-xs q-ma-md">
     <p class="text-center caption">Songs and liturgy</p>
     <q-list class="no-border">
       <div v-if="songs" class="text-center">Songs <q-icon size="sm" name="fas fa-music"/>
         <q-item v-for="song in songs" :key="song.id" :to="'/hymns/' + song.id">
-          <q-item-main>
+          <q-item-label>
             <div style="color:#4d7227" class="text-center">{{song.title}}</div>
-          </q-item-main>
+          </q-item-label>
         </q-item>
       </div>
       <div v-if="liturgies" class="q-mt-md text-center">Liturgy <q-icon size="sm" name="fas fa-list"/>
         <q-item v-for="liturgy in liturgies" :key="liturgy.id" :to="'/hymns/' + liturgy.id">
-          <q-item-main>
+          <q-item-label>
             <div style="color:#4d7227" class="text-center">{{liturgy.title}}</div>
-          </q-item-main>
+          </q-item-label>
         </q-item>
       </div>
     </q-list>

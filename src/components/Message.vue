@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-padding">
+  <div class="q-ma-md">
     <div v-if="chat.chatable">
       <p v-if="chat.chatable.society" class="caption text-center">Messages: {{chat.chatable.society}} society</p>
       <p v-else-if="chat.chatable.groupname" class="caption text-center">Messages: {{chat.chatable.groupname}}</p>
@@ -7,7 +7,7 @@
       <p v-else-if="chat.chatable.district" class="caption text-center">Messages: {{chat.chatable.district}} District</p>
       <q-chat-message class="q-mx-sm" v-for="message in chat.messages" :key="message.id" :name="message.individual.firstname + ' ' + message.individual.surname" :text="[message.chat]" :stamp="message.ago" :sent="checksent(message.individual)"/>
     </div>
-    <q-input v-model="newmess.chat" type="textarea" float-label="Reply" :max-height="60" rows="4" :after="[{icon: 'keyboard_return', handler: sendmsg}]"></q-input>
+    <q-input v-model="newmess.chat" type="textarea" label="Reply" :max-height="60" rows="4" :after="[{icon: 'keyboard_return', handler: sendmsg}]"></q-input>
   </div>
 </template>
 

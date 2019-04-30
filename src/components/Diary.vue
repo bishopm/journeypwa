@@ -1,19 +1,26 @@
 <template>
-  <div class="layout-padding">
+  <div class="q-ma-md">
     <h3 class="text-center">Upcoming events</h3>
     <div class="text-center">
       <q-btn color="primary" :to="{ name: 'diaries', params: { scope: 'Society' }}" class="q-mr-sm">Society</q-btn>
       <q-btn color="secondary" :to="{ name: 'diaries', params: { scope: 'Circuit' }}" class="q-mr-sm">Circuit</q-btn>
       <q-btn color="black" :to="{ name: 'diaries', params: { scope: 'District' }}">District</q-btn>
     </div>
-    <q-list v-if="anyevents" no-border>
+    <q-list class="q-mt-md" v-if="anyevents" no-border>
       <q-item v-for="event in events" :key="event.id">
-        <q-item-side class="text-left">
-          <small>{{formatme(event.meetingdatetime)}}<br><router-link :to="{ name: 'society', params: { id: event.society_id }}">{{event.society.society}}</router-link></small>
-        </q-item-side>
-        <q-item-main :class="'text-right ' + styleme(event.meetable_type)">
-          <b>{{event.description}}</b>
-        </q-item-main>
+        <q-item-section>
+          <q-item-label>
+            {{formatme(event.meetingdatetime)}}
+          </q-item-label>
+          <q-item-label caption>
+            <router-link class="text-primary" :to="{ name: 'society', params: { id: event.society_id }}">{{event.society.society}}</router-link>
+          </q-item-label>
+        </q-item-section>
+        <q-item-section :class="'text-right ' + styleme(event.meetable_type)">
+          <q-item-label>
+            <b>{{event.description}}</b>
+          </q-item-label>
+        </q-item-section>
       </q-item>
     </q-list>
     <p class="text-center" v-if="!anyevents">No diary entries for the next 10 days</p>
@@ -59,7 +66,7 @@ export default {
 </script>
 
 <style>
-.layout-padding {
+.q-ma-md {
   padding-top:0;
 }
 h3 {

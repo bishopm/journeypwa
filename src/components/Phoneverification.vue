@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-padding">
+  <div class="q-ma-md">
     <p class="text-center caption q-mt-md">Verify your phone number below</p>
     <div id="firebaseui-auth-container"></div>
   </div>
@@ -46,7 +46,7 @@ export default {
 }
 </script>
 <style>
-.layout-padding {
+.q-ma-md {
   padding-top:0;
 }
 h3 {

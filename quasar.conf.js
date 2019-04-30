@@ -1,23 +1,83 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Special services lectionary')
-var version = JSON.stringify('0.1.8.4')
+var vnotes = JSON.stringify('Upgrade underlying framework - Quasar 1.0b18')
+var version = JSON.stringify('0.2')
 
 module.exports = function (ctx) {
   return {
-    // app plugins (/src/plugins)
-    plugins: [
+    // app boot file (/src/boot)
+    // --> boot files are part of "main.js"
+    boot: [
       'axios',
       'firebase',
       'vuelidate'
     ],
+
     css: [
       'app.styl'
     ],
+
     extras: [
-      ctx.theme.mat ? 'roboto-font' : null,
-      'fontawesome'
+      'roboto-font',
+      //'material-icons' // optional, you are not bound to it
+      // 'ionicons-v4',
+      // 'mdi-v3',
+      'fontawesome-v5',
+      // 'eva-icons'
     ],
+
+    framework: {
+      // all: true, // --- includes everything; for dev only!
+
+      components: [
+        'QCard',
+        'QChip',
+        'QDate',
+        'QDialog',
+        'QCardSection',
+        'QExpansionItem',
+        'QField',
+        'QLayout',
+        'QHeader',
+        'QInput',
+        'QFooter',
+        'QDrawer',
+        'QOptionGroup',
+        'QPageContainer',
+        'QPage',
+        'QPopupProxy',
+        'QTable',
+        'QToolbar',
+        'QToolbarTitle',
+        'QBtn',
+        'QIcon',
+        'QList',
+        'QItem',
+        'QItemSection',
+        'QItemLabel',
+        'QSelect',
+        'QTabs',
+        'QTab',
+        'QTabPanels',
+        'QTabPanel'
+      ],
+
+      directives: [
+        'Ripple'
+      ],
+
+      // Quasar plugins
+      plugins: [
+        'Notify',
+        'Loading',
+        'Dialog'
+      ],
+
+      iconSet: 'fontawesome-v5'
+      // lang: 'de' // Quasar language
+    },
+
     supportIE: false,
+
     build: {
       env: ctx.dev
         ? { // so on dev we'll have
@@ -33,7 +93,7 @@ module.exports = function (ctx) {
           VERSION: version
         },
       scopeHoisting: true,
-      vueRouterMode: 'history',
+      // vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
@@ -43,78 +103,27 @@ module.exports = function (ctx) {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules|quasar)/
+          exclude: /node_modules/
         })
       }
     },
+
     devServer: {
       // https: true,
       // port: 8080,
       open: true // opens browser window automatically
     },
-    // framework: 'all' --- includes everything; for dev only!
-    framework: {
-      components: [
-        'QBtn',
-        'QCard',
-        'QCardMain',
-        'QCardMedia',
-        'QCardTitle',
-        'QChatMessage',
-        'QChip',
-        'QCollapsible',
-        'QDatetime',
-        'QField',
-        'QIcon',
-        'QInput',
-        'QItem',
-        'QItemMain',
-        'QItemSide',
-        'QItemTile',
-        'QOptionGroup',
-        'QLayout',
-        'QLayoutDrawer',
-        'QLayoutFooter',
-        'QLayoutHeader',
-        'QList',
-        'QListHeader',
-        'QModal',
-        'QPageContainer',
-        'QPage',
-        'QRadio',
-        'QSelect',
-        'QTable',
-        'QTabs',
-        'QTab',
-        'QTabPane',
-        'QToolbar',
-        'QToolbarTitle'
-      ],
-      directives: [
-        'Ripple'
-      ],
-      // Quasar plugins
-      plugins: [
-        'Dialog',
-        'Notify',
-        'Loading'
-      ],
-      config: {
-        notify: {
-          color: 'black'
-        }
-      },
-      iconSet: 'fontawesome'
-      // i18n: 'de' // Quasar language
-    },
-    // animations: 'all' --- includes all animations
+
+    // animations: 'all', // --- includes all animations
     animations: [],
+
     ssr: {
       pwa: false
     },
+
     pwa: {
-      workboxPluginMode: 'InjectManifest',
-      // workboxOptions: {},
+      // workboxPluginMode: 'InjectManifest',
+      // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
         // name: 'Quasar App',
         // short_name: 'Quasar-PWA',
@@ -152,14 +161,20 @@ module.exports = function (ctx) {
         ]
       }
     },
+
     cordova: {
       // id: 'org.cordova.quasar.app'
+      // noIosLegacyBuildFlag: true // uncomment only if you know what you are doing
     },
+
     electron: {
       // bundler: 'builder', // or 'packager'
+
       extendWebpack (cfg) {
-        // do something with Electron process Webpack cfg
+        // do something with Electron main process Webpack cfg
+        // chainWebpack also available besides this extendWebpack
       },
+
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
 
@@ -172,6 +187,7 @@ module.exports = function (ctx) {
         // Window only
         // win32metadata: { ... }
       },
+
       builder: {
         // https://www.electron.build/configuration/configuration
 
