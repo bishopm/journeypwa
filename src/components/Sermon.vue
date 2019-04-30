@@ -7,7 +7,7 @@
         <audio preload="none" controls><source :src="sermon.enclosure.link" type="audio/mpeg"></audio>
         <br>
         <p>Preacher: {{sermon.author}}</p>
-        <p>{{sermon.body}}</p>
+        <p v-html="sermon.body"></p>
       </div>
       <hr class="q-mt-lg">
     </div>

@@ -40,16 +40,16 @@
               <q-item-label caption>Community news and needs</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item to="/ffdl">
+          <q-item v-if="menu_devotional()" :to="this.$store.state.feeditems.devotion.length > 1 ? '/devotionals' : 'devotional/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-pray" />
             </q-item-section>
             <q-item-section side>
-              <q-item-label overline>Devotions</q-item-label>
-              <q-item-label caption>Faith for daily living</q-item-label>
+              <q-item-label overline>Daily devotional</q-item-label>
+              <q-item-label caption>Devotional readings</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_blogs()" to="/blogs">
+          <q-item v-if="menu_blogs()" :to="this.$store.state.feeditems.blog.length > 1 ? '/blogs' : 'blogposts/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-edit" />
             </q-item-section>
@@ -58,7 +58,7 @@
               <q-item-label caption>From our blog</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_sermons()" to="/sermons">
+          <q-item v-if="menu_sermons()" :to="this.$store.state.feeditems.sermon.length > 1 ? '/sermonsites' : 'sermon/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-microphone" />
             </q-item-section>
@@ -161,6 +161,15 @@
               <q-item-label caption>App notifications</q-item-label>
             </q-item-section>
           </q-item>
+          <q-item to="/subscriptions">
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-hand-pointer" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>My subscriptions</q-item-label>
+              <q-item-label caption>Explore blogs and podcasts</q-item-label>
+            </q-item-section>
+          </q-item>
         </q-expansion-item>
       </q-list>
     </q-drawer>
@@ -221,6 +230,9 @@ export default {
             console.log(error)
           })
       }
+    },
+    menu_devotional () {
+      return this.$store.state.menu_devotional
     },
     menu_media () {
       return this.$store.state.menu_media
@@ -318,6 +330,11 @@ export default {
             this.$store.commit('setEvents', true)
           } else {
             this.$store.commit('setEvents', false)
+          }
+          if ((response.data.devotion) && (response.data.devotion.length)) {
+            this.$store.commit('setDevotional', true)
+          } else {
+            this.$store.commit('setDevotional', false)
           }
           if ((response.data.diary) && (response.data.diary.length)) {
             this.$store.commit('setDiary', true)

@@ -15,9 +15,9 @@
           <q-icon class="text-primary" name="fas fa-fw fa-bible" size="3rem" />
         </router-link>
       </div>
-      <div class="col-6 text-center q-mb-md">
-        <div class="q-mb-sm caption">Faith for daily living</div>
-        <router-link to="/ffdl" class="text-white" style="text-decoration:none;">
+      <div v-if="menu_devotional()" class="col-6 text-center q-mb-md">
+        <router-link :to="this.$store.state.feeditems.devotion.length > 1 ? '/devotionals' : '/devotional/0'" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Devotional</div>
           <q-icon class="text-primary" name="fas fa-fw fa-pray" size="3rem" />
         </router-link>
       </div>
@@ -34,21 +34,13 @@
         </router-link>
       </div>
       <div v-if="menu_blogs()" class="col-6 text-center q-mb-md">
-        <router-link v-if="this.$store.state.feeditems.blog.length > 1" to="/blogs" class="text-white" style="text-decoration:none;">
-          <div class="q-mb-sm text-black caption">Blog</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-edit" size="3rem" />
-        </router-link>
-        <router-link v-else to="/blogposts/0" class="text-white" style="text-decoration:none;">
+        <router-link :to="this.$store.state.feeditems.blog.length > 1 ? '/blogs' : '/blogposts/0'" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Blog</div>
           <q-icon class="text-primary" name="fas fa-fw fa-edit" size="3rem" />
         </router-link>
       </div>
       <div v-if="menu_sermons()" class="col-6 text-center q-mb-md">
-        <router-link v-if="this.$store.state.feeditems.sermon.length > 1" to="/sermonsites" class="text-white" style="text-decoration:none;">
-          <div class="q-mb-sm text-black caption">Sermon</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-microphone" size="3rem" />
-        </router-link>
-        <router-link v-else to="/sermons/0" class="text-white" style="text-decoration:none;">
+        <router-link :to="this.$store.state.feeditems.sermon.length > 1 ? '/sermonsites' : '/sermon/0'" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Sermon</div>
           <q-icon class="text-primary" name="fas fa-fw fa-microphone" size="3rem" />
         </router-link>
@@ -125,6 +117,9 @@ export default {
     }
   },
   methods: {
+    menu_devotional () {
+      return this.$store.state.menu_devotional
+    },
     menu_diary () {
       return this.$store.state.menu_diary
     },

@@ -15,6 +15,7 @@ export default function (/* { ssrContext } */) {
       circuitname: '',
       circuitid: 0,
       individual: {},
+      menu_devotional: false,
       menu_diary: false,
       menu_groups: false,
       menu_media: false,
@@ -40,6 +41,9 @@ export default function (/* { ssrContext } */) {
       },
       setCommunity (state, newbdays) {
         state.menu_community = newbdays
+      },
+      setDevotional (state, newdev) {
+        state.menu_devotional = newdev
       },
       setDiary (state, newdiary) {
         state.menu_diary = newdiary

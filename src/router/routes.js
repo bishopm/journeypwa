@@ -9,6 +9,8 @@ const routes = [
       { name: 'church', path: '/church', component: () => import('components/Church'), meta: { auth: true } },
       { name: 'combined', path: '/adduser', component: () => import('components/forms/Combined'), meta: { auth: true } },
       { name: 'content', path: '/content/:ctype/:id?', component: () => import('components/Content'), meta: { auth: true } },
+      { name: 'devotionals', path: '/devotionals', component: () => import('components/Devotionals'), meta: { auth: true } },
+      { name: 'devotional', path: '/devotional/:id', component: () => import('components/Devotional'), meta: { auth: true } },
       { name: 'diary', path: '/diary', component: () => import('components/Diary'), meta: { auth: true } },
       { name: 'diaries', path: '/diary/:scope', component: () => import('components/Diaries'), meta: { auth: true } },
       { name: 'events', path: '/events', component: () => import('components/Events'), meta: { auth: true } },
@@ -33,6 +35,7 @@ const routes = [
       { name: 'settings', path: '/settings', component: () => import('components/Settings'), meta: { auth: true } },
       { name: 'societies', path: '/societies', component: () => import('components/Societies'), meta: { auth: true } },
       { name: 'society', path: '/societies/:id', component: () => import('components/Society'), meta: { auth: true } },
+      { name: 'subscriptions', path: '/subscriptions', component: () => import('components/Subscriptions'), meta: { auth: true } },
       { name: 'sunday', path: '/sunday', component: () => import('components/Sunday'), meta: { auth: true } },
       { name: 'home', path: '/:district?/:circuit?/:society?', component: () => import('components/Home'), meta: { auth: true } }
     ]
