@@ -30,6 +30,7 @@ module.exports = function (ctx) {
 
       components: [
         'QCard',
+        'QCardActions',
         'QChip',
         'QDate',
         'QDialog',
@@ -63,7 +64,8 @@ module.exports = function (ctx) {
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
+        'ClosePopup'
       ],
 
       // Quasar plugins

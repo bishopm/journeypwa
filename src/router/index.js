@@ -22,5 +22,17 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
+  Router.beforeEach((to, from, next) => {
+    if (to.meta.auth) {
+      if (localStorage.getItem('JOURNEY_Token')) {
+        next()
+      } else {
+        Router.push({ name: 'home' })
+        return false
+      }
+    }
+    next()
+  })
+
   return Router
 }

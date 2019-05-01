@@ -1,6 +1,6 @@
 <template>
   <div class="q-ma-md">
-    <h3 class="text-center">Upcoming events</h3>
+    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Upcoming events</p>
     <div class="text-center">
       <q-btn color="primary" :to="{ name: 'diaries', params: { scope: 'Society' }}" class="q-mr-sm">Society</q-btn>
       <q-btn color="secondary" :to="{ name: 'diaries', params: { scope: 'Circuit' }}" class="q-mr-sm">Circuit</q-btn>

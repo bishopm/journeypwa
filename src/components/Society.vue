@@ -1,7 +1,7 @@
 <template>
   <div v-if="society" class="text-center">
-    <h3>{{society.society}}</h3>
-    <p v-for="service in society.services" :key="service.id">{{service.servicetime}} ({{service.language}})</p>
+    <p class="bg-secondary q-py-md text-white text-bold text-center caption">{{society.society}}</p><br>
+    <p v-for="service in society.services" :key="service.id">{{service.servicetime}} ({{service.language}})</p><br>
     <div v-if="society.website"><a target="_blank" :href="society.websiteurl">{{society.website}}</a></div>
     <leafletmap v-if="society.location" :latitude="society.location.latitude" :longitude="society.location.longitude" :popuplabel="society.society + ' Methodist Church'" editable="no"></leafletmap>
   </div>

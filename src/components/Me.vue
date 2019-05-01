@@ -1,5 +1,5 @@
 <template>
-  <div class="q-ma-md">
+  <div class="q-ma-sm">
     <div v-if="household.id" class="text-center q-mt-md">
       <p class="caption q-mt-md">{{household.addressee}} <q-btn color="primary" round size="sm" @click.native="editHousehold">edit</q-btn></p>
       <p class="text-center q-mx-md">
@@ -27,7 +27,7 @@
                 <q-icon v-if="indiv.birthdate" name="fas fa-fw fa-birthday-cake" color="primary" class="q-mr-sm"/>{{indiv.birthdate}}<br>
                 <q-icon v-if="indiv.memberstatus" name="fas fa-fw fa-check-square" color="primary" class="q-mr-sm"/>{{indiv.memberstatus}}<br>
                 <span v-if="indiv.memberstatus !== 'child'">
-                  <q-btn class="q-my-md" @click.native="giver(indiv.id)">Planned Giving</q-btn>
+                  <q-btn class="q-my-sm" @click.native="giver(indiv.id)">Planned Giving</q-btn>
                 </span>
               </div>
             </div>

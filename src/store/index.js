@@ -11,7 +11,6 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     state: {
-      chats: [],
       circuitname: '',
       circuitid: 0,
       individual: {},
@@ -21,17 +20,19 @@ export default function (/* { ssrContext } */) {
       menu_media: false,
       menu_community: false,
       menu_practice: false,
-      menu_blogs: false,
-      menu_sermons: false,
+      menu_blog: false,
+      menu_sermon: false,
       menu_reminders: false,
       token: ''
     },
+    getters: {
+      getMenu: (state) => (menu) => {
+        return state['menu_' + menu]
+      }
+    },
     mutations: {
-      setBlogs (state, newblogs) {
-        state.menu_blogs = newblogs
-      },
-      setChats (state, newchats) {
-        state.chats = newchats
+      setMenu (state, marray) {
+        state['menu_' + marray[0]] = marray[1]
       },
       setCircuitName (state, newname) {
         state.circuitname = newname
@@ -39,38 +40,11 @@ export default function (/* { ssrContext } */) {
       setCircuitId (state, newid) {
         state.circuitid = newid
       },
-      setCommunity (state, newbdays) {
-        state.menu_community = newbdays
-      },
-      setDevotional (state, newdev) {
-        state.menu_devotional = newdev
-      },
-      setDiary (state, newdiary) {
-        state.menu_diary = newdiary
-      },
-      setEvents (state, newevents) {
-        state.menu_events = newevents
-      },
       setFeeditems (state, newitems) {
         state.feeditems = newitems
       },
-      setGroups (state, newgroups) {
-        state.menu_groups = newgroups
-      },
       setIndividual (state, newindiv) {
         state.individual = newindiv
-      },
-      setMedia (state, newmedia) {
-        state.menu_media = newmedia
-      },
-      setPractice (state, newprac) {
-        state.menu_practice = newprac
-      },
-      setReminders (state, newrem) {
-        state.menu_reminders = newrem
-      },
-      setSermons (state, newsermons) {
-        state.menu_sermons = newsermons
       },
       setSocietyId (state, newsocietyid) {
         state.societyid = newsocietyid

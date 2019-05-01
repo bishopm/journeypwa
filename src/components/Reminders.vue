@@ -1,10 +1,13 @@
 <template>
   <div class="q-mt-xs">
     <q-list striped v-if="notifications" no-border>
-      <p class="text-center header">Messages</p>
-      <q-item v-for="notification in notifications" :key="notification.id">
-        <q-item-section class="text-justify"><small v-html="notification.message"></small></q-item-section>
-        <q-item-section avatar @click.native="deleteme(notification.id)" class="cursor-pointer q-pl-sm text-center" color="red" icon="fa fa-times"><br><small>{{notification.ndate}}<br>{{notification.ntime}}</small></q-item-section>
+      <p class="bg-secondary text-white caption text-center q-pa-sm">Messages</p>
+      <q-item v-for="notification in notifications" :key="notification.id" :class="{striped: index % 2 === 1}">
+        <q-item-section class="text-justify"><span v-html="notification.message"/></q-item-section>
+        <q-item-section avatar class="text-right">
+          <q-icon @click.native="deleteme(notification.id)" class="cursor-pointer" color="red" name="fa fa-times" />
+          <br><small>{{notification.ndate}}<br>{{notification.ntime}}</small>
+        </q-item-section>
       </q-item>
     </q-list>
     <div class="q-ma-md">{{message}}</div>
@@ -74,7 +77,9 @@ export default {
 </script>
 
 <style>
-.q-list-striped > .q-item:nth-child(even) {
-  background-color: #E6f2d9;
+.q-item.striped {
+  background-color:#E6f2d9;
+  margin-left:20px;
+  margin-right:20px;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-list v-if="lections" striped class="no-border">
+    <q-list v-if="lections" class="no-border">
       <p class="q-my-md q-mx-md header text-center bg-secondary q-pa-sm text-white text-bold">Revised Common Lectionary: Year {{lections[0].lection.year}}</p>
-      <q-item v-for="lection in lections" :key="lection.date" :to="'/otherday/' + lection.date">
+      <q-item v-for="(lection, index) in lections" :key="lection.date" :to="'/otherday/' + lection.date" :class="{striped: index % 2 === 1}">
         <q-item-section side>
           <q-item-label caption>{{lection.date}}</q-item-label>
         </q-item-section>
@@ -26,12 +26,12 @@ export default {
   methods: {
     getSaveStateConfig () {
       return {
-        'cacheKey': 'CIRC_Lectionary'
+        'cacheKey': 'JOURNEY_Lectionary'
       }
     }
   },
   mounted () {
-    if (!localStorage.getItem('CIRC_Lectionary')) {
+    if (!localStorage.getItem('JOURNEY_Lectionary')) {
       // this.$q.loading.show()
     }
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token
@@ -56,11 +56,14 @@ h4 {
 p.caption {
   line-height: 12px;
 }
-.q-list-striped > .q-item:nth-child(even) {
-  background-color: #E6f2d9;
+.q-item.striped {
+  background-color:#E6f2d9;
+  margin-left:20px;
+  margin-right:20px;
 }
 .q-item {
   min-height: 36px;
-  padding-left: 15px;
+  margin-left:20px;
+  margin-right:20px;
 }
 </style>

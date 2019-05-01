@@ -13,34 +13,16 @@
     <q-drawer side="right" v-model="rightDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
         <q-expansion-item v-if="societyname()" v-model="expanded" class="text-center society" :label="societyname() + ' Society'">
-          <q-item to="/church">
+          <q-item v-if="$store.state.token" to="/church">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-users" />
             </q-item-section>
             <q-item-section side>
               <q-item-label overline>My church</q-item-label>
-              <q-item-label caption>Names and faces</q-item-label>
+              <q-item-label caption>Learn names and faces</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="messages()" to="/messages">
-            <q-item-section avatar>
-              <q-icon color="primary" name="message" />
-            </q-item-section>
-            <q-item-section side>
-              <q-item-label overline>Messages: {{messages()}}</q-item-label>
-              <q-item-label caption>Inbox messages</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item v-if="menu_community()" to="/community">
-            <q-item-section avatar>
-              <q-icon color="primary" name="people_outline" />
-            </q-item-section>
-            <q-item-section side>
-              <q-item-label overline>Community</q-item-label>
-              <q-item-label caption>Community news and needs</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item v-if="menu_devotional()" :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'">
+          <q-item v-if="$store.getters.getMenu('devotional')" :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-pray" />
             </q-item-section>
@@ -49,7 +31,7 @@
               <q-item-label caption>Devotional readings</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_blogs()" :to="this.$store.state.feeditems.blog.length > 1 ? '/blogs' : '/blogposts/0'">
+          <q-item v-if="$store.getters.getMenu('blogs')" :to="this.$store.state.feeditems.blog.length > 1 ? '/blogs' : '/blogposts/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-edit" />
             </q-item-section>
@@ -58,7 +40,7 @@
               <q-item-label caption>From our blog</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_sermons()" :to="this.$store.state.feeditems.sermon.length > 1 ? '/sermonsites' : '/sermon/0'">
+          <q-item v-if="$store.getters.getMenu('sermon')" :to="this.$store.state.feeditems.sermon.length > 1 ? '/sermonsites' : '/sermon/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-microphone" />
             </q-item-section>
@@ -76,7 +58,7 @@
               <q-item-label caption>Events for your diary</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_groups()" to="/content/groups">
+          <q-item v-if="$store.getters.getMenu('groups')" to="/content/groups">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-users" />
             </q-item-section>
@@ -85,7 +67,7 @@
               <q-item-label caption>Small group material</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_media()" to="/content/media">
+          <q-item v-if="$store.getters.getMenu('extra')" to="/content/media">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-images" />
             </q-item-section>
@@ -94,7 +76,7 @@
               <q-item-label caption>Media / articles</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_practice()" to="/content/practice">
+          <q-item v-if="$store.getters.getMenu('practice')" to="/content/practice">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-praying-hands" />
             </q-item-section>
@@ -143,7 +125,7 @@
               <q-item-label caption>App settings</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item to="/me">
+          <q-item v-if="$store.state.token" to="/me">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-user-cog" />
             </q-item-section>
@@ -152,7 +134,7 @@
               <q-item-label caption>My personal details</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item to="/reminders">
+          <q-item v-if="$store.state.token" to="/reminders">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-inbox" />
             </q-item-section>
@@ -161,7 +143,7 @@
               <q-item-label caption>App notifications</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item to="/subscriptions">
+          <q-item v-if="$store.state.token" to="/subscriptions">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-hand-pointer" />
             </q-item-section>
@@ -177,25 +159,25 @@
       <router-view />
     </q-page-container>
     <q-footer>
-      <q-toolbar class="justify-around">
-        <q-item class="text-center" to="/home">
-          <q-item-section avatar>
-            <q-icon name="fas fa-home" color="white"/>
+      <q-toolbar v-if="$store.state.token" class="justify-around">
+        <q-item class="text-center" to="/">
+          <q-item-section>
+            <q-icon size="24px" name="fas fa-home" color="white"/>
           </q-item-section>
         </q-item>
         <q-item class="text-center" to="/sunday">
-          <q-item-section avatar>
-            <q-icon name="fas fa-bible" color="white"/>
+          <q-item-section>
+            <q-icon size="24px" name="fas fa-bible" color="white"/>
           </q-item-section>
         </q-item>
-        <q-item class="text-center" to="/ffdl">
-          <q-item-section avatar>
-            <q-icon name="fas fa-pray" color="white"/>
+        <q-item class="text-center" :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'">
+          <q-item-section>
+            <q-icon size="24px" name="fas fa-pray" color="white"/>
           </q-item-section>
         </q-item>
         <q-item class="text-center" to="/me">
-          <q-item-section avatar>
-            <q-icon name="fas fa-user-cog" color="white"/>
+          <q-item-section>
+            <q-icon size="24px" name="fas fa-user-cog" color="white"/>
           </q-item-section>
         </q-item>
       </q-toolbar>
@@ -211,7 +193,8 @@ export default {
       phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
       rightDrawerOpen: this.$q.platform.is.desktop,
       individual: '',
-      expanded: true
+      expanded: true,
+      menus: ['blog', 'devotional', 'diary', 'events', 'groups', 'media', 'practice', 'reminders', 'sermon']
     }
   },
   methods: {
@@ -225,32 +208,14 @@ export default {
           .then(response => {
             localStorage.setItem('JOURNEY_Token', response.data.token)
             this.$store.commit('setToken', response.data.token)
+            if (!localStorage.getItem('JOURNEY_Individual')) {
+              this.getindiv()
+            }
           })
           .catch(function (error) {
             console.log(error)
           })
       }
-    },
-    menu_devotional () {
-      return this.$store.state.menu_devotional
-    },
-    menu_media () {
-      return this.$store.state.menu_media
-    },
-    menu_groups () {
-      return this.$store.state.menu_groups
-    },
-    menu_community () {
-      return this.$store.state.menu_community
-    },
-    menu_practice () {
-      return this.$store.state.menu_practice
-    },
-    menu_blogs () {
-      return this.$store.state.menu_blogs
-    },
-    menu_sermons () {
-      return this.$store.state.menu_sermons
     },
     societyname () {
       return this.$store.state.societyname
@@ -258,13 +223,61 @@ export default {
     circuitname () {
       return this.$store.state.circuitname
     },
-    messages () {
-      return this.$store.state.chats.length
-    },
     household () {
       if (this.$store.state.individual.id) {
         return true
       }
+    },
+    getfeedcontent () {
+      this.$q.loading.show()
+      this.$axios.post(process.env.API + '/userfeed',
+        {
+          society: this.$store.state.societyid,
+          individual: this.$store.state.individual.id
+        })
+        .then(response => {
+          localStorage.setItem('JOURNEY_User', response.data.userid)
+          this.$store.commit('setFeeditems', response.data)
+          for (var mndx in this.menus) {
+            if (response.data[this.menus[mndx]]) {
+              this.$store.commit('setMenu', [this.menus[mndx], true])
+            } else {
+              this.$store.commit('setMenu', [this.menus[mndx], false])
+            }
+          }
+          this.$q.loading.hide()
+        })
+        .catch(function (error) {
+          console.log(error)
+          // this.$q.loading.hide()
+        })
+    },
+    getindiv () {
+      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+      this.$axios.post(process.env.API + '/phone',
+        {
+          phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
+          society_id: localStorage.getItem('JOURNEY_Society')
+        })
+        .then(response => {
+          if (response.data.individual) {
+            this.$store.commit('setIndividual', response.data.individual)
+            if (!localStorage.getItem('JOURNEY_Individual')) {
+              localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data.individual))
+            }
+          }
+          if (this.$store.state.societyid) {
+            this.getfeedcontent()
+          }
+        })
+        .catch(function (error) {
+          if (error.response.status === 401) {
+            localStorage.removeItem('JOURNEY_Token')
+            window.location.reload()
+          } else {
+            console.log(error)
+          }
+        })
     }
   },
   async mounted () {
@@ -286,6 +299,7 @@ export default {
     } else {
       localStorage.setItem('JOURNEY_Version', process.env.VERSION)
     }
+    // Check that settings are intact
     if (localStorage.getItem('JOURNEY_Circuit')) {
       this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
       this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
@@ -294,113 +308,17 @@ export default {
     } else {
       this.$router.push({ name: 'settings' })
     }
-    // Populate user state
-    if (this.$store.state.individual) {
-      this.individual = this.$store.state.individual.id
-    } else {
-      this.individual = ''
-    }
     if (!localStorage.getItem('JOURNEY_Token')) {
       await this.get_token()
     } else {
       this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
     }
-    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-    if (this.$store.state.societyid) {
-      this.$q.loading.show()
-      this.$axios.post(process.env.API + '/userfeed',
-        {
-          society: this.$store.state.societyid,
-          individual: this.individual
-        })
-        .then(response => {
-          localStorage.setItem('JOURNEY_User', response.data.userid)
-          this.$store.commit('setFeeditems', response.data)
-          if (response.data.diary) {
-            this.$store.commit('setDiary', true)
-          } else {
-            this.$store.commit('setDiary', false)
-          }
-          if (response.data.groups) {
-            this.$store.commit('setGroups', true)
-          } else {
-            this.$store.commit('setGroups', false)
-          }
-          if ((response.data.events) && (response.data.events.length)) {
-            this.$store.commit('setEvents', true)
-          } else {
-            this.$store.commit('setEvents', false)
-          }
-          if ((response.data.devotional) && (response.data.devotional.length)) {
-            this.$store.commit('setDevotional', true)
-          } else {
-            this.$store.commit('setDevotional', false)
-          }
-          if ((response.data.diary) && (response.data.diary.length)) {
-            this.$store.commit('setDiary', true)
-          } else {
-            this.$store.commit('setDiary', false)
-          }
-          if (response.data.community) {
-            this.$store.commit('setCommunity', true)
-          } else {
-            this.$store.commit('setCommunity', false)
-          }
-          if (response.data.media) {
-            this.$store.commit('setMedia', true)
-          } else {
-            this.$store.commit('setMedia', false)
-          }
-          if (response.data.practice) {
-            this.$store.commit('setPractice', true)
-          } else {
-            this.$store.commit('setPractice', false)
-          }
-          if (response.data.blog) {
-            this.$store.commit('setBlogs', true)
-          } else {
-            this.$store.commit('setBlogs', false)
-          }
-          if ((response.data.reminders) && (response.data.reminders.length)) {
-            this.$store.commit('setReminders', true)
-          } else {
-            this.$store.commit('setReminders', false)
-          }
-          if (response.data.sermon) {
-            this.$store.commit('setSermons', true)
-          } else {
-            this.$store.commit('setSermons', false)
-          }
-          if (this.phoneverified && this.$store.state.token) {
-            this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-            this.$axios.post(process.env.API + '/phone',
-              {
-                phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
-                society_id: localStorage.getItem('JOURNEY_Society')
-              })
-              .then(response => {
-                if (response.data.individual) {
-                  this.$store.commit('setIndividual', response.data.individual)
-                  if (!localStorage.getItem('JOURNEY_Individual')) {
-                    localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data.individual))
-                  }
-                }
-              })
-              .catch(function (error) {
-                if (error.response.status === 401) {
-                  localStorage.removeItem('JOURNEY_Token')
-                  window.location.reload()
-                } else {
-                  console.log(error)
-                }
-              })
-          }
-          this.$q.loading.hide()
-        })
-        .catch(function (error) {
-          console.log(error)
-          // this.$q.loading.hide()
-        })
+    if (this.phoneverified && this.$store.state.token) {
+      this.getindiv()
+    } else {
+      if (this.$store.state.societyid) {
+        this.getfeedcontent()
+      }
     }
   }
 }
@@ -431,5 +349,10 @@ a, a:hover {
 #toolbar {
   display: flex;
   justify-content: space-between;
+}
+.q-item {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 20px;
 }
 </style>

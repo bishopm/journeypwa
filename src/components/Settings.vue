@@ -20,17 +20,17 @@
           <q-icon name="fas fa-fw fa-church" />
         </template>
       </q-select>
-      <q-select borderless class="q-my-md" label="Synod" v-model="district" :options="districtOptions" map-options emit-value>
+      <q-select borderless class="q-my-md" label="Synod" @input="chooseDistrict" v-model="district" :options="districtOptions" map-options emit-value>
         <template v-slot:prepend>
           <q-icon name="fas fa-fw fa-sitemap" />
         </template>
       </q-select>
-      <q-select borderless class="q-my-md" label="Circuit" v-model="circuit" :options="circuitOptions" map-options emit-value>
+      <q-select borderless class="q-my-md" label="Circuit" @input="chooseCircuit" v-model="circuit" :options="circuitOptions" map-options emit-value>
         <template v-slot:prepend>
           <q-icon name="fas fa-fw fa-users" />
         </template>
       </q-select>
-      <q-select borderless class="q-my-md" label="Society" v-model="society" :options="societyOptions" map-options emit-value>
+      <q-select borderless class="q-my-md" label="Society" @input="chooseSociety" v-model="society" :options="societyOptions" map-options emit-value>
         <template v-slot:prepend>
           <q-icon name="fas fa-fw fa-map-marker-alt" />
         </template>
@@ -57,7 +57,8 @@ export default {
       circuit: {},
       society: {},
       phone: '',
-      webpush: Notification.permission
+      webpush: Notification.permission,
+      menus: ['blog', 'devotional', 'diary', 'events', 'groups', 'media', 'practice', 'reminders', 'sermon']
     }
   },
   mixins: [saveState],
@@ -136,6 +137,35 @@ export default {
           console.log(error)
         })
     },
+    getfeedcontent () {
+      this.$q.loading.show({
+        message: 'Updating feed content based on your settings',
+        messageColor: 'white',
+        spinnerSize: 250, // in pixels
+        spinnerColor: 'white'
+      })
+      this.$axios.post(process.env.API + '/userfeed',
+        {
+          society: this.$store.state.societyid,
+          individual: this.$store.state.individual.id
+        })
+        .then(response => {
+          localStorage.setItem('JOURNEY_User', response.data.userid)
+          this.$store.commit('setFeeditems', response.data)
+          for (var mndx in this.menus) {
+            if (response.data[this.menus[mndx]]) {
+              this.$store.commit('setMenu', [this.menus[mndx], true])
+            } else {
+              this.$store.commit('setMenu', [this.menus[mndx], false])
+            }
+          }
+          this.$q.loading.hide()
+        })
+        .catch(function (error) {
+          console.log(error)
+          // this.$q.loading.hide()
+        })
+    },
     chooseSociety () {
       localStorage.setItem('JOURNEY_Society', this.society)
       for (var skey in this.societyOptions) {
@@ -145,33 +175,63 @@ export default {
       }
       this.$store.commit('setSocietyId', this.society)
       this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
+      this.getfeedcontent()
     },
     chooseTranslation () {
       localStorage.setItem('JOURNEY_Bible', this.bible)
     }
   },
   async mounted () {
-    if (localStorage.getItem('JOURNEY_District')) {
-      this.populateDistricts()
-      this.district = parseInt(localStorage.getItem('JOURNEY_District'))
-      await this.chooseDistrict()
-    }
-    if (localStorage.getItem('JOURNEY_Circuit')) {
-      this.circuit = parseInt(localStorage.getItem('JOURNEY_Circuit'))
-      await this.chooseCircuit()
-    }
-    if (localStorage.getItem('JOURNEY_Society')) {
-      this.society = parseInt(localStorage.getItem('JOURNEY_Society'))
-      await this.chooseSociety()
-    }
-    if (!localStorage.getItem('JOURNEY_Bible')) {
-      localStorage.setItem('JOURNEY_Bible', this.bible)
-    }
-    if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
-      this.phone = localStorage.getItem('JOURNEY_VerifiedPhone')
-    }
-    if (!localStorage.getItem('JOURNEY_District')) {
-      this.populateDistricts()
+    if (this.$route.params.society) {
+      this.$axios.get(process.env.API + '/journeysettings/' + this.$route.params.society)
+        .then(response => {
+          localStorage.setItem('JOURNEY_District', response.data.circuit.district.id)
+          this.populateDistricts()
+          this.district = parseInt(localStorage.getItem('JOURNEY_District'))
+          this.chooseDistrict()
+          localStorage.setItem('JOURNEY_Circuit', response.data.circuit.id)
+          localStorage.setItem('JOURNEY_Circuitname', response.data.circuit.circuit)
+          this.$store.commit('setCircuitName', response.data.circuit.circuit)
+          this.$store.commit('setCircuitId', response.data.circuit.id)
+          this.circuit = parseInt(localStorage.getItem('JOURNEY_Circuit'))
+          this.chooseCircuit()
+          localStorage.setItem('JOURNEY_Society', response.data.id)
+          localStorage.setItem('JOURNEY_Societyname', response.data.society)
+          this.$store.commit('setSocietyId', response.data.id)
+          this.$store.commit('setSocietyName', response.data.society)
+          this.society = parseInt(localStorage.getItem('JOURNEY_Society'))
+          this.chooseSociety()
+          if (!localStorage.getItem('JOURNEY_Bible')) {
+            localStorage.setItem('JOURNEY_Bible', this.bible)
+          }
+          this.getfeedcontent()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    } else {
+      if (localStorage.getItem('JOURNEY_District')) {
+        this.populateDistricts()
+        this.district = parseInt(localStorage.getItem('JOURNEY_District'))
+        await this.chooseDistrict()
+      }
+      if (localStorage.getItem('JOURNEY_Circuit')) {
+        this.circuit = parseInt(localStorage.getItem('JOURNEY_Circuit'))
+        await this.chooseCircuit()
+      }
+      if (localStorage.getItem('JOURNEY_Society')) {
+        this.society = parseInt(localStorage.getItem('JOURNEY_Society'))
+        await this.chooseSociety()
+      }
+      if (!localStorage.getItem('JOURNEY_Bible')) {
+        localStorage.setItem('JOURNEY_Bible', this.bible)
+      }
+      if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+        this.phone = localStorage.getItem('JOURNEY_VerifiedPhone')
+      }
+      if (!localStorage.getItem('JOURNEY_District')) {
+        this.populateDistricts()
+      }
     }
   }
 }
