@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Upgrade underlying framework - Quasar 1.0b18')
-var version = JSON.stringify('0.2')
+var vnotes = JSON.stringify('Subscriptions to other blogs, sermons')
+var version = JSON.stringify('0.2.1')
 
 module.exports = function (ctx) {
   return {

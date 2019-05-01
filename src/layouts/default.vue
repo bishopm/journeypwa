@@ -170,7 +170,7 @@
             <q-icon size="24px" name="fas fa-bible" color="white"/>
           </q-item-section>
         </q-item>
-        <q-item class="text-center" :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'">
+        <q-item v-if="this.$store.state.feeditems && this.$store.state.feeditems.devotional" class="text-center" :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'">
           <q-item-section>
             <q-icon size="24px" name="fas fa-pray" color="white"/>
           </q-item-section>

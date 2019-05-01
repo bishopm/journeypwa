@@ -14,7 +14,8 @@
         </q-list>
       </q-tab-panel>
     </q-tab-panels>
-    <p class="q-mt-md q-pa-md text-grey text-center">Changes made here take effect after restarting the app</p>
+    <p v-if="subscriptions.length" class="q-mt-md q-pa-md text-grey text-center">Changes made here take effect after restarting the app</p>
+    <p v-else class="q-mt-md q-pa-md text-grey text-center">No subscriptions have been set up by your administrator yet</p>
   </div>
 </template>
 
