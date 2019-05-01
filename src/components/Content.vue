@@ -2,7 +2,7 @@
   <div class="q-ma-md" v-if="contents.length">
     <div v-if="!$route.params.id" class="caption text-center">For the week beginning: {{ monday() }}</div>
     <div v-for="item in contents" :key="item.feedpost.title">
-      <div class="text-center caption">{{item.feedpost.title}}<br><small><i>{{item.source}}</i></small></div>
+      <div class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{item.feedpost.title}}<br><small><i>{{item.source}}</i></small></div>
       <div v-html="item.feedpost.body"></div>
       <hr class="q-mt-lg">
     </div>

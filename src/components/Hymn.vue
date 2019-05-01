@@ -1,6 +1,6 @@
 <template>
   <div class="q-mt-xs q-ma-md">
-    <p v-if="song" class="text-center caption">{{song.title}}</p>
+    <p v-if="song" class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{song.title}}</p>
     <div class="q-mx-md" v-if="song" v-html="song.body"></div>
   </div>
 </template>

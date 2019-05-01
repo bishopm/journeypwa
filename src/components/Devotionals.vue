@@ -1,13 +1,13 @@
 <template>
-  <div class="q-mt-xs q-ma-md" v-if="blogs.length">
-    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Blogs</p>
+  <div class="q-mt-xs q-ma-md" v-if="devotionals.length">
+    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Devotional readings</p>
     <q-list>
-      <q-item v-for="(blog, index) in blogs" :key="blog.permalink" :to="'/blogposts/' + index">
+      <q-item v-for="(devotional, index) in devotionals" :key="devotional.permalink" :to="'/devotional/' + index">
         <q-item-section class="text-center">
-          {{blog.title}}
+          {{devotional.title}}
         </q-item-section>
         <q-item-section avatar>
-          <q-chip>{{blog.items.length}}</q-chip>
+          <q-chip>{{devotional.items.length}}</q-chip>
         </q-item-section>
       </q-item>
     </q-list>
@@ -18,14 +18,14 @@
 export default {
   data () {
     return {
-      blogs: []
+      devotionals: []
     }
   },
   mounted () {
     if (!this.$store.state.feeditems) {
       this.$router.push({ name: 'home' })
     }
-    this.blogs = this.$store.state.feeditems.blog
+    this.devotionals = this.$store.state.feeditems.devotional
   }
 }
 </script>

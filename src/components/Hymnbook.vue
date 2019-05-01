@@ -1,6 +1,6 @@
 <template>
   <div class="q-mt-xs q-ma-md">
-    <p class="text-center caption">Songs and liturgy</p>
+    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Songs and liturgy</p>
     <q-list class="no-border">
       <div v-if="songs" class="text-center">Songs <q-icon size="sm" name="fas fa-music"/>
         <q-item v-for="song in songs" :key="song.id" :to="'/hymns/' + song.id">

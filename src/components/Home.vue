@@ -16,7 +16,7 @@
         </router-link>
       </div>
       <div v-if="menu_devotional()" class="col-6 text-center q-mb-md">
-        <router-link :to="this.$store.state.feeditems.devotion.length > 1 ? '/devotionals' : '/devotional/0'" class="text-white" style="text-decoration:none;">
+        <router-link :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Devotional</div>
           <q-icon class="text-primary" name="fas fa-fw fa-pray" size="3rem" />
         </router-link>

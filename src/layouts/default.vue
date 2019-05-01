@@ -40,7 +40,7 @@
               <q-item-label caption>Community news and needs</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_devotional()" :to="this.$store.state.feeditems.devotion.length > 1 ? '/devotionals' : 'devotional/0'">
+          <q-item v-if="menu_devotional()" :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-pray" />
             </q-item-section>
@@ -49,7 +49,7 @@
               <q-item-label caption>Devotional readings</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_blogs()" :to="this.$store.state.feeditems.blog.length > 1 ? '/blogs' : 'blogposts/0'">
+          <q-item v-if="menu_blogs()" :to="this.$store.state.feeditems.blog.length > 1 ? '/blogs' : '/blogposts/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-edit" />
             </q-item-section>
@@ -58,7 +58,7 @@
               <q-item-label caption>From our blog</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-if="menu_sermons()" :to="this.$store.state.feeditems.sermon.length > 1 ? '/sermonsites' : 'sermon/0'">
+          <q-item v-if="menu_sermons()" :to="this.$store.state.feeditems.sermon.length > 1 ? '/sermonsites' : '/sermon/0'">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-microphone" />
             </q-item-section>
@@ -167,7 +167,7 @@
             </q-item-section>
             <q-item-section side>
               <q-item-label overline>My subscriptions</q-item-label>
-              <q-item-label caption>Explore blogs and podcasts</q-item-label>
+              <q-item-label caption>Methodist blogs, sermons</q-item-label>
             </q-item-section>
           </q-item>
         </q-expansion-item>
@@ -331,7 +331,7 @@ export default {
           } else {
             this.$store.commit('setEvents', false)
           }
-          if ((response.data.devotion) && (response.data.devotion.length)) {
+          if ((response.data.devotional) && (response.data.devotional.length)) {
             this.$store.commit('setDevotional', true)
           } else {
             this.$store.commit('setDevotional', false)
