@@ -10,6 +10,7 @@ module.exports = function (ctx) {
       'axios',
       'firebase',
       'vuelidate'
+      // 'addressbar-color'
     ],
 
     css: [
