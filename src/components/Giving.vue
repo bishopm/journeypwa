@@ -13,7 +13,27 @@
               <q-table :title="'Planned Giving History - PG:' + pg" v-if="$route.params.id === $store.state.individual.id && pg > 0" :pagination.sync="pagination" :data="rows" :columns="columns" row-key="name" no-data-label="No payments have been captured yet"/>
               <p v-else>This family member has a different planned giving number. You may only view records linked to your PG number</p>
             </div>
-            <q-btn v-else @click="modalopen = true">Choose a planned giving number</q-btn>
+            <div v-else>
+              You don't have a planned giving number yet. Start by clicking the button below and choosing a number. Or click the ABOUT tab above and read more about our planned giving programme.
+              <q-btn class="q-mt-md" label="Choose a planned giving number" color="primary" @click="modalopen = true" />
+            </div>
+            <q-dialog v-model="modalopen" transition-show="scale" transition-hide="scale">
+              <q-card class="" style="width: 300px">
+                <q-card-section>
+                  <div class="text-h6">Choose a PG number</div>
+                  <div v-if="householdpg.length !== null && householdpg.length !== 0">
+                    <small>The following members of your household already have PG numbers:</small>
+                    <div class="q-mt-sm text-center" v-for="(kk,vv) of householdpg" :key="kk"><small><b>{{kk}} ({{vv}})</b></small></div>
+                    <div class="q-mt-sm text-justify"><small>You may choose either an existing household number or a new number from the list below</small></div>
+                  </div>
+                  <q-select label="Choose a number" v-model="newnumber" :options="pgs"/>
+                  <div class="text-center">
+                    <q-btn class="q-mt-md" color="primary" @click="savechanges()" label="OK" />
+                    <q-btn class="q-mt-md q-ml-md" color="black" @click="modalopen = false" label="Cancel" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </q-dialog>
           </div>
         </q-tab-panel>
         <q-tab-panel name="aboutGiving" class="no-border">
@@ -27,25 +47,13 @@
               <li>You may choose to give via EFT (using that number as a reference: eg - PG 999) or by placing an envelope in the offering bag marked with that number</li>
               <li>Our bookkeeper captures amounts received and records the appropriate PG number. We do not track giving by name.</li>
               <li>Our system will automatically send you an email each quarter listing the amounts recorded - this is helpful to keep track of your own giving and to ensure that the money has actually been received.</li>
+              <li>You can also see your giving history at any time in the ADMIN tab of this page in the Journey App.</li>
             </ul>
           </p>
         </q-tab-panel>
       </q-tab-panels>
     </div>
     <div v-else class="text-center">{{errormessage}}</div>
-    <q-dialog minimized v-model="modalopen" content-css="padding: 50px">
-      <h4 class="text-center">Choose a PG number</h4>
-      <div v-if="householdpg.length !== null && householdpg.length !== 0">
-        <small>The following members of your household already have PG numbers:</small>
-        <div class="q-mt-sm text-center" v-for="(kk,vv) of householdpg" :key="kk"><small><b>{{kk}} ({{vv}})</b></small></div>
-        <div class="q-mt-sm text-justify"><small>You may choose either an existing household number or a new number from the list below</small></div>
-      </div>
-      <q-select label="Choose a number" v-model="newnumber" :options="pgs"/>
-      <div class="text-center">
-        <q-btn class="q-mt-md" color="primary" @click="savechanges()" label="OK" />
-        <q-btn class="q-mt-md q-ml-md" color="black" @click="modalopen = false" label="Cancel" />
-      </div>
-    </q-dialog>
   </div>
 </template>
 
