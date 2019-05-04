@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Subscriptions to other blogs, sermons')
-var version = JSON.stringify('0.2.1')
+var vnotes = JSON.stringify('Fixed: update member details and planned giving records')
+var version = JSON.stringify('0.2.2')
 
 module.exports = function (ctx) {
   return {
@@ -48,6 +48,7 @@ module.exports = function (ctx) {
         'QPageContainer',
         'QPage',
         'QPopupProxy',
+        'QRadio',
         'QTable',
         'QToolbar',
         'QToolbarTitle',

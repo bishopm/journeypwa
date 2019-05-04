@@ -126,7 +126,7 @@ export default {
     if (!localStorage.getItem('JOURNEY_Society')) {
       this.$router.push({ name: 'settings' })
     }
-    if (!this.$store.state.individual && !this.$store.state.individual.id) {
+    if (!this.$store.state.individual || !this.$store.state.individual.id) {
       if (localStorage.getItem('JOURNEY_Individual')) {
         this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
       } else {

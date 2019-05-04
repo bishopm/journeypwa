@@ -14,7 +14,7 @@
               <p v-else>This family member has a different planned giving number. You may only view records linked to your PG number</p>
             </div>
             <div v-else>
-              You don't have a planned giving number yet. Start by clicking the button below and choosing a number. Or click the ABOUT tab above and read more about our planned giving programme.
+              You don't have a planned giving number yet. Start by clicking the button below and choosing a number. Or click the ABOUT tab above and read more about our planned giving programme.<br>
               <q-btn class="q-mt-md" label="Choose a planned giving number" color="primary" @click="modalopen = true" />
             </div>
             <q-dialog v-model="modalopen" transition-show="scale" transition-hide="scale">

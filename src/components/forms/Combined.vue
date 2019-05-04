@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-md">
     <div class="q-mx-md q-mt-md text-center caption">
-      Add my details to the {{$store.state.societyname}} member database
+      <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Add my details to the {{$store.state.societyname}} member database</p>
       <p id="instructions">Please complete this brief form - you can add other details and other members of your household later.</p>
     </div>
     <div class="q-ma-md">
@@ -70,9 +70,11 @@ export default {
                 society_id: localStorage.getItem('JOURNEY_Society')
               })
               .then(response => {
-                if (response.data.household) {
-                  this.$store.commit('setIndividual', response.data)
-                  this.$store.commit('setChats', response.data.chats)
+                if (response.data.individual) {
+                  this.$store.commit('setIndividual', response.data.individual)
+                  if (!localStorage.getItem('JOURNEY_Individual')) {
+                    localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data.individual))
+                  }
                 }
                 this.$q.notify('Success! You may now edit your details as needed')
                 this.$router.push({ name: 'me' })
@@ -86,14 +88,6 @@ export default {
             this.$q.loading.hide()
           })
       }
-    }
-  },
-  mounted () {
-    if (!this.$store.state.individual.household) {
-      this.$router.push({ name: 'home' })
-    }
-    if (this.$route.params.action === 'edit') {
-      this.form = this.$route.params.individual
     }
   }
 }

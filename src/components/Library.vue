@@ -59,19 +59,20 @@ export default {
   mounted () {
     if (!this.$store.state.societyid) {
       this.$router.push({ name: 'home' })
+    } else {
+      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+      this.$axios.get(process.env.API + '/feedlibrary/' + this.$store.state.societyid)
+        .then(response => {
+          this.practices = response.data.practice
+          this.groups = response.data.groups
+          this.media = response.data.media
+          this.songs = response.data.songs
+          this.ready = true
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
-    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
-    this.$axios.get(process.env.API + '/feedlibrary/' + this.$store.state.societyid)
-      .then(response => {
-        this.practices = response.data.practice
-        this.groups = response.data.groups
-        this.media = response.data.media
-        this.songs = response.data.songs
-        this.ready = true
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
   }
 }
 </script>
