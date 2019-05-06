@@ -1,7 +1,7 @@
 <template>
   <div>
+    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Upcoming events (Click event for details)</p>
     <q-list v-if="events.length" class="no-border">
-      <q-list-header class="text-center">Upcoming events (Click event for details)</q-list-header>
       <q-item v-for="event in events" :key="event.id" :to="'/events/' + event.id">
         <q-item-section class="text-center">
           <div class="caption">{{event.groupname}}</div><div class="q-ml-md text-weight-thin">{{formatme(event.eventdatetime)}}</div>

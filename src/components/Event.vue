@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="event && event.group" class="text-center q-ma-md">
-      <h5>{{event.group.groupname}}</h5>
+      <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{event.group.groupname}}</p>
       <small>{{event.group.till}}</small>
       <p class="caption">{{event.group.description}}</p>
       <p class="text-left q-mt-md"><b>Date & time:</b> {{formatme(event.group.eventdatetime)}}</p>
