@@ -8,7 +8,7 @@
         <q-icon name="fas fa-fw fa-phone" color="tertiary"></q-icon> {{household.homephone}}<br>
         Household SMS'es go to: {{householdcell}}
       </p>
-      <q-tabs v-model="tab" active-bg-color="secondary" no-pane-border align="justify" class="q-mt-md bg-primary text-white" indicator-color="secondary">
+      <q-tabs v-model="tab" dense active-bg-color="secondary" no-pane-border align="justify" class="q-mt-md bg-primary text-white" indicator-color="secondary">
         <q-tab v-for="indiv in household.individuals" :key="indiv.id" :name="'tab' + indiv.id" :label="indiv.firstname"/>
         <q-tab key="0" name="tabadd" icon="fas fa-fw fa-plus-circle"/>
       </q-tabs>
