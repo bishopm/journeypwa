@@ -36,7 +36,7 @@ export default {
   mixins: [saveState],
   computed: {
     isAuthorised () {
-      if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+      if (this.$q.localStorage.getItem('JOURNEY_VerifiedPhone')) {
         return true
       } else {
         return false

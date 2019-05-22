@@ -43,6 +43,7 @@ module.exports = function (ctx) {
         'QHeader',
         'QInput',
         'QFooter',
+        'QForm',
         'QDrawer',
         'QOptionGroup',
         'QPageContainer',
@@ -74,7 +75,8 @@ module.exports = function (ctx) {
       plugins: [
         'Notify',
         'Loading',
-        'Dialog'
+        'Dialog',
+        'LocalStorage'
       ],
 
       iconSet: 'fontawesome-v5'

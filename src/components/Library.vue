@@ -1,9 +1,10 @@
 <template>
   <div class="q-mt-xs q-ma-md">
     <p class="text-center caption">Resource library<br>
-      <small v-if="practices || media || groups">Click on an item to open</small>
+      <small v-if="practices.length || media.length || groups.length">Click on an item to open</small>
       <small v-else>No items have been added to the library yet</small>
     </p>
+    <p v-if="message">{{message}}</p>
     <div v-if="ready">
       <q-list v-if="practices" class="no-border">
         <div class="text-center"><q-icon size="sm" name="fas fa-pray"/>
@@ -53,13 +54,12 @@ export default {
       practices: [],
       groups: [],
       media: [],
-      ready: false
+      ready: false,
+      message: null
     }
   },
   mounted () {
-    if (!this.$store.state.societyid) {
-      this.$router.push({ name: 'home' })
-    } else {
+    if (this.$store.state.societyid) {
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
       this.$axios.get(process.env.API + '/feedlibrary/' + this.$store.state.societyid)
         .then(response => {
@@ -72,6 +72,8 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    } else {
+      this.message = 'Once you tell us which church you belong to, we can check if there are any resources available to you.'
     }
   }
 }

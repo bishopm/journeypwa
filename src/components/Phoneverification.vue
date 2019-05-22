@@ -15,7 +15,7 @@ export default {
     }
   },
   mounted () {
-    if ((localStorage.getItem('JOURNEY_VerifiedPhone')) && (localStorage.getItem('JOURNEY_Phonetoken'))) {
+    if ((this.$q.localStorage.getItem('JOURNEY_VerifiedPhone')) && (this.$q.localStorage.getItem('JOURNEY_Phonetoken'))) {
       this.$router.push({ name: 'home' })
     } else {
       this.uiConfig = {

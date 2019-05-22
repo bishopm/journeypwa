@@ -39,8 +39,8 @@ export default {
       spinnerSize: 250, // in pixels
       spinnerColor: 'white'
     })
-    if (localStorage.getItem('JOURNEY_Bible')) {
-      this.bible = localStorage.getItem('JOURNEY_Bible')
+    if (this.$q.localStorage.getItem('JOURNEY_Bible')) {
+      this.bible = this.$q.localStorage.getItem('JOURNEY_Bible')
     } else {
       this.bible = 'eng-GNTUK'
     }

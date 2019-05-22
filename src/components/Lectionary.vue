@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted () {
-    if (!localStorage.getItem('JOURNEY_Lectionary')) {
+    if (!this.$q.localStorage.getItem('JOURNEY_Lectionary')) {
       // this.$q.loading.show()
     }
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token

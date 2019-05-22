@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" class="q-ma-md">
+  <div class="q-ma-md">
     <div class="caption text-center q-mt-md">
       <div v-if="!phoneverified">
         <q-btn color="secondary" to="phoneverification">Please verify your phone number</q-btn>
@@ -24,8 +24,35 @@
       </div>
       <p v-if="permission === 'denied'">Notifications are disabled. Click <router-link to="settings">HERE</router-link> to fix this</p>
       <div v-else-if="anon && phoneverified">
-        Welcome, {{phoneverified}}<br>
-        <q-btn to="adduser" color="secondary">Update my details</q-btn>
+        <div v-if="society">
+          Welcome, {{phoneverified}}<br>
+          <q-btn to="adduser" color="secondary">Update my details</q-btn>
+        </div>
+        <q-btn v-else @click="socmodal = true" color="secondary">Which church do you belong to?</q-btn>
+        <q-dialog v-model="socmodal" persistent transition-show="scale" transition-hide="scale">
+          <q-card class="bg-primary text-white" style="width: 300px">
+            <q-card-section>
+              <div class="text-h6">Find your church</div>
+            </q-card-section>
+            <q-card-section class="bg-white">
+              <div class="q-gutter-md row">
+                <q-select outlined v-model="mySociety" use-input input-debounce="0" :options="filteredSocieties" @filter="filterFn" clearable style="width:90%;">
+                  <template v-slot:no-option>
+                    <q-item>
+                      <q-item-section class="text-grey">
+                        No results
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+              </div>
+            </q-card-section>
+            <q-card-actions align="right" class="bg-white text-black">
+              <q-btn class="bg-black text-white" flat label="Cancel" v-close-popup/>
+              <q-btn class="bg-primary text-white" flat label="OK" @click="setSociety"/>
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
       </div>
     </div>
     <div class="row q-mt-lg">
@@ -104,15 +131,20 @@ import 'assets/push-notifications.js'
 export default {
   data () {
     return {
-      phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
+      phoneverified: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
       grace: false,
       anon: false,
-      persistent: false
+      persistent: false,
+      socmodal: false,
+      societies: [],
+      filteredSocieties: [],
+      denomination: 1,
+      mySociety: null
     }
   },
   computed: {
-    settings () {
-      if (localStorage.getItem('JOURNEY_Society')) {
+    society () {
+      if (this.$q.localStorage.getItem('JOURNEY_Society')) {
         return true
       } else {
         return false
@@ -123,15 +155,52 @@ export default {
     }
   },
   async mounted () {
-    if (!localStorage.getItem('JOURNEY_Society')) {
-      this.$router.push({ name: 'settings' })
-    }
     if (!this.$store.state.individual || !this.$store.state.individual.id) {
-      if (localStorage.getItem('JOURNEY_Individual')) {
-        this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
+      if (this.$q.localStorage.getItem('JOURNEY_Individual')) {
+        this.$store.commit('setIndividual', JSON.parse(this.$q.localStorage.getItem('JOURNEY_Individual')))
       } else {
         this.anon = true
+        this.getSocieties()
       }
+    }
+  },
+  methods: {
+    getSocieties () {
+      this.$axios.get(process.env.API + '/denominations/' + this.denomination + '/societies')
+        .then(response => {
+          for (var soc in response.data) {
+            this.societies.push({
+              label: response.data[soc].society + ' (' + response.data[soc].circuit + ', ' + response.data[soc].district + ')',
+              value: response.data[soc].society_id,
+              society: response.data[soc].society,
+              circuit: response.data[soc].circuit,
+              circuit_id: response.data[soc].circuit_id,
+              district: response.data[soc].district_id
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    setSociety () {
+      this.socmodal = false
+      this.$q.localStorage.set('JOURNEY_Societyname', this.mySociety.society)
+      this.$q.localStorage.set('JOURNEY_Circuitname', this.mySociety.circuit)
+      this.$q.localStorage.set('JOURNEY_Society', this.mySociety.value)
+      this.$q.localStorage.set('JOURNEY_Circuit', this.mySociety.circuit_id)
+      this.$q.localStorage.set('JOURNEY_District', this.mySociety.district)
+      window.location.reload()
+    },
+    filterFn (val, update, abort) {
+      if (val.length < 2) {
+        abort()
+        return
+      }
+      update(() => {
+        const needle = val.toLowerCase()
+        this.filteredSocieties = this.societies.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+      })
     }
   }
 }

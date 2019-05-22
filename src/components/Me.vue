@@ -63,7 +63,7 @@ export default {
   mounted () {
     this.url = process.env.WEB + '/vendor/bishopm/images/'
     if (!this.$store.state.individual.household) {
-      this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
+      this.$store.commit('setIndividual', JSON.parse(this.$q.localStorage.getItem('JOURNEY_Individual')))
     }
     this.household = this.$store.state.individual.household
     this.tab = 'tab' + this.$store.state.individual.id
@@ -73,7 +73,7 @@ export default {
       return this.$store.state.societyname
     },
     phone () {
-      return localStorage.getItem('JOURNEY_VerifiedPhone')
+      return this.$q.localStorage.getItem('JOURNEY_VerifiedPhone')
     },
     householdcell () {
       var hname = 'None'

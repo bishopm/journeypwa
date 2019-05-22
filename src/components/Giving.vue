@@ -99,7 +99,7 @@ export default {
   },
   mounted () {
     if (!this.$store.state.individual.household) {
-      this.$store.commit('setIndividual', JSON.parse(localStorage.getItem('JOURNEY_Individual')))
+      this.$store.commit('setIndividual', JSON.parse(this.$q.localStorage.getItem('JOURNEY_Individual')))
     }
     this.householdids = []
     for (var indx in this.$store.state.individual.household.individuals) {
@@ -107,7 +107,7 @@ export default {
     }
     console.log(this.householdids.indexOf(this.$route.params.id))
     if (this.householdids.indexOf(this.$route.params.id) > -1) {
-      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('JOURNEY_Token')
+      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$q.localStorage.getItem('JOURNEY_Token')
       this.$axios.post(process.env.API + '/giving',
         {
           id: this.$route.params.id,

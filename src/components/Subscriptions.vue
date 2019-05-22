@@ -41,7 +41,7 @@ export default {
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
       this.$axios.post(process.env.API + '/mysubscriptions',
         {
-          user_id: localStorage.getItem('JOURNEY_User'),
+          user_id: this.$q.localStorage.getItem('JOURNEY_User'),
           feed_id: id,
           state: event
         })

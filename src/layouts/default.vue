@@ -190,7 +190,7 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      phoneverified: localStorage.getItem('JOURNEY_VerifiedPhone'),
+      phoneverified: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
       rightDrawerOpen: this.$q.platform.is.desktop,
       individual: '',
       expanded: true,
@@ -199,16 +199,16 @@ export default {
   },
   methods: {
     async get_token () {
-      if (localStorage.getItem('JOURNEY_VerifiedPhone')) {
+      if (this.$q.localStorage.getItem('JOURNEY_VerifiedPhone')) {
         this.$axios.post(process.env.API + '/login',
           {
-            phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
-            phonetoken: localStorage.getItem('JOURNEY_Phonetoken')
+            phone: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
+            phonetoken: this.$q.localStorage.getItem('JOURNEY_Phonetoken')
           })
           .then(response => {
-            localStorage.setItem('JOURNEY_Token', response.data.token)
+            this.$q.localStorage.set('JOURNEY_Token', response.data.token)
             this.$store.commit('setToken', response.data.token)
-            if (!localStorage.getItem('JOURNEY_Individual')) {
+            if (!this.$q.localStorage.getItem('JOURNEY_Individual')) {
               this.getindiv()
             }
           })
@@ -236,7 +236,7 @@ export default {
           individual: this.$store.state.individual.id
         })
         .then(response => {
-          localStorage.setItem('JOURNEY_User', response.data.userid)
+          this.$q.localStorage.set('JOURNEY_User', response.data.userid)
           this.$store.commit('setFeeditems', response.data)
           for (var mndx in this.menus) {
             if (response.data[this.menus[mndx]]) {
@@ -256,14 +256,14 @@ export default {
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
       this.$axios.post(process.env.API + '/phone',
         {
-          phone: localStorage.getItem('JOURNEY_VerifiedPhone'),
-          society_id: localStorage.getItem('JOURNEY_Society')
+          phone: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
+          society_id: this.$q.localStorage.getItem('JOURNEY_Society')
         })
         .then(response => {
           if (response.data.individual) {
             this.$store.commit('setIndividual', response.data.individual)
-            if (!localStorage.getItem('JOURNEY_Individual')) {
-              localStorage.setItem('JOURNEY_Individual', JSON.stringify(response.data.individual))
+            if (!this.$q.localStorage.getItem('JOURNEY_Individual')) {
+              this.$q.localStorage.set('JOURNEY_Individual', JSON.stringify(response.data.individual))
             }
           }
           if (this.$store.state.societyid) {
@@ -282,36 +282,34 @@ export default {
   },
   async mounted () {
     // Deal with upgrades
-    if (localStorage.getItem('JOURNEY_Version')) {
-      if (localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
+    if (this.$q.localStorage.getItem('JOURNEY_Version')) {
+      if (this.$q.localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
         this.$q.dialog({
           title: 'New version available',
           message: 'Click OK to restart the app and upgrade to version ' + process.env.VERSION + '. This new version includes: ' + process.env.VNOTES,
           ok: 'OK',
           cancel: 'LATER'
         }).onOk(() => {
-          localStorage.setItem('JOURNEY_Version', process.env.VERSION)
+          this.$q.localStorage.set('JOURNEY_Version', process.env.VERSION)
           window.location.reload()
         }).catch(() => {
           console.log('Delaying upgrade')
         })
       }
     } else {
-      localStorage.setItem('JOURNEY_Version', process.env.VERSION)
+      this.$q.localStorage.set('JOURNEY_Version', process.env.VERSION)
     }
     // Check that settings are intact
-    if (localStorage.getItem('JOURNEY_Circuit')) {
-      this.$store.commit('setSocietyName', localStorage.getItem('JOURNEY_Societyname'))
-      this.$store.commit('setSocietyId', localStorage.getItem('JOURNEY_Society'))
-      this.$store.commit('setCircuitId', localStorage.getItem('JOURNEY_Circuit'))
-      this.$store.commit('setCircuitName', localStorage.getItem('JOURNEY_Circuitname'))
-    } else {
-      this.$router.push({ name: 'settings' })
+    if (this.$q.localStorage.getItem('JOURNEY_Circuit')) {
+      this.$store.commit('setSocietyName', this.$q.localStorage.getItem('JOURNEY_Societyname'))
+      this.$store.commit('setSocietyId', this.$q.localStorage.getItem('JOURNEY_Society'))
+      this.$store.commit('setCircuitId', this.$q.localStorage.getItem('JOURNEY_Circuit'))
+      this.$store.commit('setCircuitName', this.$q.localStorage.getItem('JOURNEY_Circuitname'))
     }
-    if (!localStorage.getItem('JOURNEY_Token')) {
+    if (!this.$q.localStorage.getItem('JOURNEY_Token')) {
       await this.get_token()
     } else {
-      this.$store.commit('setToken', localStorage.getItem('JOURNEY_Token'))
+      this.$store.commit('setToken', this.$q.localStorage.getItem('JOURNEY_Token'))
     }
     if (this.phoneverified && this.$store.state.token) {
       this.getindiv()
