@@ -4,6 +4,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/default'),
     children: [
+      { name: 'addchurch', path: '/addchurch', component: () => import('components/Addchurch'), meta: { auth: false } },
       { name: 'blogs', path: '/blogs', component: () => import('components/Blogs'), meta: { auth: false } },
       { name: 'blogposts', path: '/blogposts/:id', component: () => import('components/Blogposts'), meta: { auth: false } },
       { name: 'church', path: '/church', component: () => import('components/Church'), meta: { auth: true } },

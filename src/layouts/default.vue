@@ -310,13 +310,7 @@ export default {
       await this.get_token()
     } else {
       this.$store.commit('setToken', this.$q.localStorage.getItem('JOURNEY_Token'))
-    }
-    if (this.phoneverified && this.$store.state.token) {
       this.getindiv()
-    } else {
-      if (this.$store.state.societyid) {
-        this.getfeedcontent()
-      }
     }
   }
 }

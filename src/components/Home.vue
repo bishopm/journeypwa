@@ -23,20 +23,21 @@
         </q-dialog>
       </div>
       <p v-if="permission === 'denied'">Notifications are disabled. Click <router-link to="settings">HERE</router-link> to fix this</p>
-      <div v-else-if="anon && phoneverified">
+      <div v-else-if="!$q.localStorage.getItem('JOURNEY_Individual') && phoneverified">
         <div v-if="society">
           Welcome, {{phoneverified}}<br>
           <q-btn to="adduser" color="secondary">Update my details</q-btn>
         </div>
         <q-btn v-else @click="socmodal = true" color="secondary">Which church do you belong to?</q-btn>
         <q-dialog v-model="socmodal" persistent transition-show="scale" transition-hide="scale">
-          <q-card class="bg-primary text-white" style="width: 300px">
+          <q-card class="bg-primary text-white" style="width: 400px">
             <q-card-section>
               <div class="text-h6">Find your church</div>
             </q-card-section>
             <q-card-section class="bg-white">
               <div class="q-gutter-md row">
-                <q-select outlined v-model="mySociety" use-input input-debounce="0" :options="filteredSocieties" @filter="filterFn" clearable style="width:90%;">
+                <q-select outlined v-model="church" label="Church" :options="[{label: 'Methodist Church of Southern Africa', value: 'mcsa'}]" style="width:100%;" emit-value map-options/>
+                <q-select autofocus placeholder="Type here to find or change your church" outlined v-model="mySociety" use-input input-debounce="0" :options="filteredSocieties" @filter="filterFn" clearable style="width:100%;">
                   <template v-slot:no-option>
                     <q-item>
                       <q-item-section class="text-grey">
@@ -48,7 +49,8 @@
               </div>
             </q-card-section>
             <q-card-actions align="right" class="bg-white text-black">
-              <q-btn class="bg-black text-white" flat label="Cancel" v-close-popup/>
+              <q-btn class="bg-white text-primary" to="addchurch" flat label="I can't find my church" v-close-popup/>
+              <q-btn class="bg-grey text-white" flat label="Cancel" v-close-popup/>
               <q-btn class="bg-primary text-white" flat label="OK" @click="setSociety"/>
             </q-card-actions>
           </q-card>
@@ -133,13 +135,13 @@ export default {
     return {
       phoneverified: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
       grace: false,
-      anon: false,
       persistent: false,
       socmodal: false,
       societies: [],
       filteredSocieties: [],
       denomination: 1,
-      mySociety: null
+      mySociety: null,
+      church: 'mcsa'
     }
   },
   computed: {
@@ -157,9 +159,8 @@ export default {
   async mounted () {
     if (!this.$store.state.individual || !this.$store.state.individual.id) {
       if (this.$q.localStorage.getItem('JOURNEY_Individual')) {
-        this.$store.commit('setIndividual', JSON.parse(this.$q.localStorage.getItem('JOURNEY_Individual')))
+        this.$store.commit('setIndividual', this.$q.localStorage.getItem('JOURNEY_Individual'))
       } else {
-        this.anon = true
         this.getSocieties()
       }
     }
@@ -207,4 +208,7 @@ export default {
 </script>
 
 <style>
+.q-select__input--padding {
+  padding-left: 0px;
+}
 </style>

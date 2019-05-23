@@ -4,7 +4,7 @@
       <small v-if="practices.length || media.length || groups.length">Click on an item to open</small>
       <small v-else>No items have been added to the library yet</small>
     </p>
-    <p v-if="message">{{message}}</p>
+    <p class="text-justify" v-if="message">{{message}}</p>
     <div v-if="ready">
       <q-list v-if="practices" class="no-border">
         <div class="text-center"><q-icon size="sm" name="fas fa-pray"/>
@@ -73,7 +73,7 @@ export default {
           console.log(error)
         })
     } else {
-      this.message = 'Once you tell us which church you belong to, we can check if there are any resources available to you.'
+      this.message = 'Once you verify your phone number and tell us which church you belong to, we can check if there are any resources available to you.'
     }
   }
 }

@@ -46,7 +46,7 @@ export default {
       icon: null
     }
   },
-  props: ['latitude', 'longitude', 'popuplabel', 'editable'],
+  props: ['latitude', 'longitude', 'popuplabel', 'editable', 'initialZoom'],
   components: {
     'l-map': LMap,
     'l-tile-layer': LTileLayer,
@@ -90,17 +90,19 @@ export default {
     displayLocationInfo (position) {
       const lng = position.coords.longitude
       const lat = position.coords.latitude
-
-      // this.marker = L.latLng(lat, lng)
+      this.marker = L.latLng(lat, lng)
       this.center = [lat, lng]
       // console.log(lat)
       // console.log(lng)
     },
     noGeoLocation (error) {
-      alert('No funciona' + error.message)
+      alert('Not working: ' + error.message)
     }
   },
   mounted () {
+    if (this.initialZoom) {
+      this.zoom = parseInt(this.initialZoom)
+    }
     this.icon = L.icon({
       iconUrl: require('leaflet/dist/images/marker-icon.png'),
       shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
