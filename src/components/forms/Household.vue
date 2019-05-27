@@ -72,9 +72,12 @@ export default {
             this.$q.notify('Database successfully updated')
             this.$router.push({ name: 'home' })
           })
-          .catch(function (error) {
-            console.log(error)
-            this.$q.loading.hide()
+          .catch(error => {
+            if (error.code === 'ECONNABORTED') {
+              this.$q.notify('Server connection timed out - are you offline?')
+            } else {
+              console.log(error)
+            }
           })
       }
     }

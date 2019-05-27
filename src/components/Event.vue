@@ -54,13 +54,16 @@ export default {
         .then(response => {
           this.populateData()
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     },
     populateData () {
       if (this.$store.state.token) {
-        this.$q.loading.show()
         this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
         this.$axios.get(process.env.API + '/groups/' + this.$route.params.id)
           .then((response) => {
@@ -88,11 +91,13 @@ export default {
                 this.attenders.push(this.event.members[gkey].id)
               }
             }
-            this.$q.loading.hide()
           })
-          .catch(function (error) {
-            this.$q.loading.hide()
-            console.log(error)
+          .catch(error => {
+            if (error.code === 'ECONNABORTED') {
+              this.$q.notify('Server connection timed out - are you offline?')
+            } else {
+              console.log(error)
+            }
           })
       }
     }

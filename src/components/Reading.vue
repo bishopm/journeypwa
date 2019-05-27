@@ -33,12 +33,6 @@ export default {
     }
   },
   mounted () {
-    this.$q.loading.show({
-      message: 'Retrieving Bible reading',
-      messageColor: 'white',
-      spinnerSize: 250, // in pixels
-      spinnerColor: 'white'
-    })
     if (this.$q.localStorage.getItem('JOURNEY_Bible')) {
       this.bible = this.$q.localStorage.getItem('JOURNEY_Bible')
     } else {
@@ -51,11 +45,13 @@ export default {
           this.readings.push({ title: value, reading: response.data[value] })
         }
         this.selectedTab = this.readingHeaders[0]
-        this.$q.loading.hide()
       })
-      .catch(function (error) {
-        console.log(error)
-        this.$q.loading.hide()
+      .catch(error => {
+        if (error.code === 'ECONNABORTED') {
+          this.$q.notify('Server connection timed out - are you offline?')
+        } else {
+          console.log(error)
+        }
       })
   }
 }

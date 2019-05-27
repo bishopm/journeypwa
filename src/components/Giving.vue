@@ -92,8 +92,12 @@ export default {
           this.modalopen = false
           this.pg = this.newnumber
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     }
   },
@@ -141,8 +145,12 @@ export default {
             this.pgs.push(newt)
           }
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     } else {
       this.errormessage = 'Sorry, this person is not a member of your household!'

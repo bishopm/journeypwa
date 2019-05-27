@@ -156,6 +156,12 @@
       </q-list>
     </q-drawer>
     <q-page-container>
+      <div v-if="loading" class="text-center bg-grey-4 text-white">
+        <div v-if="!offerrefresh" class="q-pa-md" transition-hide="fade">
+          Checking for new content <q-spinner-bars class="q-ml-sm" size="20px" color="white" />
+        </div>
+        <div v-else class="q-py-md text-black">Switching to latest content in {{countdown}}s</div>
+      </div>
       <router-view />
     </q-page-container>
     <q-footer>
@@ -192,8 +198,12 @@ export default {
     return {
       phoneverified: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
       rightDrawerOpen: this.$q.platform.is.desktop,
+      loading: false,
+      offerrefresh: false,
       individual: '',
       expanded: true,
+      countdown: 3,
+      newdata: [],
       menus: ['blog', 'devotional', 'diary', 'events', 'groups', 'media', 'practice', 'reminders', 'sermon']
     }
   },
@@ -212,10 +222,26 @@ export default {
               this.getindiv()
             }
           })
-          .catch(function (error) {
-            console.log(error)
+          .catch(error => {
+            if (error.code === 'ECONNABORTED') {
+              this.$q.notify('Server connection timed out - are you offline?')
+            } else {
+              console.log(error)
+            }
           })
       }
+    },
+    updateFeed () {
+      this.$store.commit('setFeeditems', this.newdata)
+      for (var mndx in this.menus) {
+        if (this.newdata[this.menus[mndx]]) {
+          this.$store.commit('setMenu', [this.menus[mndx], true])
+        } else {
+          this.$store.commit('setMenu', [this.menus[mndx], false])
+        }
+      }
+      this.offerrefresh = false
+      this.loading = false
     },
     societyname () {
       return this.$store.state.societyname
@@ -229,7 +255,7 @@ export default {
       }
     },
     getfeedcontent () {
-      this.$q.loading.show()
+      this.loading = true
       this.$axios.post(process.env.API + '/userfeed',
         {
           society: this.$store.state.societyid,
@@ -237,19 +263,31 @@ export default {
         })
         .then(response => {
           this.$q.localStorage.set('JOURNEY_User', response.data.userid)
-          this.$store.commit('setFeeditems', response.data)
-          for (var mndx in this.menus) {
-            if (response.data[this.menus[mndx]]) {
-              this.$store.commit('setMenu', [this.menus[mndx], true])
-            } else {
-              this.$store.commit('setMenu', [this.menus[mndx], false])
-            }
+          this.newdata = response.data
+          if (JSON.stringify(this.newdata) !== JSON.stringify(this.$store.state.feeditems)) {
+            this.offerrefresh = true
+            setTimeout(() => {
+              this.countdown = 2
+              setTimeout(() => {
+                this.countdown = 1
+                setTimeout(() => {
+                  this.countdown = 0
+                  this.updateFeed()
+                }, 1000)
+              }, 1000)
+            }, 1000)
+          } else {
+            this.offerrefresh = false
+            this.loading = false
           }
-          this.$q.loading.hide()
         })
-        .catch(function (error) {
-          console.log(error)
-          // this.$q.loading.hide()
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.loading = false
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     },
     getindiv () {
@@ -282,6 +320,7 @@ export default {
   },
   async mounted () {
     // Deal with upgrades
+    this.timeout = false
     if (this.$q.localStorage.getItem('JOURNEY_Version')) {
       if (this.$q.localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
         this.$q.dialog({

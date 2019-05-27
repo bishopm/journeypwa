@@ -43,8 +43,12 @@ export default {
           this.message = 'You have no messages'
         }
       })
-      .catch(function (error) {
-        console.log(error)
+      .catch(error => {
+        if (error.code === 'ECONNABORTED') {
+          this.$q.notify('Server connection timed out - are you offline?')
+        } else {
+          console.log(error)
+        }
       })
   },
   methods: {
@@ -68,8 +72,12 @@ export default {
         .then(response => {
           console.log('Item deleted')
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     }
   }

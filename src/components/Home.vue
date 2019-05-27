@@ -180,8 +180,12 @@ export default {
             })
           }
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     },
     setSociety () {
@@ -191,7 +195,28 @@ export default {
       this.$q.localStorage.set('JOURNEY_Society', this.mySociety.value)
       this.$q.localStorage.set('JOURNEY_Circuit', this.mySociety.circuit_id)
       this.$q.localStorage.set('JOURNEY_District', this.mySociety.district)
-      window.location.reload()
+      this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+      this.$axios.post(process.env.API + '/phone',
+        {
+          phone: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
+          society_id: this.$q.localStorage.getItem('JOURNEY_Society')
+        })
+        .then(response => {
+          if (response.data.individual) {
+            if (!this.$q.localStorage.getItem('JOURNEY_Individual')) {
+              this.$q.localStorage.set('JOURNEY_Individual', JSON.stringify(response.data.individual))
+            }
+          }
+          window.location.reload()
+        })
+        .catch(function (error) {
+          if (error.response.status === 401) {
+            localStorage.removeItem('JOURNEY_Token')
+            window.location.reload()
+          } else {
+            console.log(error)
+          }
+        })
     },
     filterFn (val, update, abort) {
       if (val.length < 2) {

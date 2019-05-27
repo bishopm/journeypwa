@@ -45,6 +45,7 @@ export default {
           firstname: this.form.firstname,
           sex: this.form.sex,
           phone: this.form.phone,
+          phonetoken: this.$q.localStorage.getItem('JOURNEY_Phonetoken'),
           society_id: this.form.society_id,
           adduser: 'yes'
         })
@@ -65,13 +66,20 @@ export default {
               this.$q.notify('Success! You may now edit your details as needed')
               this.$router.push({ name: 'me' })
             })
-            .catch(function (error) {
-              console.log(error)
+            .catch(error => {
+              if (error.code === 'ECONNABORTED') {
+                this.$q.notify('Server connection timed out - are you offline?')
+              } else {
+                console.log(error)
+              }
             })
         })
-        .catch(function (error) {
-          console.log(error)
-          this.$q.loading.hide()
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     }
   }

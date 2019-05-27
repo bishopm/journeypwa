@@ -21,8 +21,12 @@ export default {
       .then(response => {
         this.song = response.data
       })
-      .catch(function (error) {
-        console.log(error)
+      .catch(error => {
+        if (error.code === 'ECONNABORTED') {
+          this.$q.notify('Server connection timed out - are you offline?')
+        } else {
+          console.log(error)
+        }
       })
   }
 }

@@ -92,8 +92,12 @@ export default {
             this.districtOptions.push(newitem)
           }
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     },
     chooseDistrict () {
@@ -109,8 +113,12 @@ export default {
           }
           this.$q.localStorage.set('JOURNEY_District', this.district)
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     },
     chooseCircuit () {
@@ -125,25 +133,34 @@ export default {
       this.$axios.get(process.env.API + '/circuits/' + this.circuit + '/societies')
         .then(response => {
           this.societyOptions = []
+          var inactive = true
           for (var skey in response.data) {
             var newitem = {
               label: response.data[skey].society,
               value: response.data[skey].id
             }
             this.societyOptions.push(newitem)
+            if (response.data[skey].id === this.$q.localStorage.getItem('JOURNEY_Society')) {
+              inactive = false
+            }
+          }
+          if (inactive) {
+            this.societyOptions.push({
+              label: this.$q.localStorage.getItem('JOURNEY_Societyname'),
+              value: this.$q.localStorage.getItem('JOURNEY_Society')
+            })
           }
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     },
     getfeedcontent () {
-      this.$q.loading.show({
-        message: 'Updating feed content based on your settings',
-        messageColor: 'white',
-        spinnerSize: 250, // in pixels
-        spinnerColor: 'white'
-      })
+      this.$q.notify('Updating feed content based on your settings')
       this.$axios.post(process.env.API + '/userfeed',
         {
           society: this.$store.state.societyid,
@@ -159,11 +176,13 @@ export default {
               this.$store.commit('setMenu', [this.menus[mndx], false])
             }
           }
-          this.$q.loading.hide()
         })
-        .catch(function (error) {
-          console.log(error)
-          // this.$q.loading.hide()
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     },
     chooseSociety () {
@@ -206,8 +225,12 @@ export default {
           }
           this.getfeedcontent()
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     } else {
       if (this.$q.localStorage.getItem('JOURNEY_District')) {

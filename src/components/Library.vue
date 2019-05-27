@@ -69,8 +69,12 @@ export default {
           this.songs = response.data.songs
           this.ready = true
         })
-        .catch(function (error) {
-          console.log(error)
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
         })
     } else {
       this.message = 'Once you verify your phone number and tell us which church you belong to, we can check if there are any resources available to you.'

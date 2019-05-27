@@ -31,18 +31,16 @@ export default {
     }
   },
   mounted () {
-    if (!this.$q.localStorage.getItem('JOURNEY_Lectionary')) {
-      // this.$q.loading.show()
-    }
-    // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token
     this.$axios.get(process.env.API + '/lectionary')
       .then(response => {
         this.lections = response.data
-        // this.$q.loading.hide()
       })
-      .catch(function (error) {
-        console.log(error)
-        // this.$q.loading.hide()
+      .catch(error => {
+        if (error.code === 'ECONNABORTED') {
+          this.$q.notify('Server connection timed out - are you offline?')
+        } else {
+          console.log(error)
+        }
       })
   }
 

@@ -65,11 +65,13 @@ export default {
         this.description = response.data.description
         this.readings = response.data.readings
         this.extras = response.data.extras
-        // this.$q.loading.hide()
       })
-      .catch(function (error) {
-        console.log(error)
-        // this.$q.loading.hide()
+      .catch(error => {
+        if (error.code === 'ECONNABORTED') {
+          this.$q.notify('Server connection timed out - are you offline?')
+        } else {
+          console.log(error)
+        }
       })
   }
 }

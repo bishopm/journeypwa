@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Fixed: update member details and planned giving records')
-var version = JSON.stringify('0.2.2')
+var vnotes = JSON.stringify('Allow new users to add their society if missing, change login flow')
+var version = JSON.stringify('0.2.3')
 
 module.exports = function (ctx) {
   return {
@@ -10,7 +10,6 @@ module.exports = function (ctx) {
       'axios',
       'firebase',
       'vuelidate'
-      // 'addressbar-color'
     ],
 
     css: [
@@ -41,6 +40,7 @@ module.exports = function (ctx) {
         'QField',
         'QLayout',
         'QHeader',
+        'QInnerLoading',
         'QInput',
         'QFooter',
         'QForm',
@@ -50,6 +50,7 @@ module.exports = function (ctx) {
         'QPage',
         'QPopupProxy',
         'QRadio',
+        'QSpinnerBars',
         'QTable',
         'QToolbar',
         'QToolbarTitle',
@@ -66,7 +67,8 @@ module.exports = function (ctx) {
         'QTabs',
         'QTab',
         'QTabPanels',
-        'QTabPanel'
+        'QTabPanel',
+        'QTime'
       ],
 
       directives: [

@@ -53,8 +53,12 @@ export default {
         this.societies = response.data.societies
         this.sunday = response.data.sunday
       })
-      .catch(function (error) {
-        console.log(error)
+      .catch(error => {
+        if (error.code === 'ECONNABORTED') {
+          this.$q.notify('Server connection timed out - are you offline?')
+        } else {
+          console.log(error)
+        }
       })
   },
   methods: {

@@ -6,8 +6,8 @@
     <q-tab-panels v-model="selectedTab" animated class="q-ma-sm">
       <q-tab-panel v-for="feedtype in feedtypes" :name="feedtype" :key="feedtype" class="no-border">
         <q-list>
-          <q-item v-for="(sub, index) in filteredsubs" :key="index">
-            <q-checkbox @input="changeSub(sub.id, sub.subval)" :class="sub.disabled ? 'text-grey' : 'text-black'" :color='sub.color' :disable="sub.disabled" v-model="sub.subval" :label="sub.title">
+          <q-item v-for="(sub, index) in subscriptions" :key="index">
+            <q-checkbox v-if="sub.category === feedtype" @input="changeSub(sub.id, !sub.subval, index)" :class="sub.disabled ? 'text-grey' : 'text-black'" :color='sub.color' :disable="sub.disabled" v-model="allvals[index]" :label="sub.title">
               <div><small>{{sub.description}}</small></div>
             </q-checkbox>
           </q-item>
@@ -23,21 +23,20 @@
 export default {
   data () {
     return {
+      allvals: [],
       subscriptions: [],
       feedtypes: [],
-      selectedTab: ''
-    }
-  },
-  computed: {
-    filteredsubs () {
-      let self = this
-      return this.subscriptions.filter(function (sub) {
-        return sub.category === self.selectedTab
-      })
+      selectedTab: '',
+      dumfeed: {}
     }
   },
   methods: {
-    changeSub (id, event) {
+    changeSub (id, event, ndx) {
+      if (this.subscriptions[ndx].subval === true) {
+        this.subscriptions[ndx].subval = false
+      } else {
+        this.subscriptions[ndx].subval = true
+      }
       this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
       this.$axios.post(process.env.API + '/mysubscriptions',
         {
@@ -46,12 +45,15 @@ export default {
           state: event
         })
         .then(response => {
-          this.lections = response.data
-          // this.$q.loading.hide()
+          if (response.data === 'Subscription deleted') {
+            this.$q.notify('You have unsubscribed from this feed. When you restart the app, content from this feed will no longer appear.')
+          } else {
+            console.log(response.data)
+            this.$q.notify('You have subscribed to a new feed. When you restart the app, available content from this feed will appear.')
+          }
         })
         .catch(function (error) {
           console.log(error)
-          // this.$q.loading.hide()
         })
     }
   },
@@ -63,20 +65,25 @@ export default {
       if (this.feedtypes.indexOf(this.$store.state.feeditems.feeds[sndx].category) < 0) {
         this.feedtypes.push(this.$store.state.feeditems.feeds[sndx].category)
       }
+      this.dumfeed = {}
       if (!this.$store.state.feeditems.feeds[sndx].subs) {
-        this.$store.state.feeditems.feeds[sndx].subval = false
-        this.$store.state.feeditems.feeds[sndx].disabled = false
-        this.$store.state.feeditems.feeds[sndx].color = 'green'
+        this.dumfeed.subval = false
+        this.dumfeed.disabled = false
+        this.dumfeed.color = 'green'
       } else if (this.$store.state.feeditems.feeds[sndx].subs === 'Bishopm\\Churchnet\\Models\\User') {
-        this.$store.state.feeditems.feeds[sndx].subval = true
-        this.$store.state.feeditems.feeds[sndx].disabled = false
-        this.$store.state.feeditems.feeds[sndx].color = 'green'
+        this.dumfeed.subval = true
+        this.dumfeed.disabled = false
+        this.dumfeed.color = 'green'
       } else {
-        this.$store.state.feeditems.feeds[sndx].subval = true
-        this.$store.state.feeditems.feeds[sndx].disabled = true
-        this.$store.state.feeditems.feeds[sndx].color = 'grey'
+        this.dumfeed.subval = true
+        this.dumfeed.disabled = true
+        this.dumfeed.color = 'grey'
       }
-      this.subscriptions.push(this.$store.state.feeditems.feeds[sndx])
+      this.dumfeed.id = this.$store.state.feeditems.feeds[sndx].id
+      this.allvals.push(this.dumfeed.subval)
+      this.dumfeed.title = this.$store.state.feeditems.feeds[sndx].title
+      this.dumfeed.category = this.$store.state.feeditems.feeds[sndx].category
+      this.subscriptions.push(this.dumfeed)
     }
     this.selectedTab = this.feedtypes[0]
   }
