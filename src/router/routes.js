@@ -17,6 +17,7 @@ const routes = [
       { name: 'events', path: '/events', component: () => import('components/Events'), meta: { auth: true } },
       { name: 'event', path: '/events/:id', component: () => import('components/Event'), meta: { auth: true } },
       { name: 'giving', path: '/giving/:id', component: () => import('components/Giving'), meta: { auth: true } },
+      { name: 'help', path: '/help', component: () => import('components/Help'), meta: { auth: true } },
       { name: 'householdform', path: '/household/:action/:id?', component: () => import('components/forms/Household'), meta: { auth: true } },
       { name: 'hymn', path: '/hymns/:id', component: () => import('components/Hymn'), meta: { auth: false } },
       { name: 'hymnbook', path: '/hymnbook', component: () => import('components/Hymnbook'), meta: { auth: false } },

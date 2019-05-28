@@ -152,6 +152,15 @@
               <q-item-label caption>Methodist blogs, sermons</q-item-label>
             </q-item-section>
           </q-item>
+          <q-item v-if="$store.state.token" to="/help">
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-info" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Help</q-item-label>
+              <q-item-label caption>Send feedback / get help</q-item-label>
+            </q-item-section>
+          </q-item>
         </q-expansion-item>
       </q-list>
     </q-drawer>
