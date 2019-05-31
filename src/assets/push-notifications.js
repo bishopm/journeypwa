@@ -1,6 +1,9 @@
 import axios from 'axios'
+import { Platform } from 'quasar'
 
-initPush()
+if (!Platform.is.ios) {
+  initPush()
+}
 
 function initPush () {
   new Promise(function (resolve, reject) {

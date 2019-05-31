@@ -57,7 +57,7 @@ export default {
       circuit: {},
       society: {},
       phone: '',
-      webpush: Notification.permission,
+      webpush: '',
       menus: ['blog', 'devotional', 'diary', 'events', 'groups', 'media', 'practice', 'reminders', 'sermon']
     }
   },
@@ -201,6 +201,11 @@ export default {
     }
   },
   async mounted () {
+    if (!this.$q.platform.is.ios) {
+      this.webpush = Notification.permission
+    } else {
+      this.webpush = 'Unavailable on your platform'
+    }
     if (this.$route.params.society) {
       this.$axios.get(process.env.API + '/journeysettings/' + this.$route.params.society)
         .then(response => {

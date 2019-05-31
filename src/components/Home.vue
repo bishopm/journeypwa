@@ -22,8 +22,7 @@
           </q-card>
         </q-dialog>
       </div>
-      <p v-if="permission === 'denied'">Notifications are disabled. Click <router-link to="settings">HERE</router-link> to fix this</p>
-      <div v-else-if="!$q.localStorage.getItem('JOURNEY_Individual') && phoneverified">
+      <div v-if="!$q.localStorage.getItem('JOURNEY_Individual') && phoneverified">
         <div v-if="society">
           Welcome, {{phoneverified}}<br>
           <q-btn to="adduser" color="secondary">Update my details</q-btn>
@@ -153,7 +152,11 @@ export default {
       }
     },
     permission () {
-      return Notification.permission
+      if (!this.$q.platform.is.ios) {
+        return Notification.permission
+      } else {
+        return 'unavailable'
+      }
     }
   },
   async mounted () {
