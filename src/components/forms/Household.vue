@@ -3,28 +3,26 @@
     <div v-if="$route.params.action" class="q-mx-md q-mt-md text-center bg-secondary text-white q-py-md">
       {{$route.params.action.toUpperCase()}} HOUSEHOLD <small>{{$store.state.societyname}} society</small>
     </div>
-    <div class="q-ma-md">
-      <q-field :error="$v.form.addressee.$error" error-label="The addressee field is required">
-        <q-input label="Addressee" v-model="form.addressee" @blur="$v.form.addressee.$touch()" :error="$v.form.addressee.$error" />
-      </q-field>
-    </div>
-    <div class="q-ma-md">
-      <q-input label="Residential Address" v-model="form.addr1"/>
-      <q-input v-model="form.addr2"/>
-      <q-input v-model="form.addr3"/>
-    </div>
-    <div class="q-ma-md">
-      <q-field :error="$v.form.homephone.$error" error-label="Phone numbers must be numeric">
-        <q-input label="Home phone" v-model="form.homephone" @blur="$v.form.homephone.$touch()" :error="$v.form.homephone.$error" />
-      </q-field>
-    </div>
-    <div class="q-ma-md">
-      <q-select label="Household cellphone" v-model="form.householdcell" :options="housecellOptions"/>
-    </div>
-    <div class="q-ma-md text-center">
-      <q-btn color="primary" @click="submit">OK</q-btn>
-      <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
-    </div>
+    <q-form>
+      <div class="q-ma-md">
+        <q-input outlined hide-bottom-space error-message="Addressee is required" label="Addressee" v-model="form.addressee" :rules="[ val => val.length >= 1 ]" />
+      </div>
+      <div class="q-ma-md">
+        <q-input outlined label="Residential Address" v-model="form.addr1"/>
+        <q-input class="q-my-sm" outlined v-model="form.addr2"/>
+        <q-input outlined v-model="form.addr3"/>
+      </div>
+      <div class="q-ma-md">
+        <q-input outlined label="Home phone" v-model="form.homephone"/>
+      </div>
+      <div class="q-ma-md">
+        <q-select outlined label="Household cellphone" v-model="form.householdcell" :options="housecellOptions" map-options emit-value/>
+      </div>
+      <div class="q-ma-md text-center">
+        <q-btn color="primary" @click="submit">OK</q-btn>
+        <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
+      </div>
+    </q-form>
   </div>
 </template>
 

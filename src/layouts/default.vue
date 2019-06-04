@@ -232,6 +232,12 @@
       <router-view />
     </q-page-container>
     <q-footer>
+      <div class="text-center bg-black">
+        <small v-if="$store.state.individual.firstname" class="text-bold">{{$store.state.individual.firstname}} {{$store.state.individual.surname}} - </small>
+        <small v-if="$store.state.societyname">{{$store.state.societyname}} ({{$store.state.circuitname}})
+        </small>
+        <router-link to="/settings" class="text-white text-bold" style="text-decoration:none;"><q-icon v-if="$store.state.societyname" size="12px" name="fa fa-cog"></q-icon></router-link>
+      </div>
       <q-toolbar v-if="$store.state.token" class="justify-around">
         <q-item class="text-center" to="/">
           <q-item-section>
@@ -485,6 +491,9 @@ export default {
             this.$store.commit('setIndividual', response.data.individual)
             this.$q.localStorage.set('JOURNEY_Individual', JSON.stringify(response.data.individual))
             this.noindiv = false
+          } else {
+            localStorage.removeItem('JOURNEY_Individual')
+            this.noindiv = true
           }
           if (this.$store.state.societyid) {
             this.getfeedcontent()

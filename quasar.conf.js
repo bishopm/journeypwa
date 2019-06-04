@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Final fix for iphones and ipads')
-var version = JSON.stringify('0.2.3.3')
+var vnotes = JSON.stringify('Simplify login process')
+var version = JSON.stringify('0.2.4')
 
 module.exports = function (ctx) {
   return {

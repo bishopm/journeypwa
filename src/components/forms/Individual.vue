@@ -1,55 +1,57 @@
 <template>
   <div class="q-ma-md">
-    <div v-if="$route.params.action" class="bg-secondary q-mx-md q-mt-md text-center text-white q-py-md">
-      {{$route.params.action.toUpperCase()}} INDIVIDUAL
-    </div>
-    <div class="q-ma-md">
-      <q-input outlined hide-bottom-space error-message="Surname is required" label="Surname" v-model="form.surname" :rules="[ val => val.length >= 1 ]"/>
-    </div>
-    <div class="q-ma-md">
-      <q-input outlined hide-bottom-space error-message="The firstname field is required" label="First name" v-model="form.firstname" :rules="[ val => val.length >= 1 ]" />
-    </div>
-    <div class="q-ma-md">
-      <q-input outlined hide-bottom-space label="Email" error-message="Must be a valid email address" v-model="form.email"/>
-    </div>
-    <div class="q-ma-md">
-      <q-input outlined hide-bottom-space error-message="Phone numbers must be numeric" label="Cellphone" v-model="form.cellphone" @blur="$v.form.cellphone.$touch()" :error="$v.form.cellphone.$error" />
-    </div>
-    <div class="q-ma-md">
-      <q-select label="Sex" outlined v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]" map-options emit-value/>
-    </div>
-    <div class="q-ma-md">
-      <q-select label="Title" outlined v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
-    </div>
-    <div class="q-ma-md">
-      <q-select label="Membership" outlined v-model="form.memberstatus" :options="[{ label: 'Child', value: 'child' }, { label: 'Member', value: 'member' }, { label: 'Non-member', value: 'non-member' }]"/>
-    </div>
-    <div class="q-ma-md">
-      <q-input outlined label="Date of birth" v-model="form.birthdate" mask="date" :rules="['date']">
-        <template v-slot:append>
-          <q-icon name="fa fa-calendar" class="cursor-pointer">
-            <q-popup-proxy>
-              <q-date v-model="form.birthdate" />
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-    </div>
-    <div class="text-center" v-if="form.id">
-      <div class="card-body">
-        <img :src="profilepic" style="border-radius:50%" width="250"/>
-        <div class="card-img-overlay">
-          <q-btn color="primary" id="pick-avatar">{{buttontext}}</q-btn>
-          <q-btn v-if="form.image" @click="removeImage" class="q-ml-md" color="negative">Delete image</q-btn>
-        </div>
+    <q-form>
+      <div v-if="$route.params.action" class="bg-secondary q-mx-md q-mt-md text-center text-white q-py-md">
+        {{$route.params.action.toUpperCase()}} INDIVIDUAL
       </div>
-      <div class="card-footer text-muted" v-html="message"></div>
-      <avatar-cropper  :labels="{submit: 'OK', cancel: 'Cancel'}" @uploading="handleUploading" @uploaded="handleUploaded" @completed="handleCompleted" @error="handlerError" trigger="#pick-avatar" :upload-url="uploadurl" :upload-headers="uploadHeaders"/>
-    </div>
-    <div class="q-ma-md text-center">
-      <q-btn color="primary" @click="submit">OK</q-btn>
-      <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
-    </div>
+      <div class="q-ma-md">
+        <q-input outlined hide-bottom-space error-message="Surname is required" label="Surname" v-model="form.surname" :rules="[ val => val.length >= 1 ]"/>
+      </div>
+      <div class="q-ma-md">
+        <q-input outlined hide-bottom-space error-message="The firstname field is required" label="First name" v-model="form.firstname" :rules="[ val => val.length >= 1 ]" />
+      </div>
+      <div class="q-ma-md">
+        <q-input outlined hide-bottom-space label="Email" error-message="Must be a valid email address" v-model="form.email"/>
+      </div>
+      <div class="q-ma-md">
+        <q-input outlined hide-bottom-space error-message="Phone numbers must be numeric" label="Cellphone" v-model="form.cellphone" @blur="$v.form.cellphone.$touch()" :error="$v.form.cellphone.$error" />
+      </div>
+      <div class="q-ma-md">
+        <q-select label="Sex" outlined v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]" map-options emit-value/>
+      </div>
+      <div class="q-ma-md">
+        <q-select label="Title" outlined v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
+      </div>
+      <div class="q-ma-md">
+        <q-select label="Membership" outlined v-model="form.memberstatus" :options="[{ label: 'Child', value: 'child' }, { label: 'Member', value: 'member' }, { label: 'Non-member', value: 'non-member' }]"/>
+      </div>
+      <div class="q-ma-md">
+        <q-input outlined label="Date of birth" v-model="form.birthdate" mask="date" :rules="['date']">
+          <template v-slot:append>
+            <q-icon name="fa fa-calendar" class="cursor-pointer">
+              <q-popup-proxy>
+                <q-date v-model="form.birthdate" />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+      <div class="text-center" v-if="form.id">
+        <div class="card-body">
+          <img :src="profilepic" style="border-radius:50%" width="250"/>
+          <div class="card-img-overlay">
+            <q-btn color="primary" id="pick-avatar">{{buttontext}}</q-btn>
+            <q-btn v-if="form.image" @click="removeImage" class="q-ml-md" color="negative">Delete image</q-btn>
+          </div>
+        </div>
+        <div class="card-footer text-muted" v-html="message"></div>
+        <avatar-cropper  :labels="{submit: 'OK', cancel: 'Cancel'}" @uploading="handleUploading" @uploaded="handleUploaded" @completed="handleCompleted" @error="handlerError" trigger="#pick-avatar" :upload-url="uploadurl" :upload-headers="uploadHeaders"/>
+      </div>
+      <div class="q-ma-md text-center">
+        <q-btn color="primary" @click="submit">OK</q-btn>
+        <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
+      </div>
+    </q-form>
   </div>
 </template>
 

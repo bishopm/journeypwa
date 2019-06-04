@@ -2,7 +2,7 @@
   <div class="q-ma-md">
     <div class="q-mx-md q-mt-md text-center caption">
       <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Add my details to the {{$store.state.societyname}} member database</p>
-      <p id="instructions">Please complete this brief form - you can add other details and other members of your household later.</p>
+      <p class="instructions">Please complete this brief form - you can add other details and other members of your household later.</p>
     </div>
     <q-form>
       <div class="q-ma-md">
@@ -18,6 +18,7 @@
       <div class="q-ma-lg text-center">
         <q-btn color="primary" @click="submit">OK</q-btn>
         <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
+        <q-btn class="q-my-md" color="grey-6" to="/settings">Not at {{$store.state.societyname}}? Change to another society</q-btn>
       </div>
     </q-form>
   </div>
@@ -91,7 +92,7 @@ export default {
     text-decoration: none;
     color:white;
   }
-  #instructions {
+  .instructions {
     line-height: 1;
     margin: 0;
     font-size: small;

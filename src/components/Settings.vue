@@ -160,7 +160,6 @@ export default {
         })
     },
     getfeedcontent () {
-      this.$q.notify('Updating feed content based on your settings')
       this.$axios.post(process.env.API + '/userfeed',
         {
           society: this.$store.state.societyid,
