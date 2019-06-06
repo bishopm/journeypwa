@@ -103,6 +103,15 @@
               <q-item-label caption>Lectionary readings</q-item-label>
             </q-item-section>
           </q-item>
+          <q-item to="/signup">
+            <q-item-section avatar>
+              <q-icon color="primary" name="fas fa-fw fa-pen-alt" />
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label overline>Sign up</q-item-label>
+              <q-item-label caption>Join a group / serve in a team </q-item-label>
+            </q-item-section>
+          </q-item>
         </q-expansion-item>
         <q-expansion-item v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
