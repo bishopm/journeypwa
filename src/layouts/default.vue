@@ -203,7 +203,7 @@
           <div v-if="!offerrefresh" class="q-pa-md" transition-hide="fade">
             Checking for new content <q-spinner-bars class="q-ml-sm" size="20px" color="white" />
           </div>
-          <div v-else class="q-py-md text-black">Switching to latest content in {{countdown}}s</div>
+          <div v-else class="q-py-md text-black">Switching to latest content in {{countdown}}</div>
         </div>
         <div v-if="noindiv && society && !$q.localStorage.getItem('JOURNEY_Individual')">
           <div class="text-center q-ma-md">
@@ -409,9 +409,9 @@ export default {
                 setTimeout(() => {
                   this.countdown = 0
                   this.updateFeed()
-                }, 1000)
-              }, 1000)
-            }, 1000)
+                }, 500)
+              }, 500)
+            }, 500)
           } else {
             this.offerrefresh = false
             this.loading = false
