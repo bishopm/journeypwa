@@ -6,18 +6,20 @@
     </q-tabs>
     <q-tab-panels v-model="selectedTab" animated class="q-ma-sm">
       <q-tab-panel key="fGroups" name="fGroups" class="no-border">
-        <q-list>
+        <q-list v-if="fgroups.length">
           <q-item v-for="fgroup in fgroups" :key="fgroup.id" :to="'/groups/' + fgroup.id">
             {{fgroup.groupname}}
           </q-item>
         </q-list>
+        <p v-else class="text-justify">No fellowship / home groups have been set up yet. When your administrator has done this, it will be possible to join groups or request information from here.</p>
       </q-tab-panel>
       <q-tab-panel key="sGroups" name="sGroups" class="no-border">
-        <q-list>
+        <q-list v-if="sgroups.length">
           <q-item v-for="sgroup in sgroups" :key="sgroup.id" :to="'/groups/' + sgroup.id">
             {{sgroup.groupname}}
           </q-item>
         </q-list>
+        <p v-else class="text-justify">No service teams have been set up yet. When your administrator has done this, it will be possible to join groups or request information from here.</p>
       </q-tab-panel>
     </q-tab-panels>
   </div>

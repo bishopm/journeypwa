@@ -2,6 +2,7 @@
   <div class="q-mx-md">
     <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{group.groupname}}</p>
     <p v-if="group.description" class="text-grey">{{group.description}}</p>
+    <p>Contact person: {{leader}}</p>
     <q-separator v-if="members.length" class="q-mb-md"/>
     <span v-for="(member, index) in members" :key="member.id">
       {{member.firstname}} {{member.surname}}<template v-if="index !== members.length - 1">, </template>
@@ -20,7 +21,8 @@ export default {
       group: {},
       members: [],
       alreadyamember: false,
-      grouptype: 'group'
+      grouptype: 'group',
+      leader: ''
     }
   },
   methods: {
@@ -32,7 +34,7 @@ export default {
           person: this.$store.state.individual.id
         })
         .then((response) => {
-          this.$q.notify('Thanks for your interest - we have sent a message to the group leader who will get in touch with you')
+          this.$q.notify('Thanks for your interest - we have sent a message to the group contact person who will get in touch with you')
         })
         .catch(error => {
           if (error.code === 'ECONNABORTED') {
@@ -55,6 +57,9 @@ export default {
         for (var mndx in this.members) {
           if (this.members[mndx].id === this.$store.state.individual.id) {
             this.alreadyamember = true
+          }
+          if (this.members[mndx].id === this.group.leader) {
+            this.leader = this.members[mndx].firstname + ' ' + this.members[mndx].surname
           }
         }
       })

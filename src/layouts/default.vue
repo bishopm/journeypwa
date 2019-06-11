@@ -109,7 +109,7 @@
             </q-item-section>
             <q-item-section side>
               <q-item-label overline>Sign up</q-item-label>
-              <q-item-label caption>Join a group / serve in a team </q-item-label>
+              <q-item-label caption>Join a group/service team </q-item-label>
             </q-item-section>
           </q-item>
         </q-expansion-item>

@@ -19,6 +19,12 @@
           <q-icon class="text-primary" name="fas fa-fw fa-warehouse" size="3rem" />
         </router-link>
       </div>
+      <div class="col-6 text-center q-mb-md">
+        <div class="q-mb-sm caption">Read the Bible in a year</div>
+        <router-link to="/dailyreading" class="text-white" style="text-decoration:none;">
+          <q-icon class="text-primary" name="fas fa-fw fa-book-open" size="3rem" />
+        </router-link>
+      </div>
       <div v-if="$store.getters.getMenu('diary') && $store.state.feeditems.diary.length" class="col-6 text-center q-mb-md">
         <router-link to="/diary" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm caption text-black">Calendar</div>
