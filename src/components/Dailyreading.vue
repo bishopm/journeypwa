@@ -1,25 +1,10 @@
 <template>
   <div>
     <q-list striped v-if="today" class="no-border">
-      <p class="bg-secondary text-white q-ma-md q-pa-sm header text-center">Read the bible in a year: {{today}}</p>
-      <q-item :to="'/reading/' + encodeURI($store.state.feeditems.dailyreading.reading1)" class="striped">
+      <p class="bg-secondary text-white q-ma-md q-pa-sm header text-center">Read the bible in a year: {{today}} [Day {{this.$store.state.feeditems.dailyreading.readingday}}]</p>
+      <q-item v-for="(reading, index) in readings" :key="reading" :to="'/reading/' + encodeURI(reading)" :class="{striped: index % 2 === 1}">
         <q-item-section class="text-center">
-          <q-item-label v-html="cleanup($store.state.feeditems.dailyreading.reading1)"/>
-        </q-item-section>
-      </q-item>
-      <q-item :to="'/reading/' + encodeURI($store.state.feeditems.dailyreading.reading2)">
-        <q-item-section class="text-center">
-          <q-item-label v-html="cleanup($store.state.feeditems.dailyreading.reading2)"/>
-        </q-item-section>
-      </q-item>
-      <q-item :to="'/reading/' + encodeURI($store.state.feeditems.dailyreading.reading3)" class="striped">
-        <q-item-section class="text-center">
-          <q-item-label v-html="cleanup($store.state.feeditems.dailyreading.reading3)"/>
-        </q-item-section>
-      </q-item>
-      <q-item :to="'/reading/' + encodeURI($store.state.feeditems.dailyreading.reading4)">
-        <q-item-section class="text-center">
-          <q-item-label v-html="cleanup($store.state.feeditems.dailyreading.reading4)"/>
+          <q-item-label v-html="cleanup(reading)"/>
         </q-item-section>
       </q-item>
     </q-list>
@@ -41,6 +26,7 @@ export default {
   },
   mounted () {
     this.today = new Date().toJSON().slice(0, 10).replace(/-/g, '-')
+    this.readings = this.$store.state.feeditems.dailyreading.readings.split(';')
   }
 }
 </script>
