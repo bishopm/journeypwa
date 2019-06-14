@@ -1,14 +1,14 @@
 <template>
   <div>
     <q-list striped v-if="today" class="no-border">
-      <p class="bg-secondary text-white q-ma-md q-pa-sm header text-center">Read the bible in a year: {{today}} [Day {{this.$store.state.feeditems.dailyreading.readingday}}]</p>
+      <p class="bg-secondary text-white q-ma-md q-pa-sm header text-center">{{$store.state.feeditems.dailyreading.readingplan.title}} {{today}} [Day {{this.$store.state.feeditems.dailyreading.readingday}}]</p>
       <q-item v-for="(reading, index) in readings" :key="reading" :to="'/reading/' + encodeURI(reading)" :class="{striped: index % 2 === 1}">
         <q-item-section class="text-center">
           <q-item-label v-html="cleanup(reading)"/>
         </q-item-section>
       </q-item>
     </q-list>
-    <p class="q-ma-md text-italic text-justify">This reading plan was originally devised by the 19th Century Scottish minister, Robert Murray M’Cheyne, who lived from 1813-1843. It takes readers through the New Testament and Psalms twice a year, and through the rest of the Bible once each year.</p>
+    <p class="q-ma-md text-italic text-justify">{{$store.state.feeditems.dailyreading.readingplan.description}}</p>
   </div>
 </template>
 
