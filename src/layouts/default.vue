@@ -409,7 +409,7 @@ export default {
                 setTimeout(() => {
                   this.countdown = 0
                   this.updateFeed()
-                }, 500)
+                }, 750)
               }, 500)
             }, 500)
           } else {

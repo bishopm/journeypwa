@@ -20,7 +20,7 @@
         </router-link>
       </div>
       <div class="col-6 text-center q-mb-md">
-        <div class="q-mb-sm caption">Read the Bible in a year</div>
+        <div class="q-mb-sm caption">Bible reading plan</div>
         <router-link to="/dailyreading" class="text-white" style="text-decoration:none;">
           <q-icon class="text-primary" name="fas fa-fw fa-book-open" size="3rem" />
         </router-link>

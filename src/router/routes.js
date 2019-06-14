@@ -31,6 +31,7 @@ const routes = [
       { name: 'otherday', path: '/otherday/:date', component: () => import('components/Otherday'), meta: { auth: false } },
       { name: 'phoneverification', path: '/phoneverification', component: () => import('components/Phoneverification'), meta: { auth: false } },
       { name: 'reading', path: '/reading/:reading', component: () => import('components/Reading'), meta: { auth: false } },
+      { name: 'readingplans', path: '/readingplans', component: () => import('components/Readingplans'), meta: { auth: false } },
       { name: 'sermonsites', path: '/sermonsites', component: () => import('components/Sermonsites'), meta: { auth: false } },
       { name: 'sermon', path: '/sermon/:id', component: () => import('components/Sermon'), meta: { auth: false } },
       { name: 'settings', path: '/settings/:society?', component: () => import('components/Settings'), meta: { auth: false } },
