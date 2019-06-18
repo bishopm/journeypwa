@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="!fgroups.length && !sgroups.length">
+      Checking for group details <q-spinner-bars class="q-ml-sm" size="20px" />
+    </div>
     <q-tabs v-model="selectedTab" active-color="white" indicator-color="primary" class="no-border bg-secondary text-primary" q-tabs-two-lines>
       <q-tab name="fGroups" key="fGroups">Fellowship groups</q-tab>
       <q-tab name="sGroups" key="sGroups">Service groups</q-tab>

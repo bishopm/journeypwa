@@ -1,15 +1,20 @@
 <template>
   <div class="q-mx-md">
-    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{group.groupname}}</p>
-    <p v-if="group.description" class="text-grey">{{group.description}}</p>
-    <p>Contact person: {{leader}}</p>
-    <q-separator v-if="members.length" class="q-mb-md"/>
-    <span v-for="(member, index) in members" :key="member.id">
-      {{member.firstname}} {{member.surname}}<template v-if="index !== members.length - 1">, </template>
-    </span>
-    <div class="text-center q-mt-md">
-      <p v-if="alreadyamember"><b>You are a member of this {{grouptype}}</b></p>
-      <q-btn v-else @click="signmeup">I'd like to join this {{grouptype}}</q-btn>
+    <div v-if="!group">
+      Downloading details <q-spinner-bars class="q-ml-sm" size="20px" />
+    </div>
+    <div v-else>
+      <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{group.groupname}}</p>
+      <p v-if="group.description" class="text-grey">{{group.description}}</p>
+      <p v-if="leader">Contact person: {{leader}}</p>
+      <q-separator v-if="members.length" class="q-mb-md"/>
+      <span v-for="(member, index) in members" :key="member.id">
+        {{member.firstname}} {{member.surname}}<template v-if="index !== members.length - 1">, </template>
+      </span>
+      <div class="text-center q-mt-md">
+        <p v-if="alreadyamember"><b>You are a member of this {{grouptype}}</b></p>
+        <q-btn v-else @click="signmeup">I'd like to join this {{grouptype}}</q-btn>
+      </div>
     </div>
   </div>
 </template>
