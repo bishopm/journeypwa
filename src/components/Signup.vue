@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div v-if="!fgroups.length && !sgroups.length">
-      Checking for group details <q-spinner-bars class="q-ml-sm" size="20px" />
-    </div>
     <q-tabs v-model="selectedTab" active-color="white" indicator-color="primary" class="no-border bg-secondary text-primary" q-tabs-two-lines>
       <q-tab name="fGroups" key="fGroups">Fellowship groups</q-tab>
       <q-tab name="sGroups" key="sGroups">Service groups</q-tab>
     </q-tabs>
     <q-tab-panels v-model="selectedTab" animated class="q-ma-sm">
       <q-tab-panel key="fGroups" name="fGroups" class="no-border">
+        <div v-if="!fgroups.length && !sgroups.length">
+          <q-spinner-bars class="q-ml-sm" size="20px" />
+        </div>
         <q-list v-if="fgroups.length">
           <q-item v-for="fgroup in fgroups" :key="fgroup.id" :to="'/groups/' + fgroup.id">
             {{fgroup.groupname}}
@@ -17,6 +17,9 @@
         <p v-else class="text-justify">No fellowship / home groups have been set up yet. When your administrator has done this, it will be possible to join groups or request information from here.</p>
       </q-tab-panel>
       <q-tab-panel key="sGroups" name="sGroups" class="no-border">
+        <div v-if="!fgroups.length && !sgroups.length">
+          <q-spinner-bars class="q-ml-sm" size="20px" />
+        </div>
         <q-list v-if="sgroups.length">
           <q-item v-for="sgroup in sgroups" :key="sgroup.id" :to="'/groups/' + sgroup.id">
             {{sgroup.groupname}}
