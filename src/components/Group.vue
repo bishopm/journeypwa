@@ -63,9 +63,9 @@ export default {
           if (this.members[mndx].id === this.$store.state.individual.id) {
             this.alreadyamember = true
           }
-          if (this.members[mndx].id === this.group.leader) {
-            this.leader = this.members[mndx].firstname + ' ' + this.members[mndx].surname
-          }
+        }
+        if (response.data.leader) {
+          this.leader = response.data.leader.firstname + ' ' + response.data.leader.surname
         }
       })
       .catch(error => {

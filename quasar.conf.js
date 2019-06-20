@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Add reading plans and group signups')
-var version = JSON.stringify('0.2.5')
+var vnotes = JSON.stringify('Fix for group signups')
+var version = JSON.stringify('0.2.5.1')
 
 module.exports = function (ctx) {
   return {
