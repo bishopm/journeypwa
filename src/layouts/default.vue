@@ -286,7 +286,7 @@ export default {
       expanded: true,
       countdown: 3,
       newdata: [],
-      menus: ['blog', 'children', 'devotional', 'diary', 'events', 'groups', 'media', 'practice', 'reminders', 'sermon'],
+      menus: ['blog', 'children', 'devotional', 'diary', 'events', 'groups', 'media', 'others', 'practice', 'reminders', 'sermon'],
       persistent: false,
       socmodal: false,
       societies: [],
@@ -368,7 +368,6 @@ export default {
         })
     },
     updateFeed () {
-      console.log(this.newdata)
       this.$store.commit('setFeeditems', this.newdata)
       for (var mndx in this.menus) {
         if (this.newdata[this.menus[mndx]]) {

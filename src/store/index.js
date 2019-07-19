@@ -19,6 +19,7 @@ export default function (/* { ssrContext } */) {
       menu_diary: false,
       menu_groups: false,
       menu_media: false,
+      menu_others: false,
       menu_community: false,
       menu_practice: false,
       menu_blog: false,

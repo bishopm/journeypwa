@@ -19,7 +19,7 @@
           <q-icon class="text-primary" name="fas fa-fw fa-book-open" size="3rem" />
         </router-link>
       </div>
-      <div class="col-6 text-center q-mb-md">
+      <div v-if="$store.getters.getMenu('others') && $store.state.feeditems.others" class="col-6 text-center q-mb-md">
         <div class="q-mb-sm caption">From other churches</div>
         <router-link to="/published" class="text-white" style="text-decoration:none;">
           <q-icon class="text-primary" name="fas fa-fw fa-share-alt" size="3rem" />
