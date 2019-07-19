@@ -14,6 +14,7 @@ export default function (/* { ssrContext } */) {
       circuitname: '',
       circuitid: 0,
       individual: {},
+      menu_children: false,
       menu_devotional: false,
       menu_diary: false,
       menu_groups: false,

@@ -7,12 +7,6 @@
           <q-icon class="text-primary" name="fas fa-fw fa-bible" size="3rem" />
         </router-link>
       </div>
-      <div v-if="$store.getters.getMenu('devotional')" class="col-6 text-center q-mb-md">
-        <router-link :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'" class="text-white" style="text-decoration:none;">
-          <div class="q-mb-sm text-black caption">Devotional</div>
-          <q-icon class="text-primary" name="fas fa-fw fa-pray" size="3rem" />
-        </router-link>
-      </div>
       <div class="col-6 text-center q-mb-md">
         <div class="q-mb-sm caption">Resources library</div>
         <router-link to="/library" class="text-white" style="text-decoration:none;">
@@ -23,6 +17,24 @@
         <div class="q-mb-sm caption">Bible reading plan</div>
         <router-link to="/dailyreading" class="text-white" style="text-decoration:none;">
           <q-icon class="text-primary" name="fas fa-fw fa-book-open" size="3rem" />
+        </router-link>
+      </div>
+      <div class="col-6 text-center q-mb-md">
+        <div class="q-mb-sm caption">From other churches</div>
+        <router-link to="/published" class="text-white" style="text-decoration:none;">
+          <q-icon class="text-primary" name="fas fa-fw fa-share-alt" size="3rem" />
+        </router-link>
+      </div>
+      <div v-if="$store.getters.getMenu('children')" class="col-6 text-center q-mb-md">
+        <router-link to="/content/children" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Children</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-child" size="3rem" />
+        </router-link>
+      </div>
+      <div v-if="$store.getters.getMenu('devotional')" class="col-6 text-center q-mb-md">
+        <router-link :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Devotional</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-pray" size="3rem" />
         </router-link>
       </div>
       <div v-if="$store.getters.getMenu('diary') && $store.state.feeditems.diary.length" class="col-6 text-center q-mb-md">
