@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Devotions for children and content from other churches')
-var version = JSON.stringify('0.2.6')
+var vnotes = JSON.stringify('Event and household bug fixes')
+var version = JSON.stringify('0.2.6.1')
 
 module.exports = function (ctx) {
   return {

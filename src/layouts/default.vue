@@ -199,11 +199,17 @@
         <div v-if="!society" class="text-center q-ma-md">
           <q-btn @click="socmodal = true" color="secondary">Which church do you belong to?</q-btn>
         </div>
-        <div v-else-if="loading" class="text-center bg-grey-4 text-white">
-          <div v-if="!offerrefresh" class="q-pa-md" transition-hide="fade">
-            Checking for new content <q-spinner-bars class="q-ml-sm" size="20px" color="white" />
+        <div v-else-if="loading" class="text-center bg-grey text-white">
+          <div v-if="!offerrefresh" class="q-px-md" transition-hide="fade">
+            <small>Checking for new content</small><q-spinner-bars class="q-ml-md" size="12px" color="white" />
           </div>
-          <div v-else class="q-py-md text-black">Switching to latest content in {{countdown}}</div>
+          <div v-else class="text-white"><small>Switching to latest content in {{countdown}}</small></div>
+        </div>
+        <div v-else class="text-center bg-grey text-white">
+          <small v-if="$store.state.individual.firstname" class="text-bold">{{$store.state.individual.firstname}} {{$store.state.individual.surname}} - </small>
+          <small v-if="$store.state.societyname">{{$store.state.societyname}} ({{$store.state.circuitname}})
+          </small>
+          <router-link to="/settings" class="text-white text-bold" style="text-decoration:none;"><q-icon v-if="$store.state.societyname" size="12px" name="fa fa-cog"></q-icon></router-link>
         </div>
         <div v-if="noindiv && society && !$q.localStorage.getItem('JOURNEY_Individual')">
           <div class="text-center q-ma-md">
@@ -241,12 +247,6 @@
       <router-view />
     </q-page-container>
     <q-footer>
-      <div class="text-center bg-black">
-        <small v-if="$store.state.individual.firstname" class="text-bold">{{$store.state.individual.firstname}} {{$store.state.individual.surname}} - </small>
-        <small v-if="$store.state.societyname">{{$store.state.societyname}} ({{$store.state.circuitname}})
-        </small>
-        <router-link to="/settings" class="text-white text-bold" style="text-decoration:none;"><q-icon v-if="$store.state.societyname" size="12px" name="fa fa-cog"></q-icon></router-link>
-      </div>
       <q-toolbar v-if="$store.state.token" class="justify-around">
         <q-item class="text-center" to="/">
           <q-item-section>

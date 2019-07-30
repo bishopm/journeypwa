@@ -20,17 +20,17 @@
         <q-select label="Sex" outlined v-model="form.sex" :options="[{ label: 'female', value: 'female' }, { label: 'male', value: 'male' }]" map-options emit-value/>
       </div>
       <div class="q-ma-md">
-        <q-select label="Title" outlined v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]"/>
+        <q-select label="Title" outlined v-model="form.title" :options="[{ label: 'Dr', value: 'Dr' }, { label: 'Mr', value: 'Mr' }, { label: 'Mrs', value: 'Mrs' }, { label: 'Ms', value: 'Ms' }, { label: 'Prof', value: 'Prof' }, { label: 'Rev', value: 'Rev' }]" map-options emit-value/>
       </div>
       <div class="q-ma-md">
-        <q-select label="Membership" outlined v-model="form.memberstatus" :options="[{ label: 'Child', value: 'child' }, { label: 'Member', value: 'member' }, { label: 'Non-member', value: 'non-member' }]"/>
+        <q-select label="Membership" outlined v-model="form.memberstatus" :options="[{ label: 'Child', value: 'child' }, { label: 'Member', value: 'member' }, { label: 'Non-member', value: 'non-member' }]" map-options emit-value/>
       </div>
       <div class="q-ma-md">
-        <q-input outlined label="Date of birth" v-model="form.birthdate" mask="date" :rules="['date']">
+        <q-input label="Date of birth" outlined v-model="form.birthdate" mask="####-##-##">
           <template v-slot:append>
             <q-icon name="fa fa-calendar" class="cursor-pointer">
-              <q-popup-proxy>
-                <q-date v-model="form.birthdate" />
+              <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                <q-date mask="YYYY-MM-DD" v-model="form.birthdate" @input="() => $refs.qDateProxy.hide()" />
               </q-popup-proxy>
             </q-icon>
           </template>
@@ -152,11 +152,28 @@ export default {
             email: this.form.email,
             image: this.form.image,
             household_id: this.form.household_id,
-            id: this.form.id
+            id: this.form.id,
+            action: this.$route.params.action
           })
           .then(response => {
             this.$q.notify('Database successfully updated')
-            this.$router.push({ name: 'home' })
+            this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token
+            this.$axios.post(process.env.API + '/phone',
+              {
+                phone: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
+                society_id: this.$q.localStorage.getItem('JOURNEY_Society')
+              })
+              .then(response => {
+                if (response.data.individual) {
+                  this.$store.commit('setIndividual', response.data.individual)
+                  this.$q.localStorage.set('JOURNEY_Individual', JSON.stringify(response.data.individual))
+                  this.noindiv = false
+                }
+                this.$router.push({ name: 'me' })
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           })
           .catch(error => {
             if (error.code === 'ECONNABORTED') {
