@@ -25,7 +25,8 @@ export default function (/* { ssrContext } */) {
       menu_blog: false,
       menu_sermon: false,
       menu_reminders: false,
-      token: ''
+      token: '',
+      season: 'bg-season-green'
     },
     getters: {
       getMenu: (state) => (menu) => {
@@ -33,6 +34,9 @@ export default function (/* { ssrContext } */) {
       }
     },
     mutations: {
+      setSeason (state, newseason) {
+        state.season = newseason
+      },
       setMenu (state, marray) {
         state['menu_' + marray[0]] = marray[1]
       },

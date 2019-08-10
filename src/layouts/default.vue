@@ -12,7 +12,7 @@
     </q-header>
     <q-drawer side="right" v-model="rightDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <q-list no-border link inset-delimiter>
-        <q-expansion-item v-if="societyname()" v-model="expanded" class="text-center society" :label="societyname() + ' Society'">
+        <q-expansion-item header-class="bg-primary text-white" expand-icon-class="text-white" v-if="societyname()" v-model="expanded" class="text-center society" :label="societyname() + ' Society'">
           <q-item v-if="$store.state.token" to="/church">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-users" />
@@ -113,7 +113,7 @@
             </q-item-section>
           </q-item>
         </q-expansion-item>
-        <q-expansion-item v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
+        <q-expansion-item header-class="bg-secondary text-white" v-if="circuitname()" class="text-center circuit" :label="circuitname() || 'Circuit'">
           <q-item to="/societies">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-church" />
@@ -124,7 +124,7 @@
             </q-item-section>
           </q-item>
         </q-expansion-item>
-        <q-expansion-item class="text-center administration" label="App administration">
+        <q-expansion-item header-class="bg-warning" class="text-center administration" label="App administration">
           <q-item to="/settings">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-cogs" />
@@ -246,7 +246,7 @@
       </div>
       <router-view />
     </q-page-container>
-    <q-footer>
+    <q-footer class="$store.state.season">
       <q-toolbar v-if="$store.state.token" class="justify-around">
         <q-item class="text-center" to="/">
           <q-item-section>
@@ -268,12 +268,18 @@
             <q-icon size="24px" name="fas fa-user-cog" color="white"/>
           </q-item-section>
         </q-item>
+        <q-item class="text-center" to="/" @click="reloadpage">
+          <q-item-section>
+            <q-icon size="24px" name="fas fa-sync-alt" color="white"/>
+          </q-item-section>
+        </q-item>
       </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
 
 <script>
+import { colors } from 'quasar'
 export default {
   name: 'LayoutDefault',
   data () {
@@ -344,8 +350,38 @@ export default {
         this.getindiv()
       }
     }
+    // Check liturgical colour
+    this.$axios.get(process.env.API + '/sunday')
+      .then(response => {
+        if (response.data.colour === 'red') {
+          colors.setBrand('primary', '#DB2828')
+          colors.setBrand('secondary', '#8b0000')
+          colors.setBrand('warning', '#ec5151')
+          colors.setBrand('info', '#ff7f7f')
+        } else if (response.data.colour === 'violet') {
+          colors.setBrand('primary', '#7D26CD')
+          colors.setBrand('secondary', '#4d078d')
+          colors.setBrand('warning', '#9248d6')
+          colors.setBrand('info', '#ac71e1')
+        } else if (response.data.colour === 'white') {
+          colors.setBrand('primary', '#eeeeee')
+          colors.setBrand('secondary', '#cccccc')
+          colors.setBrand('warning', '#777777')
+          colors.setBrand('info', '#cccccc')
+        }
+      })
+      .catch(error => {
+        if (error.code === 'ECONNABORTED') {
+          this.$q.notify('Server connection timed out - are you offline?')
+        } else {
+          console.log(error)
+        }
+      })
   },
   methods: {
+    reloadpage () {
+      window.location.reload()
+    },
     get_token () {
       this.$axios.post(process.env.API + '/login',
         {
@@ -402,16 +438,7 @@ export default {
           this.newdata = response.data
           if (JSON.stringify(this.newdata) !== JSON.stringify(this.$store.state.feeditems)) {
             this.offerrefresh = true
-            setTimeout(() => {
-              this.countdown = 2
-              setTimeout(() => {
-                this.countdown = 1
-                setTimeout(() => {
-                  this.countdown = 0
-                  this.updateFeed()
-                }, 750)
-              }, 500)
-            }, 500)
+            this.updateFeed()
           } else {
             this.offerrefresh = false
             this.loading = false
@@ -527,24 +554,6 @@ export default {
 a, a:hover {
   text-decoration: none;
 }
-#q-app > div > div.q-drawer-container > aside > div > div > div.q-expansion-item.q-item-type.text-center.society > div > div.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable {
-  background-color:#4d7227;
-  border-bottom:white solid 2px;
-  color: white;
-  text-align:center;
-}
-#q-app > div > div.q-drawer-container > aside > div > div > div.q-expansion-item.q-item-type.text-center.circuit > div > div.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable {
-  background-color:#81be41;
-  border-bottom:white solid 2px;
-  color: white;
-  text-align:center;
-}
-#q-app > div > div.q-drawer-container > aside > div > div > div.q-expansion-item.q-item-type.text-center.administration > div > div.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable {
-  background-color:#000000;
-  border-bottom:white solid 2px;
-  color: white;
-  text-align:center;
-}
 #toolbar {
   display: flex;
   justify-content: space-between;
@@ -554,4 +563,5 @@ a, a:hover {
   margin-right: 0px;
   padding-left: 20px;
 }
+
 </style>

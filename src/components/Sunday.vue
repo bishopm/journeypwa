@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-list v-if="readings" striped class="no-border">
+    <q-list v-if="readings" class="no-border">
       <p v-if="date" class="bg-secondary text-white q-ma-md q-pa-sm header text-center"><b>Lectionary readings: {{date}}</b><br>({{description}})</p>
-      <q-item v-for="(reading, index) in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)" :class="{striped: index % 2 === 1}">
+      <q-item v-for="reading in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)">
         <q-item-section class="text-center">
           <q-item-label v-html="cleanup(reading)"/>
         </q-item-section>

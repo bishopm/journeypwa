@@ -1,22 +1,25 @@
 <template>
   <div class="q-mt-xs q-ma-md">
-    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Songs and liturgy</p>
-    <q-list class="no-border">
-      <div v-if="songs" class="text-center">Songs <q-icon size="sm" name="fas fa-music"/>
+    <q-tabs v-model="selectedTab" active-color="white" indicator-color="primary" class="no-border bg-secondary text-primary">
+      <q-tab name="songTab" key="songTab">Songs</q-tab>
+      <q-tab name="liturgyTab" key="liturgyTab">Liturgy</q-tab>
+    </q-tabs>
+    <q-tab-panels v-model="selectedTab" animated class="q-ma-sm">
+      <q-tab-panel key="songTab" name="songTab" class="no-border">
         <q-item v-for="song in songs" :key="song.id" :to="'/hymns/' + song.id">
           <q-item-label>
-            <div style="color:#4d7227" class="text-center">{{song.title}}</div>
+            <div class="text-center text-primary">{{song.title}}</div>
           </q-item-label>
         </q-item>
-      </div>
-      <div v-if="liturgies" class="q-mt-md text-center">Liturgy <q-icon size="sm" name="fas fa-list"/>
+      </q-tab-panel>
+      <q-tab-panel key="liturgyTab" name="liturgyTab" class="no-border">
         <q-item v-for="liturgy in liturgies" :key="liturgy.id" :to="'/hymns/' + liturgy.id">
           <q-item-label>
-            <div style="color:#4d7227" class="text-center">{{liturgy.title}}</div>
+            <div class="text-primary text-center">{{liturgy.title}}</div>
           </q-item-label>
         </q-item>
-      </div>
-    </q-list>
+      </q-tab-panel>
+    </q-tab-panels>
   </div>
 </template>
 
@@ -25,7 +28,8 @@ export default {
   data () {
     return {
       songs: [],
-      liturgies: []
+      liturgies: [],
+      selectedTab: 'songTab'
     }
   },
   mounted () {

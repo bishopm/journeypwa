@@ -55,7 +55,7 @@ p.caption {
   line-height: 12px;
 }
 .q-item.striped {
-  background-color:#E6f2d9;
+  background-color:#fafafa;
   margin-left:20px;
   margin-right:20px;
 }

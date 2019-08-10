@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Event and household bug fixes')
-var version = JSON.stringify('0.2.6.1')
+var vnotes = JSON.stringify('Liturgical colours')
+var version = JSON.stringify('0.2.7')
 
 module.exports = function (ctx) {
   return {

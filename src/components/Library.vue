@@ -10,9 +10,9 @@
         <div class="text-center"><q-icon size="sm" name="fas fa-pray"/>
           <p>Practices</p>
         </div>
-        <q-item v-for="(practice, index) in practices" :key="practice.id" :to="'/content/practice/' + practice.id"  :class="{striped: index % 2 === 1}">
+        <q-item v-for="practice in practices" :key="practice.id" :to="'/content/practice/' + practice.id">
           <q-item-label>
-            <div style="color:#4d7227" class="text-center">{{practice.feedpost.title}}</div>
+            <div class="text-primary text-center">{{practice.feedpost.title}}</div>
           </q-item-label>
         </q-item>
       </q-list>
@@ -22,7 +22,7 @@
         </div>
         <q-item v-for="medi in media" :key="medi.id" :to="'/content/media/' + medi.id">
           <q-item-label>
-            <div style="color:#4d7227" class="text-center">{{medi.feedpost.title}}</div>
+            <div class="text-primary text-center">{{medi.feedpost.title}}</div>
           </q-item-label>
         </q-item>
       </q-list>
@@ -32,16 +32,21 @@
         </div>
         <q-item v-for="group in groups" :key="group.id" :to="'/content/groups/' + group.id">
           <q-item-label>
-            <div style="color:#4d7227" class="text-center">{{group.feedpost.title}}</div>
+            <div class="text-primary text-center">{{group.feedpost.title}}</div>
           </q-item-label>
         </q-item>
       </q-list>
       <q-list class="no-border" v-if="songs">
         <div class="text-center"><q-icon size="sm" name="fas fa-music"/>
-          <p><router-link style="color:#4d7227" to="hymnbook">Hymns, songs & liturgy</router-link>
-            <q-chip color="tertiary" class="q-ml-md">{{songs}}</q-chip>
-          </p>
+          <p>Hymnbook</p>
         </div>
+        <q-item key="songliturgy" to="hymnbook">
+          <q-item-label>
+            <div class="text-primary text-center">Hymns, songs & liturgy
+              <q-chip color="tertiary" class="q-ml-md">{{songs}}</q-chip>
+            </div>
+          </q-item-label>
+        </q-item>
       </q-list>
     </div>
   </div>
@@ -84,9 +89,6 @@ export default {
 </script>
 
 <style>
-.q-item.striped {
-  background-color:#E6f2d9;
-}
 .q-item {
   margin-left:20px;
   margin-right:20px;
