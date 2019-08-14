@@ -124,7 +124,7 @@
             </q-item-section>
           </q-item>
         </q-expansion-item>
-        <q-expansion-item header-class="bg-warning" class="text-center administration" label="App administration">
+        <q-expansion-item header-class="bg-warning text-white" class="text-center administration" label="App administration">
           <q-item to="/settings">
             <q-item-section avatar>
               <q-icon color="primary" name="fas fa-fw fa-cogs" />
@@ -256,11 +256,6 @@
         <q-item class="text-center" to="/sunday">
           <q-item-section>
             <q-icon size="24px" name="fas fa-bible" color="white"/>
-          </q-item-section>
-        </q-item>
-        <q-item v-if="this.$store.state.feeditems && this.$store.state.feeditems.devotional" class="text-center" :to="this.$store.state.feeditems.devotional.length > 1 ? '/devotionals' : '/devotional/0'">
-          <q-item-section>
-            <q-icon size="24px" name="fas fa-pray" color="white"/>
           </q-item-section>
         </q-item>
         <q-item class="text-center" to="/me">

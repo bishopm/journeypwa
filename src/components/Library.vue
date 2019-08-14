@@ -6,6 +6,21 @@
     </p>
     <p class="text-justify" v-if="message">{{message}}</p>
     <div v-if="ready">
+      <q-list class="no-border">
+        <div class="text-center"><q-icon size="sm" name="fas fa-archive"/>
+          <p>Archives</p>
+        </div>
+        <q-item key="groups" to="/archive/groups">
+          <q-item-label>
+            <div class="text-primary text-center">Archived small group material</div>
+          </q-item-label>
+        </q-item>
+        <q-item key="children" to="/archive/children">
+          <q-item-label>
+            <div class="text-primary text-center">Archived questions for children</div>
+          </q-item-label>
+        </q-item>
+      </q-list>
       <q-list v-if="practices" class="no-border">
         <div class="text-center"><q-icon size="sm" name="fas fa-pray"/>
           <p>Practices</p>
@@ -90,8 +105,6 @@ export default {
 
 <style>
 .q-item {
-  margin-left:20px;
-  margin-right:20px;
   min-height: 0px;
 }
 </style>

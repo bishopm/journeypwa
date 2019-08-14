@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Liturgical colours')
-var version = JSON.stringify('0.2.7')
+var vnotes = JSON.stringify('Toolbar changes')
+var version = JSON.stringify('0.2.7.1')
 
 module.exports = function (ctx) {
   return {
