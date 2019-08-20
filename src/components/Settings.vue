@@ -1,6 +1,6 @@
 <template>
   <div class="q-ma-lg">
-    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">App settings</p>
+    <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">App settings (v {{$q.localStorage.getItem('JOURNEY_Version')}})</p>
     <form>
       <q-field class="q-my-md" borderless label="Notifications" stack-label>
         <template v-slot:prepend>
@@ -36,8 +36,12 @@
         </template>
       </q-select>
     </form>
-    <div class="text-center" v-if="society > 0">
+    <div class="text-center q-mb-md" v-if="society > 0">
       <q-btn class="q-my-md" color="secondary" @click.native="goHome()">Back to home page</q-btn>
+    </div>
+    <div class="text-center">
+      <a target="_blank" href="https://brave.com/chu313"><q-icon size="1.8em" color="black" name="fab fa-chrome" class="q-mr-sm"/><br>
+      Download the Brave Browser<br><small>(based on Chrome, but faster, with built-in ad-blocking)</small></a>
     </div>
   </div>
 </template>

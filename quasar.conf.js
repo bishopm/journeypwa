@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Toolbar changes')
-var version = JSON.stringify('0.2.7.1')
+var vnotes = JSON.stringify('Access previous weeks group material')
+var version = JSON.stringify('0.2.8')
 
 module.exports = function (ctx) {
   return {
