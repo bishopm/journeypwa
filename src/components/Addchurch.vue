@@ -2,32 +2,41 @@
   <div class="q-ma-sm">
     <div class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Add my church</div>
     <q-stepper v-model="step" vertical ref="stepper" color="primary" animated style="width:100%;">
-      <q-step :name="1" :title="'Synod: ' + district.label" icon="fa fa-church" :done="step > 1" :header-nav="step > 1">
-        <q-select borderless @input="clickOne" class="q-my-md" label="Synod" v-model="district" :options="districtOptions">
+      <q-step :name="0" :title="'Church: ' + structures.denomination" icon="fa fa-church" :done="step > 0" :header-nav="step > 0">
+        <q-select borderless @input="clickZero" class="q-my-md" label="Church" v-model="denomination" :options="denominationOptions">
           <template v-slot:prepend>
             <q-icon name="fas fa-fw fa-sitemap" />
           </template>
         </q-select>
-        <q-btn v-if="district.label !== 'Choose your synod'" flat @click="clickOne" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
+        <q-btn v-if="district.label !== ''" flat @click="clickOne" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
       </q-step>
-      <q-step :name="2" :title="'Circuit: ' + circuit.label" icon="fa fa-church" :done="step > 2">
-        <q-select borderless class="q-my-md" @input="clickTwo" label="Circuit" v-model="circuit" :options="circuitOptions">
+      <q-step :name="1" :title="this.structures.provincial + ': ' + district.label" icon="fa fa-church" :done="step > 1" :header-nav="step > 1">
+        <q-select borderless @input="clickOne" class="q-my-md" :label="this.structures.provincial" v-model="district" :options="districtOptions">
+          <template v-slot:prepend>
+            <q-icon name="fas fa-fw fa-sitemap" />
+          </template>
+        </q-select>
+        <q-btn flat @click="step = 0" color="primary" icon="fa fa-arrow-left" label="Back" class="q-ml-sm" />
+        <q-btn v-if="district.label !== ''" flat @click="clickOne" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
+      </q-step>
+      <q-step :name="2" :title="this.structures.regional + ': ' + circuit.label" icon="fa fa-church" :done="step > 2">
+        <q-select borderless class="q-my-md" @input="clickTwo" :label="this.structures.regional" v-model="circuit" :options="circuitOptions">
           <template v-slot:prepend>
             <q-icon name="fas fa-fw fa-users" />
           </template>
         </q-select>
         <q-btn flat @click="step = 1" color="primary" icon="fa fa-arrow-left" label="Back" class="q-ml-sm" />
-        <q-btn v-if="circuit.label !== 'Choose your circuit'" flat @click="clickTwo" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
+        <q-btn v-if="circuit.label !== ''" flat @click="clickTwo" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
       </q-step>
-      <q-step :name="3" :title="'Society: ' +society.label" icon="fa fa-church">
-        <q-select borderless class="q-my-md" @input="chooseSociety" label="Society" v-model="society" :options="societyOptions">
+      <q-step :name="3" :title="this.structures.local + ': ' + society.label" icon="fa fa-church">
+        <q-select borderless class="q-my-md" @input="chooseSociety" :label="this.structures.local" v-model="society" :options="societyOptions">
           <template v-slot:prepend>
             <q-icon name="fas fa-fw fa-map-marker-alt" />
           </template>
         </q-select>
         <q-stepper-navigation>
           <q-btn flat @click="step = 2" color="primary" icon="fa fa-arrow-left" label="Back" class="q-mr-sm" />
-          <q-btn color="primary" @click="clickThree" label="Add a new society" />
+          <q-btn color="primary" @click="clickThree" :label="'Add a new ' + this.structures.local" />
         </q-stepper-navigation>
       </q-step>
       <q-step :name="4" title="Add a new society" icon="fa fa-church">
@@ -62,7 +71,7 @@ import leafletmap from './Leafletmap'
 export default {
   data () {
     return {
-      step: 1,
+      step: 0,
       map: null,
       marker: null,
       church: 'mcsa',
@@ -70,9 +79,10 @@ export default {
       initlat: null,
       longitude: 0,
       latitude: 0,
-      district: { label: 'Choose your synod', value: '' },
-      circuit: { label: 'Choose your circuit', value: '' },
-      society: { label: 'Choose your society or add a new one', value: '' },
+      denomination: { label: '', value: '' },
+      district: { label: '', value: '' },
+      circuit: { label: '', value: '' },
+      society: { label: '', value: '' },
       newsociety: {
         name: '',
         latitude: null,
@@ -80,6 +90,14 @@ export default {
         servicetime: '',
         servicelanguage: 'isiZulu'
       },
+      alldenominations: [],
+      structures: {
+        denomination: 'Methodist Church of Southern Africa',
+        provincial: 'Synod',
+        regional: 'Circuit',
+        local: 'Society'
+      },
+      denominationOptions: [],
       districtOptions: [],
       circuitOptions: [],
       societyOptions: []
@@ -89,6 +107,10 @@ export default {
     'leafletmap': leafletmap
   },
   methods: {
+    clickZero () {
+      this.step = 1
+      this.populateDistricts()
+    },
     clickOne () {
       this.step = 2
       this.populateCircuits()
@@ -134,7 +156,33 @@ export default {
     newlng (coord) {
       this.newsociety.longitude = coord
     },
+    populateDenominations () {
+      this.$axios.get(process.env.API + '/denominations')
+        .then(response => {
+          this.denominationOptions = []
+          for (var dkey in response.data) {
+            var newitem = {
+              label: response.data[dkey].denomination,
+              value: response.data[dkey].id
+            }
+            this.denominationOptions.push(newitem)
+          }
+          this.alldenominations = response.data
+        })
+        .catch(error => {
+          if (error.code === 'ECONNABORTED') {
+            this.$q.notify('Server connection timed out - are you offline?')
+          } else {
+            console.log(error)
+          }
+        })
+    },
     populateDistricts () {
+      for (var skey in this.alldenominations) {
+        if (this.alldenominations[skey].id === this.denomination.value) {
+          this.structures = this.alldenominations[skey]
+        }
+      }
       this.$axios.get(process.env.API + '/districts')
         .then(response => {
           this.districtOptions = []
@@ -232,7 +280,7 @@ export default {
     }
   },
   mounted () {
-    this.populateDistricts()
+    this.populateDenominations()
   }
 }
 </script>

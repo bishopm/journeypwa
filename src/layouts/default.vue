@@ -224,7 +224,7 @@
             </q-card-section>
             <q-card-section class="bg-white">
               <div class="q-gutter-md row">
-                <q-select outlined v-model="church" label="Church" :options="[{label: 'Methodist Church of Southern Africa', value: 'mcsa'}]" style="width:100%;" emit-value map-options/>
+                <q-select @input="getSocieties()" outlined v-model="denomination" label="Church" :options="churchOptions" style="width:100%;" emit-value map-options/>
                 <q-select autofocus placeholder="Type here to find or change your church" outlined v-model="mySociety" use-input input-debounce="0" :options="filteredSocieties" @filter="filterFn" clearable style="width:100%;">
                   <template v-slot:no-option>
                     <q-item>
@@ -295,7 +295,7 @@ export default {
       denomination: 1,
       mySociety: null,
       noindiv: false,
-      church: 'mcsa'
+      churchOptions: []
     }
   },
   computed: {
@@ -363,6 +363,12 @@ export default {
           colors.setBrand('secondary', '#cccccc')
           colors.setBrand('warning', '#777777')
           colors.setBrand('info', '#cccccc')
+        }
+        for (var cndx in response.data.denominations) {
+          this.churchOptions.push({
+            label: response.data.denominations[cndx].denomination,
+            value: response.data.denominations[cndx].id
+          })
         }
       })
       .catch(error => {
@@ -449,6 +455,7 @@ export default {
         })
     },
     getSocieties () {
+      this.societies = []
       this.$axios.get(process.env.API + '/denominations/' + this.denomination + '/societies')
         .then(response => {
           for (var soc in response.data) {
