@@ -10,8 +10,8 @@
         </q-select>
         <q-btn v-if="district.label !== ''" flat @click="clickOne" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
       </q-step>
-      <q-step :name="1" :title="this.structures.provincial + ': ' + district.label" icon="fa fa-church" :done="step > 1" :header-nav="step > 1">
-        <q-select borderless @input="clickOne" class="q-my-md" :label="this.structures.provincial" v-model="district" :options="districtOptions">
+      <q-step v-if="structures.provincial" :name="1" :title="structures.provincial + ': ' + district.label" icon="fa fa-church" :done="step > 1" :header-nav="step > 1">
+        <q-select borderless @input="clickOne" class="q-my-md" :label="structures.provincial" v-model="district" :options="districtOptions">
           <template v-slot:prepend>
             <q-icon name="fas fa-fw fa-sitemap" />
           </template>
@@ -19,8 +19,8 @@
         <q-btn flat @click="step = 0" color="primary" icon="fa fa-arrow-left" label="Back" class="q-ml-sm" />
         <q-btn v-if="district.label !== ''" flat @click="clickOne" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
       </q-step>
-      <q-step :name="2" :title="this.structures.regional + ': ' + circuit.label" icon="fa fa-church" :done="step > 2">
-        <q-select borderless class="q-my-md" @input="clickTwo" :label="this.structures.regional" v-model="circuit" :options="circuitOptions">
+      <q-step v-if="structures.regional" :name="2" :title="structures.regional + ': ' + circuit.label" icon="fa fa-church" :done="step > 2">
+        <q-select borderless class="q-my-md" @input="clickTwo" :label="structures.regional" v-model="circuit" :options="circuitOptions">
           <template v-slot:prepend>
             <q-icon name="fas fa-fw fa-users" />
           </template>
@@ -28,8 +28,8 @@
         <q-btn flat @click="step = 1" color="primary" icon="fa fa-arrow-left" label="Back" class="q-ml-sm" />
         <q-btn v-if="circuit.label !== ''" flat @click="clickTwo" color="primary" icon-right="fa fa-arrow-right" label="Next" class="q-ml-sm" />
       </q-step>
-      <q-step :name="3" :title="this.structures.local + ': ' + society.label" icon="fa fa-church">
-        <q-select borderless class="q-my-md" @input="chooseSociety" :label="this.structures.local" v-model="society" :options="societyOptions">
+      <q-step :name="3" :title="structures.local + ': ' + society.label" icon="fa fa-church">
+        <q-select borderless class="q-my-md" @input="chooseSociety" :label="structures.local" v-model="society" :options="societyOptions">
           <template v-slot:prepend>
             <q-icon name="fas fa-fw fa-map-marker-alt" />
           </template>
@@ -39,7 +39,7 @@
           <q-btn color="primary" @click="clickThree" :label="'Add a new ' + this.structures.local" />
         </q-stepper-navigation>
       </q-step>
-      <q-step :name="4" title="Add a new society" icon="fa fa-church">
+      <q-step :name="4" :title="'Add a new ' + structures.local.toLowerCase()" icon="fa fa-church">
         <q-form>
           <q-input outlined hide-bottom-space v-model="newsociety.name" label="Society name" :rules="[val => !!val || 'Society name is required']"/>
           <q-input class="q-my-xs" outlined hide-bottom-space error-message="Enter a valid time" label="Service time" v-model="newsociety.servicetime" mask="time" :rules="['time']">
@@ -74,7 +74,6 @@ export default {
       step: 0,
       map: null,
       marker: null,
-      church: 'mcsa',
       initlng: null,
       initlat: null,
       longitude: 0,
@@ -108,8 +107,42 @@ export default {
   },
   methods: {
     clickZero () {
-      this.step = 1
-      this.populateDistricts()
+      if (this.denomination.label === 'Independent') {
+        this.step = 3
+        this.structures.denomination = 'Independent'
+        this.structures.local = 'Church'
+        this.structures.regional = ''
+        this.structures.provincial = ''
+        this.$axios.get(process.env.API + '/independents')
+          .then(response => {
+            this.societyOptions = []
+            for (var skey in response.data) {
+              var newitem = {
+                label: response.data[skey].society,
+                value: response.data[skey].id
+              }
+              this.societyOptions.push(newitem)
+            }
+            if (this.societyOptions.length && response.data[0].location) {
+              this.newsociety.longitude = response.data[0].location.longitude
+              this.initlng = this.newsociety.longitude
+              this.newsociety.latitude = response.data[0].location.latitude
+              this.initlat = this.newsociety.latitude
+            }
+            localStorage.removeItem('JOURNEY_Circuit')
+            localStorage.removeItem('JOURNEY_Circuitname')
+          })
+          .catch(error => {
+            if (error.code === 'ECONNABORTED') {
+              this.$q.notify('Server connection timed out - are you offline?')
+            } else {
+              console.log(error)
+            }
+          })
+      } else {
+        this.step = 1
+        this.populateDistricts()
+      }
     },
     clickOne () {
       this.step = 2
