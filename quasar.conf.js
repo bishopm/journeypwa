@@ -1,6 +1,6 @@
 // Configuration for your app
-var vnotes = JSON.stringify('Access previous weeks group material')
-var version = JSON.stringify('0.2.8')
+var vnotes = JSON.stringify('Timezone event corrections')
+var version = JSON.stringify('0.2.9')
 
 module.exports = function (ctx) {
   return {

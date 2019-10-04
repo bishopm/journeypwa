@@ -44,7 +44,7 @@ export default {
     },
     formatme (datein) {
       var fin = new Date(datein * 1000)
-      return fin.toString().substring(4, 21)
+      return fin.toUTCString().substring(4, 22)
     },
     styleme (mt) {
       if (mt === 'Bishopm\\Churchnet\\Models\\Society') {
