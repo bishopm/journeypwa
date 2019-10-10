@@ -280,7 +280,7 @@ export default {
   data () {
     return {
       phoneverified: this.$q.localStorage.getItem('JOURNEY_VerifiedPhone'),
-      rightDrawerOpen: this.$q.platform.is.desktop,
+      rightDrawerOpen: false,
       loading: false,
       offerrefresh: false,
       individual: '',
@@ -308,25 +308,6 @@ export default {
     }
   },
   mounted () {
-    // First, deal with possible upgrades
-    if (this.$q.localStorage.getItem('JOURNEY_Version')) {
-      if (this.$q.localStorage.getItem('JOURNEY_Version') !== process.env.VERSION) {
-        this.$q.dialog({
-          title: 'New version available',
-          message: 'Click OK to restart the app and upgrade to version ' + process.env.VERSION + '. This new version includes: ' + process.env.VNOTES,
-          ok: 'OK',
-          cancel: 'LATER'
-        }).onOk(() => {
-          this.$q.localStorage.set('JOURNEY_Version', process.env.VERSION)
-          window.location.reload()
-        }).catch(() => {
-          console.log('Delaying upgrade')
-        })
-      }
-    } else {
-      this.$q.localStorage.set('JOURNEY_Version', process.env.VERSION)
-    }
-
     // Settings housekeeping - populating store
     if (!this.$q.localStorage.getItem('JOURNEY_Individual')) {
       this.noindiv = true
@@ -345,9 +326,26 @@ export default {
         this.getindiv()
       }
     }
-    // Check liturgical colour
+    // Check version and liturgical colour
     this.$axios.get(process.env.API + '/sunday')
       .then(response => {
+        if (this.$q.localStorage.getItem('JOURNEY_Version')) {
+          if (this.$q.localStorage.getItem('JOURNEY_Version') !== response.data.version) {
+            this.$q.dialog({
+              title: 'New version available',
+              message: 'Click OK to restart the app and upgrade to version ' + response.data.version + '. This new version includes: ' + response.data.updatenotes,
+              ok: 'OK',
+              cancel: 'LATER'
+            }).onOk(() => {
+              this.$q.localStorage.set('JOURNEY_Version', response.data.version)
+              window.location.reload()
+            }).catch(() => {
+              console.log('Delaying upgrade')
+            })
+          }
+        } else {
+          this.$q.localStorage.set('JOURNEY_Version', response.data.version)
+        }
         if (response.data.colour === 'red') {
           colors.setBrand('primary', '#DB2828')
           colors.setBrand('secondary', '#8b0000')
