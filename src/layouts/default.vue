@@ -263,11 +263,6 @@
             <q-icon size="24px" name="fas fa-user-cog" color="white"/>
           </q-item-section>
         </q-item>
-        <q-item class="text-center" to="/" @click="reloadpage">
-          <q-item-section>
-            <q-icon size="24px" name="fas fa-sync-alt" color="white"/>
-          </q-item-section>
-        </q-item>
       </q-toolbar>
     </q-footer>
   </q-layout>
@@ -378,9 +373,6 @@ export default {
       })
   },
   methods: {
-    reloadpage () {
-      window.location.reload()
-    },
     get_token () {
       this.$axios.post(process.env.API + '/login',
         {
