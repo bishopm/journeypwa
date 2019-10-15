@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import 'assets/push-notifications.js'
 export default {
 }
 </script>
