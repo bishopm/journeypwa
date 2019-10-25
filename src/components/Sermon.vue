@@ -37,6 +37,11 @@ export default {
       this.$router.push({ name: 'home' })
     }
     this.sermons = this.$store.state.feeditems['sermon'][this.$route.params.id].items
+    for (var sndx in this.sermons) {
+      if (typeof this.sermons[sndx].enclosure === 'string') {
+        this.sermons[sndx].enclosure = JSON.parse(this.sermons[sndx].enclosure)
+      }
+    }
     this.sitelogo = this.$store.state.feeditems['sermon'][this.$route.params.id].logo
   }
 }
