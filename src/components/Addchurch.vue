@@ -41,7 +41,7 @@
       </q-step>
       <q-step :name="4" :title="'Add a new ' + structures.local.toLowerCase()" icon="fa fa-church">
         <q-form>
-          <q-input outlined hide-bottom-space v-model="newsociety.name" label="Society name" :rules="[val => !!val || 'Society name is required']"/>
+          <q-input outlined hide-bottom-space v-model="newsociety.name" label="Name" :rules="[val => !!val || 'Name is required']"/>
           <q-input class="q-my-xs" outlined hide-bottom-space error-message="Enter a valid time" label="Service time" v-model="newsociety.servicetime" mask="time" :rules="['time']">
             <template v-slot:append>
               <q-icon name="fa fa-clock" class="cursor-pointer">
@@ -51,7 +51,7 @@
               </q-icon>
             </template>
           </q-input>
-          <q-select class="q-mb-sm" label="Service language" outlined v-model="newsociety.servicelanguage" :options="['isiZulu', 'English']"/>
+          <q-select class="q-mb-sm" label="Service language" outlined v-model="newsociety.servicelanguage" :options="['Afrikaans','English','isiXhosa','isiZulu','Sesotho','Setswana']"/>
           <leafletmap :latitude="newsociety.latitude" :longitude="newsociety.longitude" editable="yes" initialZoom="10" @newlat="newlat" @newlng="newlng"></leafletmap>
           <div class="text-center" v-if="initlat !== newsociety.latitude && initlng !== newsociety.longitude">
             <small class="text-grey q-mr-sm">Lat: {{newsociety.latitude}}°</small><small class="text-grey">Lng: {{newsociety.longitude}}°</small>
@@ -84,10 +84,10 @@ export default {
       society: { label: '', value: '' },
       newsociety: {
         name: '',
-        latitude: null,
-        longitude: null,
+        latitude: -29.8614,
+        longitude: 31.0092,
         servicetime: '',
-        servicelanguage: 'isiZulu'
+        servicelanguage: 'English'
       },
       alldenominations: [],
       structures: {
