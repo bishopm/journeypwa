@@ -10,7 +10,7 @@
           <div class="self-center full-width no-outline" tabindex="0">Notification permission: <b>{{webpush}}</b></div>
         </template>
       </q-field>
-      <q-select borderless class="q-my-md" label="Bible version" v-model="bible" :options="[{ label: 'Good News Translation', value: 'eng-GNTUK' }, { label: 'The Message', value: 'eng-MSG' } ]" map-options emit-value>
+      <q-select borderless class="q-my-md" label="Bible version" @input="chooseTranslation" v-model="bible" :options="bibleOptions" map-options emit-value>
         <template v-slot:prepend>
           <q-icon name="fas fa-fw fa-bible" />
         </template>
@@ -55,7 +55,8 @@ export default {
       circuitOptions: [],
       districtOptions: [],
       societyOptions: [],
-      bible: 'eng-GNTUK',
+      bibleOptions: [{ label: 'Contemporary English Version', value: 'CEV' }, { label: 'Good News Translation', value: 'GNT' }, { label: 'New English Translation', value: 'NET' }],
+      bible: 'GNT',
       church: 'mcsa',
       district: null,
       circuit: {},
