@@ -28,7 +28,7 @@ function subscribeUser () {
       const subscribeOptions = {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
-          'BLW0/oqb3EVRht3h+Szjq/NSWLVOksJT9nOLww2iILmMHAmHewjlxcSk+fSngBWHAwZuIiycqo+11jxg7PBSYXY='
+          'BJCC77zKEAmeD8eVlIIzqtkwxXzuwXxSIBC0kDTM89ebw7uNOu/s3TinnSZ9sngD5WhAuOM+LuX6b6Zjj4M6QsY='
         )
       }
       return registration.pushManager.subscribe(subscribeOptions)
