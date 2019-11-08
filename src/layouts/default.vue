@@ -282,7 +282,7 @@ export default {
       expanded: true,
       countdown: 3,
       newdata: [],
-      menus: ['blog', 'children', 'devotional', 'diary', 'events', 'groups', 'media', 'others', 'practice', 'reminders', 'sermon'],
+      menus: ['blog', 'children', 'devotional', 'diary', 'events', 'groups', 'media', 'others', 'practice', 'reminders', 'rosteritems', 'sermon'],
       persistent: false,
       socmodal: false,
       societies: [],

@@ -81,6 +81,13 @@
           <q-btn style="vertical-align:top" size="xs" color="secondary" round>{{$store.state.feeditems.reminders.length}}</q-btn>
         </router-link>
       </div>
+      <div v-if="$store.getters.getMenu('rosteritems') && $store.state.feeditems.rosteritems.length" class="col-6 text-center q-mb-md">
+        <router-link to="/rosteritems" class="text-white" style="text-decoration:none;">
+          <div class="q-mb-sm text-black caption">Roster dates</div>
+          <q-icon class="text-primary" name="fas fa-fw fa-th-list" size="3rem" />
+          <q-btn style="vertical-align:top" size="xs" color="secondary" round>{{$store.state.feeditems.rosteritems.length}}</q-btn>
+        </router-link>
+      </div>
       <div v-if="$store.getters.getMenu('events') && $store.state.feeditems.events.length" class="col-6 text-center q-mb-md">
         <router-link to="/events" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm text-black caption">Event sign-up</div>

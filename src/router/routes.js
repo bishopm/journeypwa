@@ -29,6 +29,7 @@ const routes = [
       { name: 'library', path: '/library', component: () => import('components/Library'), meta: { auth: false } },
       { name: 'me', path: '/me', component: () => import('components/Me'), meta: { auth: true } },
       { name: 'reminders', path: '/reminders', component: () => import('components/Reminders'), meta: { auth: true } },
+      { name: 'rosteritems', path: '/rosteritems', component: () => import('components/Rosteritems'), meta: { auth: true } },
       { name: 'otherday', path: '/otherday/:date', component: () => import('components/Otherday'), meta: { auth: false } },
       { name: 'phoneverification', path: '/phoneverification', component: () => import('components/Phoneverification'), meta: { auth: false } },
       { name: 'published', path: '/published', component: () => import('components/Published'), meta: { auth: false } },

@@ -25,6 +25,7 @@ export default function (/* { ssrContext } */) {
       menu_blog: false,
       menu_sermon: false,
       menu_reminders: false,
+      menu_rosteritems: false,
       token: '',
       season: 'bg-season-green'
     },
