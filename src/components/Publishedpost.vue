@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md">
+  <div class="q-ma-md">
     <p v-if="post" class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{post.title}}</p>
     <div class="q-mx-md" v-if="post" v-html="post.body"></div>
   </div>

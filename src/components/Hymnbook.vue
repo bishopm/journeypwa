@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md">
+  <div class="q-ma-md">
     <q-tabs v-model="selectedTab" active-color="white" indicator-color="primary" class="no-border bg-secondary text-primary">
       <q-tab name="songTab" key="songTab">Songs</q-tab>
       <q-tab name="liturgyTab" key="liturgyTab">Liturgy</q-tab>

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md" v-if="sermons.length">
+  <div class="q-ma-md" v-if="sermons.length">
     <div v-for="sermon in sermons" :key="sermon.title" class="text-center">
       <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{sermon.title}} <small>[{{sermon.pubdate}}]</small></p>
       <div v-if="sermon" class="text-center">

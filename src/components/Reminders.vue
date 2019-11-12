@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs">
+  <div>
     <q-list striped v-if="notifications" no-border>
       <p class="bg-secondary text-white caption text-center q-pa-sm">Messages</p>
       <q-item v-for="notification in notifications" :key="notification.id" :class="{striped: index % 2 === 1}">

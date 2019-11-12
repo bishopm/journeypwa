@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md" v-if="blogs.length">
+  <div class="q-ma-md" v-if="blogs.length">
     <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Blogs</p>
     <q-list>
       <q-item v-for="(blog, index) in blogs" :key="blog.permalink" :to="'/blogposts/' + index">

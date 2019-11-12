@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md">
+  <div class="q-ma-md">
     <p class="text-center caption">Resource library<br>
       <small v-if="practices.length || media.length || groups.length">Click on an item to open</small>
       <small v-else>No items have been added to the library yet</small>

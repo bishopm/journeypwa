@@ -5,15 +5,15 @@
     </q-tabs>
     <q-tab-panels v-model="selectedTab" animated class="q-ma-sm">
       <q-tab-panel v-for="reading in readings" :key="reading.title" :name="reading.title" class="no-border">
-        <div v-for="section in reading.reading" :key="section['reading']" class="text-justify">
-          <div class="q-my-md" v-if="section['type']=='optional'"><b>Optional verses</b>
-            <i><div v-html="section['text']"></div></i>
+        <div v-for="section in reading.text" :key="section['section']" class="text-justify">
+          <div class="q-my-md" v-if="section['type']=='optional'"><div class="text-center"><b>Optional verses</b></div>
+            <i><div v-html="section['section']"></div></i>
           </div>
-          <div v-else class="q-my-md" v-html="section['text']"></div>
+          <div v-else class="q-my-md" v-html="section['section']"></div>
         </div>
       </q-tab-panel>
     </q-tab-panels>
-    <small><div class="text-justify q-ma-md" v-html="readings[0].reading[0].copyright"></div></small>
+    <small><div class="text-justify q-ma-md" v-html="readings[0].copyright"></div></small>
   </div>
 </template>
 
@@ -36,13 +36,15 @@ export default {
     if (this.$q.localStorage.getItem('JOURNEY_Bible')) {
       this.bible = this.$q.localStorage.getItem('JOURNEY_Bible')
     } else {
-      this.bible = 'eng-GNTUK'
+      this.bible = 'GNT'
     }
     this.$axios.get(process.env.API + '/reading/' + this.$route.params.reading + '/' + this.bible)
       .then((response) => {
-        for (var value in response.data) {
-          this.readingHeaders.push(value)
-          this.readings.push({ title: value, reading: response.data[value] })
+        for (var value in response.data.titles) {
+          this.readingHeaders.push(response.data.titles[value])
+        }
+        for (var ndx in response.data.texts) {
+          this.readings.push(response.data.texts[ndx])
         }
         this.selectedTab = this.readingHeaders[0]
       })
@@ -63,15 +65,35 @@ export default {
   height: 300px;
   width: 100%;
 }
-.s1 {
+.s {
   font-size: 110%;
   line-height: 18px;
   padding: 0;
   text-align: center;
+  font-weight: bold;
+}
+.v {
+  font-weight: bold;
+  vertical-align: super;
+  font-size: 80%;
+  vertical-align: baseline;
+  position: relative;
+  top: -0.4em;
+}
+.r {
+  text-align:center;
 }
 .q1 {
   margin: 0;
 }
+h2 {
+  text-align:center;
+  font-size:140%;
+  font-weight: bold;
+  line-height:0;
+  padding: 0px;
+}
+
 h4 {
   line-height: 0px;
   font-weight:600;
@@ -84,5 +106,8 @@ h5.r {
 .q-tabs {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+}
+p {
+  margin-bottom: 8px;
 }
 </style>

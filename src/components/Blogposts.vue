@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md" v-if="blogposts && blogposts.length">
+  <div class="q-ma-md" v-if="blogposts && blogposts.length">
     <div v-for="blog in blogposts" :key="blog.title">
       <p class="bg-secondary text-white caption text-center q-pa-sm"><b>{{blog.title}}</b><br><small>{{blog.author}} [{{blog.pubdate}}]</small></p>
       <div v-html="blog.body"></div>

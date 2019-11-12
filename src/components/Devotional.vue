@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md" v-if="devotionalposts && devotionalposts.length">
+  <div class="q-ma-md" v-if="devotionalposts && devotionalposts.length">
     <div v-for="devotional in devotionalposts" :key="devotional.title">
       <p class="bg-secondary text-white caption text-center q-pa-sm"><b>{{devotional.title}}</b><br><small>{{devotional.author}} [{{devotional.pubdate}}]</small></p>
       <div v-html="devotional.body"></div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs">
+  <div>
     <q-list striped v-if="rosteritems" no-border>
       <p class="bg-secondary text-white caption text-center q-pa-sm">Upcoming roster dates</p>
       <q-item v-for="rosteritem in rosteritems" :key="rosteritem" :class="{striped: index % 2 === 1}">

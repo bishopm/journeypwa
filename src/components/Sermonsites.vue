@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md" v-if="sermonsites.length">
+  <div class="q-ma-md" v-if="sermonsites.length">
     <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Sermons</p>
     <q-list>
       <q-item v-for="(site, index) in sermonsites" :key="site.permalink" :to="'/sermon/' + index">

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mt-xs q-ma-md" v-if="devotionals.length">
+  <div class="q-ma-md" v-if="devotionals.length">
     <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Devotional readings</p>
     <q-list>
       <q-item v-for="(devotional, index) in devotionals" :key="devotional.permalink" :to="'/devotional/' + index">
