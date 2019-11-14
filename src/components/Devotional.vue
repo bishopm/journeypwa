@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style>
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin-block-start: 16px;
   margin-block-end: 16px;
   line-height: 0px;

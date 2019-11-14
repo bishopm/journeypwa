@@ -69,6 +69,7 @@ export default {
   font-size: 110%;
   line-height: 18px;
   padding: 0;
+  padding-top: 5px;
   text-align: center;
   font-weight: bold;
 }
