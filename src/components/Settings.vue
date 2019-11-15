@@ -55,7 +55,7 @@ export default {
       circuitOptions: [],
       districtOptions: [],
       societyOptions: [],
-      bibleOptions: [{ label: 'Contemporary English Version', value: 'CEV' }, { label: 'Good News Translation', value: 'GNT' }, { label: 'New English Translation', value: 'NET' }],
+      bibleOptions: [{ label: 'Contemporary English Version', value: 'CEV' }, { label: 'Good News Translation', value: 'GNT' }, { label: 'King James Version', value: 'KJV' }],
       bible: 'GNT',
       church: 'mcsa',
       district: null,

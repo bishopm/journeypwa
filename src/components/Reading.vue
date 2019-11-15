@@ -65,7 +65,7 @@ export default {
   height: 300px;
   width: 100%;
 }
-.s {
+.s, .s1 {
   font-size: 110%;
   line-height: 18px;
   padding: 0;
@@ -83,6 +83,7 @@ export default {
 }
 .r {
   text-align:center;
+  font-size: 80%;
 }
 .q1 {
   margin: 0;
