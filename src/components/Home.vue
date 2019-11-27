@@ -41,7 +41,7 @@
         <router-link to="/diary" class="text-white" style="text-decoration:none;">
           <div class="q-mb-sm caption text-black">Calendar</div>
           <q-icon class="text-primary" name="fas fa-fw fa-calendar-alt" size="3rem" />
-          <q-btn style="vertical-align:top" color="secondary" size="xs" class="text-black" round>{{$store.state.feeditems.diary.length}}</q-btn>
+          <q-btn style="vertical-align:top" color="secondary" size="xs" round>{{$store.state.feeditems.diary.length}}</q-btn>
         </router-link>
       </div>
       <div v-if="$store.getters.getMenu('blog')" class="col-6 text-center q-mb-md">

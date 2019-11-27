@@ -303,6 +303,25 @@ export default {
     }
   },
   mounted () {
+    if ((!this.$q.localStorage.getItem('JOURNEY_Seasoncolour')) || (this.$q.localStorage.getItem('JOURNEY_Seasoncolour') === 'green')) {
+      this.$q.localStorage.set('JOURNEY_Seasoncolour', 'green')
+    } else if (this.$q.localStorage.getItem('JOURNEY_Seasoncolour') === 'red') {
+      colors.setBrand('primary', '#DB2828')
+      colors.setBrand('secondary', '#8b0000')
+      colors.setBrand('warning', '#ec5151')
+      colors.setBrand('info', '#ff7f7f')
+    } else if (this.$q.localStorage.getItem('JOURNEY_Seasoncolour') === 'violet') {
+      colors.setBrand('primary', '#7D26CD')
+      colors.setBrand('secondary', '#4d078d')
+      colors.setBrand('warning', '#9248d6')
+      colors.setBrand('info', '#ac71e1')
+    } else if (this.$q.localStorage.getItem('JOURNEY_Seasoncolour') === 'white') {
+      colors.setBrand('primary', '#eeeeee')
+      colors.setBrand('secondary', '#cccccc')
+      colors.setBrand('warning', '#777777')
+      colors.setBrand('info', '#cccccc')
+    }
+
     // Settings housekeeping - populating store
     if (!this.$q.localStorage.getItem('JOURNEY_Individual')) {
       this.noindiv = true
@@ -342,20 +361,25 @@ export default {
           this.$q.localStorage.set('JOURNEY_Version', response.data.version)
         }
         if (response.data.colour === 'red') {
+          this.$q.localStorage.set('JOURNEY_Seasoncolour', 'red')
           colors.setBrand('primary', '#DB2828')
           colors.setBrand('secondary', '#8b0000')
           colors.setBrand('warning', '#ec5151')
           colors.setBrand('info', '#ff7f7f')
         } else if (response.data.colour === 'violet') {
+          this.$q.localStorage.set('JOURNEY_Seasoncolour', 'violet')
           colors.setBrand('primary', '#7D26CD')
           colors.setBrand('secondary', '#4d078d')
           colors.setBrand('warning', '#9248d6')
           colors.setBrand('info', '#ac71e1')
         } else if (response.data.colour === 'white') {
+          this.$q.localStorage.set('JOURNEY_Seasoncolour', 'white')
           colors.setBrand('primary', '#eeeeee')
           colors.setBrand('secondary', '#cccccc')
           colors.setBrand('warning', '#777777')
           colors.setBrand('info', '#cccccc')
+        } else {
+          this.$q.localStorage.set('JOURNEY_Seasoncolour', 'green')
         }
         for (var cndx in response.data.denominations) {
           this.churchOptions.push({
