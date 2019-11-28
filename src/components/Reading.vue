@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted () {
-    if (this.$q.localStorage.getItem('JOURNEY_Bible')) {
+    if ((this.$q.localStorage.getItem('JOURNEY_Bible')) && (this.$q.localStorage.getItem('JOURNEY_Bible') !== 'eng-GNTUK') && (this.$q.localStorage.getItem('JOURNEY_Bible') !== 'eng-MSG')) {
       this.bible = this.$q.localStorage.getItem('JOURNEY_Bible')
     } else {
       this.bible = 'GNT'
