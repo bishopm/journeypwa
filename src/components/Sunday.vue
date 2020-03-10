@@ -1,5 +1,15 @@
 <template>
   <div>
+    <q-list v-if="customreadings" class="no-border">
+      <p v-if="customreadings.length" class="bg-secondary text-white q-ma-md q-pa-sm header text-center">
+        <b>Sunday's readings<span v-if="$store.state.societyname"> ({{$store.state.societyname}})</span>: {{date}}</b>
+      </p>
+      <q-item v-for="customreading in customreadings" :key="customreading.id" :to="'/reading/' + encodeURI(customreading)">
+        <q-item-section class="text-center">
+          <q-item-label v-html="cleanup(customreading)"/>
+        </q-item-section>
+      </q-item>
+    </q-list>
     <q-list v-if="readings" class="no-border">
       <p v-if="date" class="bg-secondary text-white q-ma-md q-pa-sm header text-center"><b>Lectionary readings: {{date}}</b><br>({{description}})</p>
       <q-item v-for="reading in readings" :key="reading.key" :to="'/reading/' + encodeURI(reading)">
@@ -33,9 +43,11 @@ export default {
   data () {
     return {
       readings: [],
+      customreadings: [],
       description: '',
       date: '',
-      extras: null
+      extras: null,
+      society_id: ''
     }
   },
   mixins: [saveState],
@@ -59,11 +71,15 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get(process.env.API + '/sunday')
+    if (this.$store.state.societyid) {
+      this.society_id = '/' + this.$store.state.societyid
+    }
+    this.$axios.get(process.env.API + '/sunday' + this.society_id)
       .then(response => {
         this.date = response.data.date
         this.description = response.data.description
         this.readings = response.data.readings
+        this.customreadings = response.data.customreadings
         this.extras = response.data.extras
       })
       .catch(error => {

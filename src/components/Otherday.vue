@@ -29,7 +29,8 @@ export default {
       readings: [],
       description: '',
       date: '',
-      extras: null
+      extras: null,
+      society_id: ''
     }
   },
   methods: {
@@ -48,7 +49,7 @@ export default {
   },
   mounted () {
     // this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.profile.token
-    this.$axios.get(process.env.API + '/sunday/' + this.$route.params.date)
+    this.$axios.get(process.env.API + '/sunday/0/' + this.$route.params.date)
       .then(response => {
         this.date = response.data.date
         this.description = response.data.description
