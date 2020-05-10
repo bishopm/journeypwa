@@ -67,7 +67,8 @@ module.exports = function (ctx) {
         'QTab',
         'QTabPanels',
         'QTabPanel',
-        'QTime'
+        'QTime',
+        'QVideo'
       ],
 
       directives: [

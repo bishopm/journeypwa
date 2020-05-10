@@ -4,10 +4,14 @@
       <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">{{sermon.title}} <small>[{{sermon.pubdate}}]</small></p>
       <div v-if="sermon" class="text-center">
         <img width="250" v-if="sermon.image" :src="confirmurl(sermon.image)"/><br>
-        <audio preload="none" controls><source :src="sermon.enclosure.link" :type="sermon.enclosure.type"></audio>
-        <br>
-        <p>Preacher: {{sermon.author}}</p>
+        Preacher: {{sermon.author}}<br>
         <p v-html="sermon.body"></p>
+        <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Audio</p>
+        <audio preload="none" controls><source :src="sermon.enclosure.link" :type="sermon.enclosure.type"></audio>
+      </div>
+      <div v-if="sermon.enclosure.player">
+        <p class="q-my-md header text-center bg-secondary q-pa-sm text-white text-bold">Video</p>
+        <q-video :ratio="16/9" :src="sermon.enclosure.player" />
       </div>
       <hr class="q-mt-lg">
     </div>

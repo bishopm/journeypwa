@@ -316,8 +316,8 @@ export default {
       colors.setBrand('warning', '#9248d6')
       colors.setBrand('info', '#ac71e1')
     } else if (this.$q.localStorage.getItem('JOURNEY_Seasoncolour') === 'white') {
-      colors.setBrand('primary', '#eeeeee')
-      colors.setBrand('secondary', '#cccccc')
+      colors.setBrand('primary', '#cccccc')
+      colors.setBrand('secondary', '#bbbbbb')
       colors.setBrand('warning', '#777777')
       colors.setBrand('info', '#cccccc')
     }
@@ -374,8 +374,8 @@ export default {
           colors.setBrand('info', '#ac71e1')
         } else if (response.data.colour === 'white') {
           this.$q.localStorage.set('JOURNEY_Seasoncolour', 'white')
-          colors.setBrand('primary', '#eeeeee')
-          colors.setBrand('secondary', '#cccccc')
+          colors.setBrand('primary', '#cccccc')
+          colors.setBrand('secondary', '#bbbbbb')
           colors.setBrand('warning', '#777777')
           colors.setBrand('info', '#cccccc')
         } else {

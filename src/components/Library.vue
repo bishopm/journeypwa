@@ -21,26 +21,6 @@
           </q-item-label>
         </q-item>
       </q-list>
-      <q-list v-if="practices" class="no-border">
-        <div class="text-center"><q-icon size="sm" name="fas fa-pray"/>
-          <p>Practices</p>
-        </div>
-        <q-item v-for="practice in practices" :key="practice.id" :to="'/content/practice/' + practice.id">
-          <q-item-label>
-            <div class="text-primary text-center">{{practice.feedpost.title}}</div>
-          </q-item-label>
-        </q-item>
-      </q-list>
-      <q-list class="no-border" v-if="media">
-        <div class="text-center"><q-icon size="sm" name="fas fa-images"/>
-          <p>Media</p>
-        </div>
-        <q-item v-for="medi in media" :key="medi.id" :to="'/content/media/' + medi.id">
-          <q-item-label>
-            <div class="text-primary text-center">{{medi.feedpost.title}}</div>
-          </q-item-label>
-        </q-item>
-      </q-list>
       <q-list class="no-border" v-if="groups">
         <div class="text-center"><q-icon size="sm" name="fas fa-users"/>
           <p>Groups</p>
@@ -60,6 +40,36 @@
             <div class="text-primary text-center">Hymns, songs & liturgy
               <q-chip color="tertiary" class="q-ml-md">{{songs}}</q-chip>
             </div>
+          </q-item-label>
+        </q-item>
+      </q-list>
+      <q-list class="no-border" v-if="media">
+        <div class="text-center"><q-icon size="sm" name="fas fa-images"/>
+          <p>Media</p>
+        </div>
+        <q-item v-for="medi in media" :key="medi.id" :to="'/content/media/' + medi.id">
+          <q-item-label>
+            <div class="text-primary text-center">{{medi.feedpost.title}}</div>
+          </q-item-label>
+        </q-item>
+      </q-list>
+      <q-list v-if="practices" class="no-border">
+        <div class="text-center"><q-icon size="sm" name="fas fa-pray"/>
+          <p>Practices</p>
+        </div>
+        <q-item v-for="practice in practices" :key="practice.id" :to="'/content/practice/' + practice.id">
+          <q-item-label>
+            <div class="text-primary text-center">{{practice.feedpost.title}}</div>
+          </q-item-label>
+        </q-item>
+      </q-list>
+      <q-list class="no-border">
+        <div class="text-center"><q-icon size="sm" name="fas fa-video"/>
+          <p>Videos</p>
+        </div>
+        <q-item key="videos" to="/videos">
+          <q-item-label>
+            <div class="text-primary text-center">Video library</div>
           </q-item-label>
         </q-item>
       </q-list>
@@ -87,6 +97,7 @@ export default {
           this.groups = response.data.groups
           this.media = response.data.media
           this.songs = response.data.songs
+          this.videos = response.data.videos
           this.ready = true
         })
         .catch(error => {

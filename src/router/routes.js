@@ -44,6 +44,8 @@ const routes = [
       { name: 'society', path: '/societies/:id', component: () => import('components/Society'), meta: { auth: false } },
       { name: 'subscriptions', path: '/subscriptions', component: () => import('components/Subscriptions'), meta: { auth: true } },
       { name: 'sunday', path: '/sunday', component: () => import('components/Sunday'), meta: { auth: false } },
+      { name: 'videos', path: '/videos', component: () => import('components/Videos'), meta: { auth: true } },
+      { name: 'video', path: '/videos/:id', component: () => import('components/Video'), meta: { auth: true } },
       { name: 'home', path: '/', component: () => import('components/Home'), meta: { auth: false } }
     ]
   }

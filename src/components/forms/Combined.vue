@@ -17,7 +17,7 @@
       </div>
       <div class="q-ma-lg text-center">
         <q-btn color="primary" @click="submit">OK</q-btn>
-        <q-btn class="q-ml-md" color="black" @click="$router.back()">Cancel</q-btn>
+        <q-btn class="q-mx-md" color="black" @click="$router.back()">Cancel</q-btn>
         <q-btn class="q-my-md" color="grey-6" to="/settings">Not at {{$store.state.societyname}}? Change to another society</q-btn>
       </div>
     </q-form>
