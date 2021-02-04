@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Journey App",
   "productName": "Journey",
-  "cordovaId": "org.cordova.quasar.app",
   "author": "Michael Bishop",
   "private": true,
   "scripts": {
@@ -11,25 +10,27 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.6.4",
-    "axios": "^0.19.0",
+    "@quasar/extras": "^1.9.15",
+    "axios": "^0.21.1",
+    "core-js": "^3.8.3",
     "firebase": "^5.8.4",
     "firebaseui": "^3.4.1",
     "leaflet": "^1.4.0",
-    "quasar": "^1.9.15",
+    "quasar": "^1.15.1",
     "vue-avatar-cropper": "0.0.28",
     "vue-save-state": "^1.2.0",
     "vue2-leaflet": "^2.1.0",
     "vuelidate": "^0.7.4"
   },
   "devDependencies": {
-    "@quasar/app": "^1.7.1",
+    "@quasar/app": "^2.1.14",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-vue": "^5.0.0",
-    "strip-ansi": "^3.0.1"
+    "strip-ansi": "^3.0.1",
+    "workbox-webpack-plugin": "^5.1.4"
   },
   "engines": {
     "node": ">= 8.9.0",
@@ -37,6 +38,14 @@
     "yarn": ">= 1.6.0"
   },
   "browserslist": [
-    "last 1 version, not dead, ie >= 11"
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
   ]
 }
